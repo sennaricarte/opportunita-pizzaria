@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.opportunitapizzaria.com.br/sitemap-index.xml
+Sitemap: https://opportunitapizzaria.com.br/sitemap-index.xml

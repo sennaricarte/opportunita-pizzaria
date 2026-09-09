@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.opportunitapizzaria.com.br',
+  site: 'https://opportunitapizzaria.com.br',
   output: 'static',
   compressHTML: true,
   image: {
