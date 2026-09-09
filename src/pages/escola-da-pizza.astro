@@ -1,6 +1,36 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Mascote from '../components/Mascote.astro';
+import { rasterFormats } from '../utils/image';
+import fotoMassa from '../assets/images/escola/massa-aluna.jpg';
+import fotoAbertura from '../assets/images/escola/abertura-massa.jpg';
+import fotoMontagem from '../assets/images/escola/montagem-pizza.jpg';
+import fotoTurma from '../assets/images/escola/turma.jpg';
+import fotoEquipe from '../assets/images/escola/pratica-equipe.jpg';
+
+const galeria = [
+  {
+    src: fotoTurma,
+    alt: 'Turma da Escola da Pizza com aventais da Opportunità, Instituto Recomeçar e Pizza Prime',
+  },
+  {
+    src: fotoMassa,
+    alt: 'Aluna da Escola da Pizza trabalha a massa na cozinha da Opportunità',
+  },
+  {
+    src: fotoAbertura,
+    alt: 'Aluno abre a massa de pizza sobre a pá de madeira na aula prática',
+  },
+  {
+    src: fotoMontagem,
+    alt: 'Alunos montam uma pizza com queijo e recheio na bancada da cozinha',
+  },
+  {
+    src: fotoEquipe,
+    alt: 'Equipe da Escola da Pizza coloca coberturas juntos sobre a massa',
+  },
+] as const;
 
 const whatsappInscricao = `https://wa.me/5511962448909?text=${encodeURIComponent(
   'Olá! Gostaria de me inscrever na Escola da Pizza da Opportunità. Podem me orientar sobre o processo seletivo?'
@@ -138,6 +168,35 @@ const faq = [
     </div>
   </section>
 
+  <section class="galeria" aria-labelledby="galeria-titulo">
+    <div class="container">
+      <h2 id="galeria-titulo" class="section-title">Na prática</h2>
+      <p class="galeria__intro">
+        Aulas na cozinha da Opportunità: massa, abertura, montagem e o convívio da turma.
+      </p>
+      <ul class="galeria__grid" role="list">
+        {
+          galeria.map(({ src, alt }) => (
+            <li class="galeria__item media-slot media-slot--3-4">
+              <Image
+                src={src}
+                alt={alt}
+                width={768}
+                height={1024}
+                widths={[400, 600, 768]}
+                formats={rasterFormats(src)}
+                quality="mid"
+                loading="lazy"
+                decoding="async"
+                class="media-cover"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
   <!-- Quem pode participar -->
   <section class="publico" aria-labelledby="publico-titulo">
     <div class="container">
@@ -252,11 +311,36 @@ const faq = [
     opacity: 0.85;
   }
 
-  /* Público */
-  .publico {
+  .galeria {
     padding-block: var(--space-8);
     background-color: var(--branco);
     border-block: 1px solid rgb(27 107 58 / 10%);
+  }
+
+  .galeria__intro {
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--preto);
+    opacity: 0.75;
+    max-width: 52ch;
+  }
+
+  .galeria__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .galeria__item {
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgb(0 0 0 / 8%);
+  }
+
+  /* Público */
+  .publico {
+    padding-block: var(--space-8);
   }
 
   .publico__grid {
@@ -415,6 +499,10 @@ const faq = [
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: center;
+    }
+
+    .galeria__grid {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 

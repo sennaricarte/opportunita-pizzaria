@@ -245,6 +245,10 @@
   aspect-ratio: 4 / 3;
 }
 
+.media-slot--3-4 {
+  aspect-ratio: 3 / 4;
+}
+
 .media-slot--16-9 {
   aspect-ratio: 16 / 9;
 }
