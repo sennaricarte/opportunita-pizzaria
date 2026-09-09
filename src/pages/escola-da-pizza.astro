@@ -39,7 +39,9 @@ const galeria = [
 
 const inscricaoUrl = 'https://wkf.ms/4ec71GV';
 
-const mailtoEmpresas = 'mailto:gestao@opportunita.org.br?subject=Contratação de formandos — Escola da Pizza';
+const whatsappEmpresas = `https://wa.me/5511953054694?text=${encodeURIComponent(
+  'Olá! Sou empresa e gostaria de contratar formandos da Escola da Pizza.',
+)}`;
 
 const pilares = [
   {
@@ -260,7 +262,13 @@ const faq = [
         >
           Quero me inscrever
         </a>
-        <a class="btn btn--outline-light" href={mailtoEmpresas}>
+        <a
+          class="btn btn--outline-light"
+          href={whatsappEmpresas}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Falar no WhatsApp para contratar formandos da Escola da Pizza"
+        >
           Sou empresa e quero contratar formandos
         </a>
       </div>
