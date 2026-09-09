@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/images/logo-opportunita.png';
+import { rasterFormats } from '../utils/image';
+
+interface Props {
+  variant?: 'header' | 'footer';
+}
+
+const { variant = 'header' } = Astro.props;
+---
+
+<Image
+  src={logo}
+  alt="Opportunità Pizzaria Social"
+  width={1024}
+  height={769}
+  widths={variant === 'footer' ? [200, 320, 480] : [200, 280, 400]}
+  formats={rasterFormats(logo)}
+  loading="eager"
+  decoding="async"
+  class:list={['logo-image', `logo-image--${variant}`]}
+/>
+
+<style>
+  .logo-image {
+    display: block;
+    width: auto;
+    height: auto;
+    border-radius: calc(var(--radius) / 2);
+  }
+
+  .logo-image--header {
+    height: 4rem;
+  }
+
+  .logo-image--footer {
+    height: 5.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    .logo-image--header {
+      height: 5.5rem;
+    }
+
+    .logo-image--footer {
+      height: 7rem;
+    }
+  }
+</style>

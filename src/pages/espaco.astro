@@ -1,0 +1,348 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { rasterFormats } from '../utils/image';
+
+// Substituir placeholders por fotos reais do espaço:
+// import salao1 from '../assets/images/espaco/salao-principal.jpg';
+// import salao2 from '../assets/images/espaco/decoracao-rustica.jpg';
+// import salao3 from '../assets/images/espaco/evento-aniversario.jpg';
+// import salao4 from '../assets/images/espaco/workshop.jpg';
+// import salao5 from '../assets/images/espaco/confraternizacao.jpg';
+// import salao6 from '../assets/images/espaco/reuniao-comunitaria.jpg';
+// import mapaEstatico from '../assets/images/espaco/mapa-localizacao.jpg';
+import placeholderSalao from '../assets/images/espaco/placeholder-salao.svg';
+import placeholderMapa from '../assets/images/espaco/placeholder-mapa.svg';
+
+const whatsappDisponibilidade = `https://wa.me/5511962448909?text=${encodeURIComponent(
+  'Olá! Gostaria de consultar a disponibilidade do Espaço Opportunità para um evento. Podem me passar mais informações?'
+)}`;
+
+const mapsUrl =
+  'https://www.google.com/maps/search/?api=1&query=Av.+Vital+Brasil,+478+-+Vila+A%C3%A7oreana+-+Po%C3%A1+-+SP';
+
+const idealPara = [
+  'Aniversários',
+  'Workshops',
+  'Encontros corporativos',
+  'Confraternizações',
+  'Reuniões comunitárias',
+] as const;
+
+const galeria = [
+  { src: placeholderSalao, alt: 'Salão principal do Espaço Opportunità — placeholder' },
+  { src: placeholderSalao, alt: 'Decoração rústica e moderna — placeholder' },
+  { src: placeholderSalao, alt: 'Evento de aniversário no espaço — placeholder' },
+  { src: placeholderSalao, alt: 'Workshop realizado na sede — placeholder' },
+  { src: placeholderSalao, alt: 'Confraternização corporativa — placeholder' },
+  { src: placeholderSalao, alt: 'Reunião comunitária — placeholder' },
+] as const;
+---
+
+<Base
+  title="Espaço para Eventos em Poá"
+  description="Alugue o Espaço Opportunità em Poá para eventos de até 50 pessoas. Aniversários, workshops e confraternizações na Av. Vital Brasil, 478 — Vila Açoreana."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Espaço Opportunità', path: '/espaco' },
+  ]}
+>
+  <section class="hero hero--green" aria-labelledby="hero-titulo">
+    <div class="container hero__inner hero__inner--narrow">
+      <p class="hero__eyebrow">Eventos na sede</p>
+      <h1 id="hero-titulo" class="hero__title">Espaço Opportunità</h1>
+      <p class="hero__subtitle">
+        Um ambiente acolhedor na sede da pizzaria social, com decoração rústica e moderna,
+        para celebrar, reunir e transformar — com capacidade para até <strong>50 pessoas</strong>.
+      </p>
+      <address class="hero__endereco">
+        Av. Vital Brasil, 478 — Vila Açoreana — Poá — SP
+      </address>
+    </div>
+  </section>
+
+  <section class="ideal" aria-labelledby="ideal-titulo">
+    <div class="container">
+      <h2 id="ideal-titulo" class="section-title">Ideal para</h2>
+      <ul class="ideal__list" role="list">
+        {
+          idealPara.map((item) => (
+            <li class="ideal__item">
+              <span class="ideal__icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 10l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="galeria" aria-labelledby="galeria-titulo">
+    <div class="container">
+      <h2 id="galeria-titulo" class="section-title">Galeria</h2>
+      <p class="galeria__intro">
+        Conheça o ambiente onde acontecem nossos eventos. As fotos abaixo são placeholders —
+        substitua pelas imagens reais do espaço.
+      </p>
+      <ul class="galeria__grid" role="list">
+        {
+          galeria.map(({ src, alt }) => (
+            <li class="galeria__item media-slot media-slot--4-3">
+              <Image
+                src={src}
+                alt={alt}
+                width={800}
+                height={600}
+                widths={[400, 600, 800]}
+                formats={rasterFormats(src)}
+                loading="lazy"
+                decoding="async"
+                class="media-cover"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="localizacao" aria-labelledby="localizacao-titulo">
+    <div class="container localizacao__inner">
+      <div class="localizacao__texto">
+        <h2 id="localizacao-titulo" class="section-title">Como chegar</h2>
+        <p>
+          Estamos na Vila Açoreana, em Poá, com fácil acesso para a região do ABC Paulista.
+          Estacionamento na região e ambiente preparado para receber seu evento.
+        </p>
+        <a
+          class="localizacao__link"
+          href={mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Ver no Google Maps
+          <span class="sr-only"> — Av. Vital Brasil, 478, Poá</span>
+        </a>
+      </div>
+      <figure class="localizacao__mapa media-slot media-slot--16-9">
+        <a href={mapsUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir localização no Google Maps">
+          <Image
+            src={placeholderMapa}
+            alt="Mapa estático da localização da Opportunità na Av. Vital Brasil, 478, Poá — placeholder"
+            width={800}
+            height={450}
+            widths={[400, 600, 800]}
+            formats={rasterFormats(placeholderMapa)}
+            loading="lazy"
+            decoding="async"
+            class="media-cover"
+          />
+        </a>
+        <figcaption class="localizacao__legenda">
+          {/* Substituir placeholderMapa por captura estática do Google Maps ou foto do entorno */}
+          Av. Vital Brasil, 478 — Vila Açoreana
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="cta" aria-labelledby="cta-titulo">
+    <div class="container cta__inner">
+      <h2 id="cta-titulo" class="cta__title">Reserve o Espaço Opportunità</h2>
+      <p class="cta__text">
+        Consulte datas disponíveis e monte seu evento em um lugar com propósito social.
+      </p>
+      <a
+        class="btn btn--primary"
+        href={whatsappDisponibilidade}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Consultar disponibilidade
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero__endereco {
+    font-style: normal;
+    font-size: var(--text-base);
+    opacity: 0.9;
+    padding-top: var(--space-2);
+    border-top: 1px solid rgb(255 255 255 / 20%);
+  }
+
+  .ideal {
+    padding-block: var(--space-8);
+  }
+
+  .ideal__list {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .ideal__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    font-size: var(--text-base);
+    font-weight: 500;
+    background-color: var(--branco);
+    border-radius: var(--radius);
+    border: 1px solid rgb(27 107 58 / 12%);
+  }
+
+  .ideal__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    color: var(--verde);
+    background-color: rgb(27 107 58 / 10%);
+    border-radius: 50%;
+  }
+
+  .galeria {
+    padding-block: var(--space-8);
+    background-color: var(--branco);
+    border-block: 1px solid rgb(27 107 58 / 10%);
+  }
+
+  .galeria__intro {
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--preto);
+    opacity: 0.75;
+    max-width: 52ch;
+  }
+
+  .galeria__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .galeria__item {
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgb(0 0 0 / 8%);
+  }
+
+  .localizacao {
+    padding-block: var(--space-8);
+  }
+
+  .localizacao__inner {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .localizacao__texto p {
+    margin-top: var(--space-4);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    max-width: 48ch;
+  }
+
+  .localizacao__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-5);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--verde);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .localizacao__link:hover,
+  .localizacao__link:focus-visible {
+    color: var(--verde-escuro);
+    outline: none;
+  }
+
+  .localizacao__mapa {
+    margin: 0;
+  }
+
+  .localizacao__mapa a {
+    display: block;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 10%);
+    transition: box-shadow 0.15s ease;
+  }
+
+  .localizacao__mapa a:hover,
+  .localizacao__mapa a:focus-visible {
+    box-shadow: 0 6px 28px rgb(0 0 0 / 15%);
+    outline: 2px solid var(--verde);
+    outline-offset: 2px;
+  }
+
+  .localizacao__legenda {
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--preto);
+    opacity: 0.7;
+    text-align: center;
+  }
+
+  .cta {
+    padding-block: var(--space-8);
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+  }
+
+  .cta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    text-align: center;
+  }
+
+  .cta__title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+  }
+
+  .cta__text {
+    font-size: var(--text-base);
+    opacity: 0.9;
+    max-width: 40ch;
+  }
+
+  @media (min-width: 40rem) {
+    .ideal__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .galeria__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .ideal__list {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .localizacao__inner {
+      grid-template-columns: 1fr 1.2fr;
+      align-items: center;
+    }
+  }
+</style>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Placeholder  substituir por foto real do espa�o">
+  <rect width="800" height="600" fill="#14502B"/>
+  <rect x="60" y="80" width="680" height="400" rx="12" fill="#1B6B3A"/>
+  <rect x="120" y="140" width="200" height="140" rx="8" fill="#FAF7F2" opacity="0.2"/>
+  <rect x="360" y="160" width="320" height="24" rx="4" fill="#FAF7F2" opacity="0.25"/>
+  <rect x="360" y="210" width="260" height="16" rx="4" fill="#FAF7F2" opacity="0.18"/>
+  <text x="400" y="540" text-anchor="middle" fill="#F4B400" font-family="system-ui,sans-serif" font-size="20">Foto do espa�o  placeholder</text>
+</svg>

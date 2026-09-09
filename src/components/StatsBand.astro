@@ -1,0 +1,195 @@
+---
+import { getEntry } from 'astro:content';
+
+interface Props {
+  title?: string;
+  intro?: string;
+  showReincidencia?: boolean;
+  headingId?: string;
+}
+
+const {
+  title = 'Nosso impacto',
+  intro = 'Números do Instituto Recomeçar, beneficiado integralmente pelo lucro da Opportunità.',
+  showReincidencia = true,
+  headingId = 'stats-titulo',
+} = Astro.props;
+
+const { data: stats } = await getEntry('stats', 'impacto');
+
+const fmt = (n: number) => n.toLocaleString('pt-BR');
+
+const impactoItens = [
+  { valor: stats.pessoasCadastradas, rotulo: 'pessoas cadastradas' },
+  { valor: stats.pessoasDesenvolvidas, rotulo: 'pessoas desenvolvidas' },
+  { valor: stats.qualificacaoProfissional, rotulo: 'em qualificação profissional' },
+  { valor: stats.geracaoRenda, rotulo: 'em geração de renda' },
+  { valor: stats.lideresFormados, rotulo: 'líderes formados' },
+] as const;
+---
+
+<section class="stats-band" aria-labelledby={headingId}>
+  <div class="container">
+    <h2 id={headingId} class="stats-band__title">{title}</h2>
+    {intro && <p class="stats-band__intro">{intro}</p>}
+
+    <ul class="stats-band__grid" role="list">
+      {
+        impactoItens.map(({ valor, rotulo }) => (
+          <li class="stats-band__item">
+            <span class="stats-band__numero">{fmt(valor)}</span>
+            <span class="stats-band__rotulo">{rotulo}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      showReincidencia && (
+        <div class="stats-band__reincidencia">
+          <p class="stats-band__contraste">
+            <span class="stats-band__destaque">{stats.reincidenciaPrograma}%</span>
+            de reincidência entre egressos do programa
+          </p>
+          <p class="stats-band__vs" aria-hidden="true">vs</p>
+          <p class="stats-band__contraste stats-band__contraste--nacional">
+            <span class="stats-band__destaque stats-band__destaque--amarelo">
+              {stats.reincidenciaMediaNacional.toLocaleString('pt-BR', {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1,
+              })}%
+            </span>
+            média nacional
+          </p>
+          <p class="stats-band__fonte">Fonte: {stats.fonteReincidencia}</p>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .stats-band {
+    padding-block: var(--space-8);
+    background-color: var(--verde);
+    color: var(--branco);
+  }
+
+  .stats-band__title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .stats-band__intro {
+    margin-top: var(--space-3);
+    text-align: center;
+    font-size: var(--text-base);
+    opacity: 0.9;
+    max-width: 48ch;
+    margin-inline: auto;
+  }
+
+  .stats-band__grid {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-7);
+  }
+
+  .stats-band__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-2);
+  }
+
+  .stats-band__numero {
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    color: var(--amarelo);
+    line-height: 1;
+  }
+
+  .stats-band__rotulo {
+    font-size: var(--text-sm);
+    opacity: 0.9;
+    max-width: 16ch;
+  }
+
+  .stats-band__reincidencia {
+    margin-top: var(--space-7);
+    padding-top: var(--space-6);
+    border-top: 1px solid rgb(255 255 255 / 20%);
+    text-align: center;
+  }
+
+  .stats-band__contraste {
+    font-size: var(--text-base);
+    line-height: 1.5;
+  }
+
+  .stats-band__destaque {
+    display: block;
+    font-size: var(--text-4xl);
+    font-weight: 600;
+    color: var(--branco);
+    line-height: 1.1;
+    margin-bottom: var(--space-2);
+  }
+
+  .stats-band__destaque--amarelo {
+    color: var(--amarelo);
+  }
+
+  .stats-band__vs {
+    margin-block: var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+
+  .stats-band__fonte {
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+    opacity: 0.75;
+  }
+
+  @media (min-width: 40rem) {
+    .stats-band__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stats-band__item:last-child {
+      grid-column: 2;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .stats-band__grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .stats-band__item:last-child {
+      grid-column: auto;
+    }
+
+    .stats-band__reincidencia {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: var(--space-5);
+      text-align: center;
+    }
+
+    .stats-band__vs {
+      margin-block: 0;
+    }
+
+    .stats-band__fonte {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

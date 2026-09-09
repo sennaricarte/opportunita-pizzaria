@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="Mapa est�tico  substituir por captura do Google Maps ou imagem do entorno">
+  <rect width="800" height="450" fill="#E8E4DC"/>
+  <path d="M0 200h800M0 300h800M200 0v450M500 0v450" stroke="#C8C4BC" stroke-width="2"/>
+  <rect x="280" y="160" width="240" height="120" rx="8" fill="#1B6B3A" opacity="0.85"/>
+  <circle cx="400" cy="220" r="16" fill="#D62828"/>
+  <circle cx="400" cy="220" r="6" fill="#FFFFFF"/>
+  <text x="400" y="360" text-anchor="middle" fill="#1A1A1A" font-family="system-ui,sans-serif" font-size="18" font-weight="600">Av. Vital Brasil, 478  Po�</text>
+  <text x="400" y="390" text-anchor="middle" fill="#666" font-family="system-ui,sans-serif" font-size="14">Substituir por imagem est�tica do local</text>
+</svg>

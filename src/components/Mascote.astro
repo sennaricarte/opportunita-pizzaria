@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import { rasterFormats } from '../utils/image';
+import mascoteDelivery from '../assets/images/mascotes/delivery.png';
+import mascoteChef from '../assets/images/mascotes/chef.png';
+import mascoteMoto from '../assets/images/mascotes/moto.png';
+
+const catalog = {
+  delivery: {
+    src: mascoteDelivery,
+    alt: 'Mascote da Opportunità: esfiha sorridente carregando caixas de delivery',
+    width: 640,
+    height: 588,
+  },
+  chef: {
+    src: mascoteChef,
+    alt: 'Mascote da Opportunità: pizza chef fazendo um beijo italiano',
+    width: 496,
+    height: 657,
+  },
+  moto: {
+    src: mascoteMoto,
+    alt: 'Mascote da Opportunità: pizza de óculos em uma moto de delivery',
+    width: 806,
+    height: 726,
+  },
+} as const;
+
+interface Props {
+  variant: keyof typeof catalog;
+  size?: 'sm' | 'md' | 'lg';
+  decorative?: boolean;
+  class?: string;
+}
+
+const { variant, size = 'md', decorative = true, class: className } = Astro.props;
+const mascote = catalog[variant];
+const widths = size === 'sm' ? [160, 240] : size === 'md' ? [240, 360, 480] : [320, 480, 640];
+---
+
+<span class:list={['mascote-wrap', className]} aria-hidden={decorative ? 'true' : undefined}>
+  <Image
+    src={mascote.src}
+    alt={decorative ? '' : mascote.alt}
+    width={mascote.width}
+    height={mascote.height}
+    widths={widths}
+    formats={rasterFormats(mascote.src)}
+    quality="mid"
+    loading="lazy"
+    decoding="async"
+    class:list={['mascote', `mascote--${size}`]}
+  />
+</span>

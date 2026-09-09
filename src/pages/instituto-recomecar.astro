@@ -1,0 +1,595 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import StatsBand from '../components/StatsBand.astro';
+
+const { data: stats } = await getEntry('stats', 'impacto');
+const projetos = (await getCollection('projetos')).sort((a, b) => a.data.ordem - b.data.ordem);
+
+const mailtoParceiro =
+  'mailto:gestao@opportunita.org.br?subject=Parceria institucional — Instituto Recomeçar';
+const recomecarUrl = 'https://www.recomecar360.org';
+
+const pilares = [
+  {
+    titulo: 'Missão',
+    texto:
+      'Promover a reintegração social de egressos do sistema prisional por meio da educação profissional e cidadã, restaurando dignidade, autonomia e pertencimento.',
+  },
+  {
+    titulo: 'Visão',
+    texto:
+      'Ser referência nacional em reintegração social, com uma rede de projetos que transforma vidas e comunidades inteiras na Grande São Paulo.',
+  },
+  {
+    titulo: 'Atuação',
+    texto:
+      'Qualificação profissional, geração de renda, formação de lideranças e negócios de impacto que sustentam programas gratuitos para quem mais precisa recomeçar.',
+  },
+] as const;
+
+const negocios = [
+  { nome: 'Pizzaria Opportunità', ano: 2021, descricao: 'Pizzaria social — 100% do lucro financia o instituto.' },
+  { nome: 'Bazar Recomeçar', ano: 2022, descricao: 'Comércio solidário com produtos e artesanato da comunidade.' },
+  { nome: 'Açaí Recomeçar', ano: 2023, descricao: 'Negócio de impacto que gera emprego e renda na região.' },
+  { nome: 'Espaço Opportunità', ano: 2023, descricao: 'Locação para eventos na sede, ampliando receita social.' },
+] as const;
+
+const retornosParceria = [
+  'Visibilidade da marca em ações de impacto social',
+  'Accountability e transparência na prestação de contas',
+  'Presença nas redes sociais do instituto e dos negócios',
+  'Destaque no painel de parceiros institucionais',
+  'Palestra com Leonardo Precioso para sua equipe',
+  'Visita ao Instituto Recomeçar e conhecer os projetos',
+] as const;
+
+const projetoLinks: Record<string, string> = {
+  'escola-da-pizza': '/escola-da-pizza',
+};
+
+const reincidenciaNacional = stats.reincidenciaMediaNacional.toLocaleString('pt-BR', {
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 1,
+});
+---
+
+<Base
+  title="Instituto Recomeçar — Reintegração Social"
+  description="Instituto Recomeçar em Poá: desde 2015, reintegra egressos do sistema prisional via educação profissional. 100% do lucro da Opportunità financia esta causa na Grande São Paulo."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Instituto Recomeçar', path: '/instituto-recomecar' },
+  ]}
+>
+  <section class="hero hero--green" aria-labelledby="hero-titulo">
+    <div class="container hero__inner hero__inner--narrow">
+      <p class="hero__eyebrow">Desde 2015</p>
+      <h1 id="hero-titulo" class="hero__title">A força por trás da Opportunità</h1>
+      <p class="hero__subtitle">
+        O Instituto Recomeçar nasceu na Rede Gerando Falcões e, desde 2015, dedica-se à
+        reintegração de egressos do sistema prisional por meio da educação profissional e
+        cidadã — formando pessoas, gerando emprego e reconstruindo histórias em Poá e região.
+      </p>
+    </div>
+  </section>
+
+  <section class="pilares" aria-labelledby="pilares-titulo">
+    <div class="container">
+      <h2 id="pilares-titulo" class="section-title">Missão, visão e atuação</h2>
+      <ul class="pilares__grid" role="list">
+        {
+          pilares.map(({ titulo, texto }) => (
+            <li>
+              <article class="pilares__card">
+                <h3 class="pilares__heading">{titulo}</h3>
+                <p class="pilares__text">{texto}</p>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <StatsBand
+    title="Números de impacto"
+    intro="Resultados acumulados do Instituto Recomeçar na reintegração social de egressos."
+    showReincidencia={false}
+    headingId="impacto-titulo"
+  />
+
+  <section class="contraste" aria-labelledby="contraste-titulo">
+    <div class="container contraste__inner">
+      <h2 id="contraste-titulo" class="sr-only">Contraste de reincidência</h2>
+      <p class="contraste__label">Reincidência criminal</p>
+
+      <div class="contraste__grid">
+        <div class="contraste__box contraste__box--programa">
+          <span class="contraste__numero">{stats.reincidenciaPrograma}%</span>
+          <p class="contraste__desc">entre participantes do programa Recomeçar</p>
+        </div>
+
+        <span class="contraste__vs" aria-hidden="true">vs</span>
+
+        <div class="contraste__box contraste__box--nacional">
+          <span class="contraste__numero">{reincidenciaNacional}%</span>
+          <p class="contraste__desc">média nacional de reincidência</p>
+        </div>
+      </div>
+
+      <p class="contraste__fonte">Fonte: {stats.fonteReincidencia}</p>
+      <p class="contraste__nota">
+        Um resultado que comprova: reintegração com educação e oportunidade funciona.
+      </p>
+    </div>
+  </section>
+
+  <section class="fundador" aria-labelledby="fundador-titulo">
+    <div class="container fundador__inner">
+      <h2 id="fundador-titulo" class="section-title">Leonardo Precioso</h2>
+      <p class="fundador__cargo">Fundador do Instituto Recomeçar</p>
+
+      <div class="fundador__conteudo">
+        <p>
+          Preso em 2008, Leonardo Precioso cumpriu <strong>7 anos no cárcere</strong> e
+          transformou sua trajetória em missão de vida. Após a liberdade, fundou o Instituto
+          Recomeçar para que outros egressos tivessem a mesma chance de recomeçar.
+        </p>
+        <p>
+          Em 2016, tornou-se o <strong>primeiro ex-presidiário a ganhar o Prêmio Jovem
+          Brasileiro</strong>. Em 2023, foi vencedor do <strong>Prêmio LED da Fundação Roberto
+          Marinho</strong> e é <strong>embaixador do Movimento LED</strong>, inspirando uma
+          nova geração de líderes de impacto social no Brasil.
+        </p>
+      </div>
+
+      <ul class="fundador__premios" role="list">
+        <li>Prêmio Jovem Brasileiro — 2016</li>
+        <li>Prêmio LED — Fundação Roberto Marinho — 2023</li>
+        <li>Embaixador do Movimento LED</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="projetos" aria-labelledby="projetos-titulo">
+    <div class="container">
+      <h2 id="projetos-titulo" class="section-title">Nossos projetos</h2>
+      <ul class="projetos__grid" role="list">
+        {
+          projetos.map((projeto) => {
+            const href = projetoLinks[projeto.id];
+            return (
+              <li>
+                <article class="projetos__card">
+                  <h3 class="projetos__nome">{projeto.data.titulo}</h3>
+                  <p class="projetos__resumo">{projeto.data.resumo}</p>
+                  {href ? (
+                    <a class="projetos__link" href={href}>
+                      Saiba mais
+                    </a>
+                  ) : null}
+                </article>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="negocios" aria-labelledby="negocios-titulo">
+    <div class="container">
+      <h2 id="negocios-titulo" class="section-title">Negócios de impacto</h2>
+      <p class="negocios__intro">
+        Empreendimentos que geram emprego, renda e financiam os programas gratuitos do instituto.
+      </p>
+      <ul class="negocios__grid" role="list">
+        {
+          negocios.map(({ nome, ano, descricao }) => (
+            <li>
+              <article class="negocios__card">
+                <span class="negocios__ano">{ano}</span>
+                <h3 class="negocios__nome">{nome}</h3>
+                <p class="negocios__desc">{descricao}</p>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="parceiro" aria-labelledby="parceiro-titulo">
+    <div class="container parceiro__inner">
+      <h2 id="parceiro-titulo" class="parceiro__title">Seja um parceiro</h2>
+      <p class="parceiro__intro">
+        Empresas e instituições que apoiam o Recomeçar amplificam o impacto social e fortalecem
+        sua marca com propósito. Conheça os retornos da parceria institucional:
+      </p>
+
+      <ul class="parceiro__lista" role="list">
+        {retornosParceria.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <div class="parceiro__actions">
+        <a class="btn btn--primary" href={mailtoParceiro}>
+          Fale com a gestão
+        </a>
+        <a
+          class="btn btn--outline-light"
+          href={recomecarUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          www.recomecar360.org
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pilares {
+    padding-block: var(--space-8);
+  }
+
+  .pilares__grid {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+  }
+
+  .pilares__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    height: 100%;
+    padding: var(--space-5);
+    background-color: var(--branco);
+    border: 1px solid rgb(27 107 58 / 12%);
+    border-top: 4px solid var(--verde);
+    border-radius: var(--radius);
+  }
+
+  .pilares__heading {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .pilares__text {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--preto);
+    opacity: 0.85;
+  }
+
+  /* Contraste reincidência */
+  .contraste {
+    padding-block: var(--space-8);
+    background-color: var(--preto);
+    color: var(--branco);
+  }
+
+  .contraste__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-5);
+  }
+
+  .contraste__label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--amarelo);
+  }
+
+  .contraste__grid {
+    display: grid;
+    gap: var(--space-5);
+    width: 100%;
+    max-width: 40rem;
+  }
+
+  .contraste__box {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    border-radius: var(--radius);
+  }
+
+  .contraste__box--programa {
+    background-color: var(--verde);
+    border: 2px solid var(--amarelo);
+  }
+
+  .contraste__box--nacional {
+    background-color: rgb(214 40 40 / 20%);
+    border: 2px solid var(--vermelho);
+  }
+
+  .contraste__numero {
+    font-size: var(--text-4xl);
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .contraste__box--programa .contraste__numero {
+    color: var(--amarelo);
+  }
+
+  .contraste__box--nacional .contraste__numero {
+    color: var(--vermelho);
+  }
+
+  .contraste__desc {
+    font-size: var(--text-base);
+    opacity: 0.9;
+  }
+
+  .contraste__vs {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.6;
+  }
+
+  .contraste__fonte {
+    font-size: var(--text-sm);
+    opacity: 0.6;
+  }
+
+  .contraste__nota {
+    font-size: var(--text-lg);
+    font-weight: 500;
+    max-width: 36ch;
+    color: var(--amarelo);
+  }
+
+  /* Fundador */
+  .fundador {
+    padding-block: var(--space-8);
+    background-color: var(--creme);
+    border-block: 1px solid rgb(27 107 58 / 10%);
+  }
+
+  .fundador__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: 52rem;
+  }
+
+  .fundador__cargo {
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--verde);
+  }
+
+  .fundador__conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
+  .fundador__conteudo strong {
+    color: var(--verde-escuro);
+  }
+
+  .fundador__premios {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    padding: var(--space-4);
+    background-color: var(--branco);
+    border-radius: var(--radius);
+    border-left: 4px solid var(--amarelo);
+  }
+
+  .fundador__premios li {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--verde-escuro);
+  }
+
+  /* Projetos */
+  .projetos {
+    padding-block: var(--space-8);
+  }
+
+  .projetos__grid {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+  }
+
+  .projetos__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    height: 100%;
+    padding: var(--space-5);
+    background-color: var(--branco);
+    border-radius: var(--radius);
+    border: 1px solid rgb(27 107 58 / 12%);
+  }
+
+  .projetos__nome {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .projetos__resumo {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--preto);
+    opacity: 0.85;
+    flex: 1;
+  }
+
+  .projetos__link {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--verde);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Negócios */
+  .negocios {
+    padding-block: var(--space-8);
+    background-color: var(--branco);
+    border-block: 1px solid rgb(27 107 58 / 10%);
+  }
+
+  .negocios__intro {
+    margin-top: var(--space-3);
+    font-size: var(--text-base);
+    max-width: 48ch;
+    line-height: 1.6;
+  }
+
+  .negocios__grid {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .negocios__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    background-color: var(--creme);
+    border-radius: var(--radius);
+    border-left: 4px solid var(--verde);
+  }
+
+  .negocios__ano {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--amarelo);
+    background-color: var(--verde-escuro);
+    align-self: flex-start;
+    padding: var(--space-1) var(--space-3);
+    border-radius: 999px;
+  }
+
+  .negocios__nome {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .negocios__desc {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  /* Parceiro */
+  .parceiro {
+    padding-block: var(--space-8);
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+  }
+
+  .parceiro__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    max-width: 40rem;
+  }
+
+  .parceiro__title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+  }
+
+  .parceiro__intro {
+    font-size: var(--text-base);
+    line-height: 1.7;
+    opacity: 0.9;
+  }
+
+  .parceiro__lista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .parceiro__lista li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+  }
+
+  .parceiro__lista li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-top: 0.4rem;
+    background-color: var(--amarelo);
+    border-radius: 50%;
+  }
+
+  .parceiro__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+  }
+
+  @media (min-width: 40rem) {
+    .pilares__grid,
+    .projetos__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .negocios__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contraste__grid {
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      max-width: none;
+    }
+
+    .contraste__vs {
+      padding-inline: var(--space-4);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .pilares__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .projetos__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .negocios__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .parceiro__actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+</style>

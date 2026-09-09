@@ -1,0 +1,426 @@
+---
+import Base from '../layouts/Base.astro';
+import Mascote from '../components/Mascote.astro';
+
+const whatsappInscricao = `https://wa.me/5511962448909?text=${encodeURIComponent(
+  'Olá! Gostaria de me inscrever na Escola da Pizza da Opportunità. Podem me orientar sobre o processo seletivo?'
+)}`;
+
+const mailtoEmpresas = 'mailto:gestao@opportunita.org.br?subject=Contratação de formandos — Escola da Pizza';
+
+const pilares = [
+  {
+    titulo: 'Capacitação Profissional',
+    descricao:
+      'Massas, molhos, montagem e técnicas de pizzaria com prática intensiva na cozinha da Opportunità, com certificação ao final do programa.',
+    icon: 'capacitacao',
+  },
+  {
+    titulo: 'Desenvolvimento Pessoal',
+    descricao:
+      'Habilidades socioemocionais, gestão financeira e preparo para o mercado de trabalho, com acompanhamento individualizado.',
+    icon: 'desenvolvimento',
+  },
+  {
+    titulo: 'Inserção no Mercado',
+    descricao:
+      'Parcerias com empresas para contratação de formandos e apoio a quem deseja empreender no setor gastronômico.',
+    icon: 'insercao',
+  },
+] as const;
+
+const publico = [
+  {
+    titulo: 'Egressos do sistema prisional',
+    descricao:
+      'Pessoas em processo de reintegração social que buscam uma nova oportunidade profissional na gastronomia.',
+  },
+  {
+    titulo: 'Familiares de pessoas privadas de liberdade',
+    descricao:
+      'Parentes de egressos que desejam qualificação profissional e geração de renda para sustentar a família.',
+  },
+  {
+    titulo: 'Moradores de comunidades periféricas',
+    descricao:
+      'Moradores de Poá e região em situação de vulnerabilidade social com interesse em atuar na área de alimentação.',
+  },
+] as const;
+
+const faq = [
+  {
+    pergunta: 'O programa tem custo?',
+    resposta:
+      'Não. A Escola da Pizza é totalmente gratuita. O programa é financiado pelo lucro da Opportunità Pizzaria Social, revertido integralmente para o Instituto Recomeçar.',
+  },
+  {
+    pergunta: 'Qual a duração do curso?',
+    resposta:
+      'O programa combina aulas teóricas e prática na cozinha ao longo de meses de formação intensiva, com carga horária compatível com a rotina dos participantes. A duração exata de cada turma é informada no processo seletivo.',
+  },
+  {
+    pergunta: 'Há certificado ao final?',
+    resposta:
+      'Sim. Os formandos que concluem o programa recebem certificação de capacitação profissional em panificação e pizzaria, reconhecendo as competências técnicas desenvolvidas.',
+  },
+  {
+    pergunta: 'Como faço para me inscrever?',
+    resposta:
+      'Entre em contato pelo WhatsApp da Opportunità ou compareça à pizzaria. O processo seletivo inclui inscrição e entrevista para conhecer seu perfil e disponibilidade.',
+  },
+  {
+    pergunta: 'Preciso ter experiência na cozinha?',
+    resposta:
+      'Não é necessária experiência prévia. O programa foi pensado para quem está começando do zero, com acompanhamento próximo da equipe pedagógica em todas as etapas.',
+  },
+] as const;
+---
+
+<Base
+  title="Curso de Pizzaiolo Gratuito em Poá"
+  description="Curso de pizzaiolo gratuito em Poá: Escola da Pizza da Opportunità forma pizzaiolos, ajudantes de cozinha e atendentes com certificação e inserção no mercado de trabalho."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Escola da Pizza', path: '/escola-da-pizza' },
+  ]}
+>
+  <!-- Hero -->
+  <section class="hero hero--green" aria-labelledby="hero-titulo">
+    <div class="container hero__inner hero__inner--mascote">
+      <div>
+        <p class="hero__eyebrow">Formação profissional gratuita</p>
+        <h1 id="hero-titulo" class="hero__title">Escola da Pizza</h1>
+        <p class="hero__subtitle">
+          Programa gratuito de capacitação profissional que forma pizzaiolos, ajudantes de
+          cozinha e atendentes — com prática real na Opportunità Pizzaria Social, em Poá.
+        </p>
+      </div>
+      <Mascote variant="chef" size="lg" />
+    </div>
+  </section>
+
+  <!-- O que você aprende -->
+  <section class="pilares" aria-labelledby="pilares-titulo">
+    <div class="container">
+      <h2 id="pilares-titulo" class="section-title">O que você aprende</h2>
+      <ul class="pilares__grid" role="list">
+        {
+          pilares.map(({ titulo, descricao, icon }) => (
+            <li class="pilares__card">
+              <span class="pilares__icon" aria-hidden="true">
+                {icon === 'capacitacao' && (
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2"/>
+                    <path d="M16 28l6-8 5 5 7-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                )}
+                {icon === 'desenvolvimento' && (
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 8v32M8 24h32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="24" cy="24" r="10" stroke="currentColor" stroke-width="2"/>
+                    <path d="M24 18v12M18 24h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                )}
+                {icon === 'insercao' && (
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="8" y="20" width="32" height="20" rx="3" stroke="currentColor" stroke-width="2"/>
+                    <path d="M16 20V14a8 8 0 0116 0v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M24 28v4M20 30h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                )}
+              </span>
+              <h3 class="pilares__heading">{titulo}</h3>
+              <p class="pilares__text">{descricao}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Quem pode participar -->
+  <section class="publico" aria-labelledby="publico-titulo">
+    <div class="container">
+      <h2 id="publico-titulo" class="section-title">Quem pode participar</h2>
+      <ul class="publico__grid" role="list">
+        {
+          publico.map(({ titulo, descricao }) => (
+            <li>
+              <article class="publico__card">
+                <h3 class="publico__heading">{titulo}</h3>
+                <p class="publico__text">{descricao}</p>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+
+      <aside class="publico__info" aria-label="Informações sobre o processo seletivo">
+        <p>
+          <strong>Processo seletivo por inscrição e entrevista.</strong> Não é necessária
+          experiência prévia na cozinha — buscamos comprometimento, disponibilidade e vontade
+          de recomeçar.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" aria-labelledby="faq-titulo">
+    <div class="container">
+      <h2 id="faq-titulo" class="section-title">Perguntas frequentes</h2>
+      <div class="faq__list">
+        {
+          faq.map(({ pergunta, resposta }) => (
+            <details class="faq__item">
+              <summary class="faq__pergunta">{pergunta}</summary>
+              <p class="faq__resposta">{resposta}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" aria-labelledby="cta-titulo">
+    <div class="container cta__inner">
+      <h2 id="cta-titulo" class="cta__title">Pronto para recomeçar?</h2>
+      <p class="cta__text">
+        Inscreva-se no programa ou entre em contato se sua empresa deseja contratar formandos.
+      </p>
+      <div class="cta__actions">
+        <a
+          class="btn btn--primary"
+          href={whatsappInscricao}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Quero me inscrever
+        </a>
+        <a class="btn btn--outline-light" href={mailtoEmpresas}>
+          Sou empresa e quero contratar formandos
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Pilares */
+  .pilares {
+    padding-block: var(--space-8);
+  }
+
+  .pilares__grid {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+  }
+
+  .pilares__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    background-color: var(--branco);
+    border-radius: var(--radius);
+    border: 1px solid rgb(27 107 58 / 12%);
+  }
+
+  .pilares__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    color: var(--verde);
+    background-color: rgb(27 107 58 / 8%);
+    border-radius: var(--radius);
+  }
+
+  .pilares__heading {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .pilares__text {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--preto);
+    opacity: 0.85;
+  }
+
+  /* Público */
+  .publico {
+    padding-block: var(--space-8);
+    background-color: var(--branco);
+    border-block: 1px solid rgb(27 107 58 / 10%);
+  }
+
+  .publico__grid {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+  }
+
+  .publico__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    height: 100%;
+    background-color: var(--creme);
+    border-radius: var(--radius);
+    border-top: 4px solid var(--verde);
+  }
+
+  .publico__heading {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .publico__text {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--preto);
+    opacity: 0.85;
+  }
+
+  .publico__info {
+    margin-top: var(--space-6);
+    padding: var(--space-5);
+    background-color: rgb(244 180 0 / 15%);
+    border-left: 4px solid var(--amarelo);
+    border-radius: var(--radius);
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
+  .publico__info strong {
+    color: var(--verde-escuro);
+  }
+
+  /* FAQ */
+  .faq {
+    padding-block: var(--space-8);
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .faq__item {
+    background-color: var(--branco);
+    border: 1px solid rgb(27 107 58 / 12%);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .faq__item[open] {
+    border-color: var(--verde);
+  }
+
+  .faq__pergunta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--verde-escuro);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq__pergunta::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__pergunta::after {
+    content: '+';
+    flex-shrink: 0;
+    font-size: var(--text-xl);
+    font-weight: 400;
+    color: var(--verde);
+    transition: transform 0.2s ease;
+  }
+
+  .faq__item[open] .faq__pergunta::after {
+    content: '−';
+  }
+
+  .faq__pergunta:hover,
+  .faq__pergunta:focus-visible {
+    background-color: rgb(27 107 58 / 5%);
+    outline: none;
+  }
+
+  .faq__resposta {
+    padding: 0 var(--space-5) var(--space-5);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--preto);
+    opacity: 0.85;
+  }
+
+  /* CTA */
+  .cta {
+    padding-block: var(--space-8);
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+  }
+
+  .cta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    text-align: center;
+  }
+
+  .cta__title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+  }
+
+  .cta__text {
+    font-size: var(--text-base);
+    opacity: 0.9;
+    max-width: 40ch;
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    width: 100%;
+    max-width: 28rem;
+  }
+
+  @media (min-width: 40rem) {
+    .pilares__grid,
+    .publico__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cta__actions {
+      max-width: none;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cta__title {
+      font-size: var(--text-3xl);
+    }
+  }
+</style>

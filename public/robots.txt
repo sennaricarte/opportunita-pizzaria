@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.opportunitapizzaria.com.br/sitemap-index.xml

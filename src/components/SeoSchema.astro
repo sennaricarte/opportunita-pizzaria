@@ -1,0 +1,62 @@
+---
+interface BreadcrumbItem {
+  name: string;
+  path: string;
+}
+
+interface Props {
+  isHome?: boolean;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const { isHome = false, breadcrumbs = [] } = Astro.props;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://www.opportunitapizzaria.com.br';
+
+const instagramUrl = 'https://www.instagram.com/opportunita.pizzaria.social/';
+const facebookUrl = 'https://www.facebook.com/opportunita.pizzaria.social';
+
+const restaurantSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: 'Opportunità Pizzaria Social',
+  servesCuisine: 'Pizza',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Av. Vital Brasil, 478',
+    addressNeighborhood: 'Vila Açoreana',
+    addressLocality: 'Poá',
+    addressRegion: 'SP',
+    addressCountry: 'BR',
+  },
+  telephone: '+55-11-4634-1149',
+  url: siteUrl,
+  menu: 'https://menu.brendi.com.br/opportunita-pizzaria-social-vila-acoreana',
+  sameAs: [instagramUrl, facebookUrl],
+  priceRange: '$$',
+  description:
+    'Pizzaria social em Poá-SP. Delivery de pizza artesanal com propósito — 100% do lucro financia o Instituto Recomeçar.',
+};
+
+const breadcrumbSchema =
+  breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.name,
+          item: new URL(item.path, siteUrl).href,
+        })),
+      }
+    : null;
+
+const schema = isHome ? restaurantSchema : breadcrumbSchema;
+---
+
+{
+  schema && (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  )
+}

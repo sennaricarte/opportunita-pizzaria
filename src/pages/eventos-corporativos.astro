@@ -1,0 +1,269 @@
+---
+import Base from '../layouts/Base.astro';
+import Mascote from '../components/Mascote.astro';
+
+const whatsappOrcamento = `https://wa.me/5511962448909?text=${encodeURIComponent(
+  'Olá! Gostaria de pedir um orçamento para um evento corporativo com a Opportunità Pizzaria Social. Podem me ajudar?'
+)}`;
+
+const servicos = [
+  {
+    titulo: 'Pizza Party Corporativo',
+    descricao:
+      'Levamos um festival de pizzas à sua empresa: forno, equipe e variedade de sabores para um evento descontraído que alimenta e integra o time.',
+    icon: 'party',
+  },
+  {
+    titulo: 'Workshop de Pizza',
+    descricao:
+      'Team building hands-on: colaboradores aprendem a abrir massa, montar e assar suas próprias pizzas, com mediação da equipe da Opportunità.',
+    icon: 'workshop',
+  },
+  {
+    titulo: 'Serviço de Catering',
+    descricao:
+      'Pizzas artesanais prontas para eventos de qualquer porte — convenções, lançamentos, reuniões de diretoria ou celebrações internas.',
+    icon: 'catering',
+  },
+] as const;
+---
+
+<Base
+  title="Eventos Corporativos em Poá e ABC"
+  description="Pizza party, workshop de team building e catering corporativo em Poá e região do ABC. Eventos com responsabilidade social — cada contratação apoia o Instituto Recomeçar."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Eventos Corporativos', path: '/eventos-corporativos' },
+  ]}
+>
+  <section class="hero hero--green" aria-labelledby="hero-titulo">
+    <div class="container hero__inner hero__inner--mascote">
+      <div>
+        <p class="hero__eyebrow">Para empresas com propósito</p>
+        <h1 id="hero-titulo" class="hero__title">Eventos Corporativos</h1>
+        <p class="hero__subtitle">
+          Experiências gastronômicas que fortalecem equipes e apoiam a reintegração social.
+          Cada evento contratado contribui diretamente com a causa do Instituto Recomeçar.
+        </p>
+      </div>
+      <Mascote variant="moto" size="lg" />
+    </div>
+  </section>
+
+  <section class="servicos" aria-labelledby="servicos-titulo">
+    <div class="container">
+      <h2 id="servicos-titulo" class="section-title">Nossos serviços</h2>
+      <ul class="servicos__grid" role="list">
+        {
+          servicos.map(({ titulo, descricao, icon }) => (
+            <li>
+              <article class="servico-card">
+                <span class="servico-card__icon" aria-hidden="true">
+                  {icon === 'party' && (
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 36l8-20 8 8 8-16 8 28" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="36" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                  )}
+                  {icon === 'workshop' && (
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2"/>
+                      <path d="M24 16v8l6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M16 32l4-6M32 32l-4-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  )}
+                  {icon === 'catering' && (
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="6" y="18" width="36" height="22" rx="3" stroke="currentColor" stroke-width="2"/>
+                      <path d="M6 26h36M14 18V12a10 10 0 0120 0v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      <circle cx="24" cy="32" r="3" fill="currentColor"/>
+                    </svg>
+                  )}
+                </span>
+                <h3 class="servico-card__titulo">{titulo}</h3>
+                <p class="servico-card__desc">{descricao}</p>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="impacto" aria-labelledby="impacto-titulo">
+    <div class="container impacto__inner">
+      <h2 id="impacto-titulo" class="impacto__title">Responsabilidade social corporativa</h2>
+      <p class="impacto__texto">
+        Ao contratar a Opportunità para seu evento corporativo, sua empresa vai além do
+        catering: investe em <strong>formação profissional</strong>, <strong>geração de
+        emprego</strong> e <strong>reintegração social</strong> de egressos do sistema
+        prisional. O lucro do evento financia o Instituto Recomeçar — e seu time leva para
+        casa uma experiência com significado real.
+      </p>
+      <ul class="impacto__lista" role="list">
+        <li>Relatório de impacto social para ações de ESG</li>
+        <li>Equipe formada pela Escola da Pizza</li>
+        <li>Marca associada a uma causa reconhecida na região</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta" aria-labelledby="cta-titulo">
+    <div class="container cta__inner">
+      <h2 id="cta-titulo" class="cta__title">Monte seu evento com propósito</h2>
+      <p class="cta__text">
+        Conte-nos sobre sua empresa, data e número de participantes. Retornamos com um
+        orçamento personalizado.
+      </p>
+      <a
+        class="btn btn--inverse"
+        href={whatsappOrcamento}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Pedir orçamento para evento corporativo pelo WhatsApp"
+      >
+        Pedir orçamento
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .servicos {
+    padding-block: var(--space-8);
+  }
+
+  .servicos__grid {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+  }
+
+  .servico-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    height: 100%;
+    padding: var(--space-5);
+    background-color: var(--branco);
+    border-radius: var(--radius);
+    border: 1px solid rgb(27 107 58 / 12%);
+    border-top: 4px solid var(--verde);
+  }
+
+  .servico-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    color: var(--verde);
+    background-color: rgb(27 107 58 / 8%);
+    border-radius: var(--radius);
+  }
+
+  .servico-card__titulo {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .servico-card__desc {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--preto);
+    opacity: 0.85;
+  }
+
+  .impacto {
+    padding-block: var(--space-8);
+    background-color: var(--creme);
+    border-block: 1px solid rgb(27 107 58 / 10%);
+  }
+
+  .impacto__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    max-width: 52rem;
+  }
+
+  .impacto__title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .impacto__texto {
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
+  .impacto__texto strong {
+    color: var(--verde);
+  }
+
+  .impacto__lista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .impacto__lista li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--verde-escuro);
+  }
+
+  .impacto__lista li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-top: 0.45rem;
+    background-color: var(--amarelo);
+    border-radius: 50%;
+  }
+
+  .cta {
+    padding-block: var(--space-8);
+    background-color: var(--vermelho);
+    color: var(--branco);
+  }
+
+  .cta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    text-align: center;
+  }
+
+  .cta__title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    max-width: 28ch;
+  }
+
+  .cta__text {
+    font-size: var(--text-base);
+    opacity: 0.95;
+    max-width: 42ch;
+  }
+
+  @media (min-width: 40rem) {
+    .servicos__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cta__title {
+      font-size: var(--text-3xl);
+      max-width: none;
+    }
+  }
+</style>

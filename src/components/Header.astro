@@ -1,0 +1,252 @@
+---
+import Logo from './Logo.astro';
+
+const cardapioUrl = 'https://menu.brendi.com.br/opportunita-pizzaria-social-vila-acoreana';
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: cardapioUrl, label: 'Cardápio', external: true },
+  { href: '/escola-da-pizza', label: 'Escola da Pizza' },
+  { href: '/espaco', label: 'Espaço' },
+  { href: '/eventos-corporativos', label: 'Eventos' },
+  { href: '/instituto-recomecar', label: 'Instituto Recomeçar' },
+  { href: '/contato', label: 'Contato' },
+] as const;
+
+const whatsappUrl = 'https://wa.me/5511962448909';
+const currentPath = Astro.url.pathname;
+---
+
+<header class="header">
+  <div class="header__inner container">
+    <a href="/" class="logo" aria-label="Opportunità Pizzaria Social — página inicial">
+      <Logo variant="header" />
+    </a>
+
+    <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-hidden="true" tabindex="-1" />
+    <label for="menu-toggle" class="menu-button" aria-label="Abrir menu de navegação">
+      <span class="menu-button__bar" aria-hidden="true"></span>
+      <span class="menu-button__bar" aria-hidden="true"></span>
+      <span class="menu-button__bar" aria-hidden="true"></span>
+    </label>
+
+    <nav class="nav" aria-label="Principal">
+      <ul class="nav__list">
+        {
+          navLinks.map(({ href, label, ...rest }) => (
+            <li>
+              <a
+                href={href}
+                class:list={['nav__link', { 'nav__link--active': currentPath === href }]}
+                aria-current={currentPath === href ? 'page' : undefined}
+                {...('external' in rest && rest.external
+                  ? {
+                      target: '_blank',
+                      rel: 'noopener noreferrer',
+                      'aria-label': `${label} (abre em nova aba)`,
+                    }
+                  : {})}
+              >
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a
+        class="cta"
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Peça sua pizza pelo WhatsApp"
+      >
+        Peça sua pizza
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    min-height: 5.5rem;
+    background-color: var(--verde);
+    color: var(--branco);
+    box-shadow: 0 2px 12px rgb(0 0 0 / 12%);
+  }
+
+  .header__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 5.5rem;
+    padding-block: var(--space-3);
+  }
+
+  .logo {
+    display: block;
+    flex-shrink: 0;
+    text-decoration: none;
+    line-height: 0;
+  }
+
+  .menu-toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .menu-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: var(--space-2);
+    border: 2px solid rgb(255 255 255 / 30%);
+    border-radius: var(--radius);
+    background: transparent;
+    cursor: pointer;
+    color: var(--branco);
+  }
+
+  .menu-button__bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    border-radius: 1px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .menu-toggle:checked + .menu-button .menu-button__bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .menu-toggle:checked + .menu-button .menu-button__bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle:checked + .menu-button .menu-button__bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .nav {
+    display: flex;
+    position: absolute;
+    inset: 100% 0 auto;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-5) var(--space-6) var(--space-6);
+    background-color: var(--verde-escuro);
+    border-top: 1px solid rgb(255 255 255 / 12%);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .menu-toggle:checked ~ .nav {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .nav__link {
+    display: block;
+    padding: var(--space-3) var(--space-2);
+    font-size: var(--text-base);
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--branco);
+    border-radius: calc(var(--radius) / 2);
+    transition: background-color 0.15s ease;
+  }
+
+  .nav__link:hover,
+  .nav__link:focus-visible {
+    background-color: rgb(255 255 255 / 10%);
+    outline: none;
+  }
+
+  .nav__link--active {
+    background-color: rgb(255 255 255 / 15%);
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-height: 2.75rem;
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--text-base);
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--branco);
+    background-color: var(--vermelho);
+    border-radius: var(--radius);
+    transition: background-color 0.15s ease;
+  }
+
+  .cta:hover,
+  .cta:focus-visible {
+    background-color: #b81f1f;
+    outline: 2px solid var(--amarelo);
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 64rem) {
+    .menu-button {
+      display: none;
+    }
+
+    .header__inner {
+      position: relative;
+    }
+
+    .nav {
+      display: flex;
+      position: static;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-5);
+      padding: 0;
+      background: transparent;
+      border: none;
+    }
+
+    .nav__list {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .nav__link {
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-sm);
+    }
+
+    .cta {
+      white-space: nowrap;
+    }
+  }
+</style>

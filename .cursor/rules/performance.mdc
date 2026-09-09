@@ -1,0 +1,70 @@
+---
+description: Performance, SEO e padrões estáticos para todo código Astro deste repositório
+alwaysApply: true
+---
+
+# Performance & Padrões do Projeto
+
+## Astro — build estático
+
+- Astro 5+ com `output: 'static'` em `astro.config.mjs`.
+- **Proibido:** SSR, modo hybrid, adapters de servidor (Node, Vercel, Netlify, etc.).
+
+## JavaScript no cliente
+
+- **Padrão:** zero JS no cliente. Nenhum `<script client:*>`, nenhum framework reativo.
+- Interatividade preferencial via HTML/CSS nativo: `details`/`summary`, `scroll-snap`, `:has()`, Popover API.
+- **Último recurso:** vanilla JS inline mínimo, sem dependências.
+- **Proibido instalar:** React, Vue, jQuery, sliders, lightboxes ou qualquer biblioteca de UI.
+
+## Imagens
+
+Sempre `import { Image } from 'astro:assets'` (ou `<Picture />`). Nunca `<img>` HTML cru.
+
+```astro
+<Image
+  src={hero}
+  alt="Descrição acessível da imagem"
+  width={1200}
+  height={630}
+  widths={[400, 800, 1200]}
+  densities={[1, 2]}
+  formats={['avif', 'webp']}
+  loading="lazy"
+  decoding="async"
+/>
+```
+
+- `width` e `height` obrigatórios em toda imagem.
+- `loading="lazy"` e `decoding="async"` por padrão.
+- **Exceção LCP:** a imagem above-the-fold de cada página usa `loading="eager"` e `fetchpriority="high"`.
+
+## Fontes
+
+- Self-hosted via `@fontsource-variable` ou arquivos `.woff2` em `src/assets/fonts/`.
+- `font-display: swap` obrigatório.
+- Preload apenas do peso crítico (ex.: 400 ou 500).
+- **Proibido:** Google Fonts via CDN ou `<link>` externo.
+
+## CSS
+
+- Scoped styles do Astro nos componentes.
+- Custom properties globais em `src/styles/global.css`.
+- Mobile-first. **Proibido:** CSS-in-JS.
+
+## HTML semântico e acessibilidade
+
+- Landmarks obrigatórios: `header`, `nav`, `main`, `footer`.
+- Um único `<h1>` por página; hierarquia de headings sem saltos.
+- `alt` descritivo em todas as imagens; `aria-label` onde o texto visível não bastar.
+- Contraste mínimo WCAG AA.
+
+## SEO e layout
+
+- Todas as páginas usam o layout base que injeta meta tags SEO, Open Graph e `canonical` via props.
+- Idioma do site: `lang="pt-BR"` no `<html>`.
+
+## Dados e conteúdo
+
+- Conteúdo dinâmico via Content Collections (`src/content/`) em Markdown ou JSON.
+- **Proibido:** `fetch` em runtime, APIs externas no build, banco de dados.

@@ -1,0 +1,359 @@
+---
+import Base from '../layouts/Base.astro';
+import Mascote from '../components/Mascote.astro';
+
+const whatsappBase = 'https://wa.me/5511962448909';
+
+const whatsappPedido = `${whatsappBase}?text=${encodeURIComponent(
+  'Olá! Gostaria de fazer um pedido de pizza na Opportunità. Podem me ajudar?'
+)}`;
+
+const whatsappEvento = `${whatsappBase}?text=${encodeURIComponent(
+  'Olá! Gostaria de informações sobre eventos corporativos com a Opportunità. Podem me ajudar?'
+)}`;
+
+const whatsappParceria = `${whatsappBase}?text=${encodeURIComponent(
+  'Olá! Tenho interesse em uma parceria institucional com o Instituto Recomeçar / Opportunità. Podem me orientar?'
+)}`;
+
+const whatsappEscola = `${whatsappBase}?text=${encodeURIComponent(
+  'Olá! Gostaria de informações sobre inscrição na Escola da Pizza. Podem me ajudar?'
+)}`;
+
+const mailtoParceiro =
+  'mailto:gestao@opportunita.org.br?subject=Parceria institucional — Opportunità';
+const mailtoContato = 'mailto:contato@opportunitapizzaria.com.br';
+
+const instagramUrl = 'https://www.instagram.com/opportunita.pizzaria.social/';
+const facebookUrl = 'https://www.facebook.com/opportunita.pizzaria.social';
+
+const apoio = [
+  {
+    titulo: 'Peça nossas pizzas',
+    descricao: 'Saboreie pizza artesanal com propósito — 100% do lucro financia o Instituto Recomeçar.',
+    href: whatsappPedido,
+    externo: true,
+    rotulo: 'Pedir pelo WhatsApp',
+  },
+  {
+    titulo: 'Reserve nosso espaço',
+    descricao: 'Aniversários, workshops e confraternizações para até 50 pessoas na sede em Poá.',
+    href: '/espaco',
+    externo: false,
+    rotulo: 'Conhecer o espaço',
+  },
+  {
+    titulo: 'Contrate para eventos',
+    descricao: 'Pizza party, workshop de team building e catering corporativo com impacto social.',
+    href: '/eventos-corporativos',
+    externo: false,
+    rotulo: 'Ver eventos corporativos',
+  },
+  {
+    titulo: 'Seja um parceiro',
+    descricao: 'Empresas e instituições que amplificam a reintegração social na Grande São Paulo.',
+    href: mailtoParceiro,
+    externo: false,
+    rotulo: 'Falar com a gestão',
+  },
+] as const;
+
+const acoes = [
+  { label: 'Fazer um pedido', href: whatsappPedido, descricao: 'Pizzas para delivery ou retirada' },
+  { label: 'Evento corporativo', href: whatsappEvento, descricao: 'Orçamento para sua empresa' },
+  { label: 'Parceria institucional', href: whatsappParceria, descricao: 'Apoio ao Instituto Recomeçar' },
+  { label: 'Escola da Pizza', href: whatsappEscola, descricao: 'Inscrição e informações' },
+] as const;
+
+// Horário de funcionamento — preencher quando confirmado:
+// const horario = {
+//   semana: 'Terça a domingo: 18h às 23h',
+//   feriados: 'Consultar disponibilidade',
+// };
+---
+
+<Base
+  title="Contato — Pizzaria Social em Poá"
+  description="Fale com a Opportunità em Poá: delivery de pizza pelo WhatsApp, reserva de espaço para eventos, catering corporativo e parcerias com o Instituto Recomeçar. Av. Vital Brasil, 478."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Contato', path: '/contato' },
+  ]}
+>
+  <section class="hero hero--green" aria-labelledby="hero-titulo">
+    <div class="container hero__inner hero__inner--mascote">
+      <div>
+        <h1 id="hero-titulo" class="hero__title">Contato</h1>
+        <p class="hero__subtitle">
+          Estamos em Poá, prontos para atender você. Escolha a melhor forma de apoiar a causa
+          e falar com nossa equipe.
+        </p>
+      </div>
+      <Mascote variant="delivery" size="lg" />
+    </div>
+  </section>
+
+  <section class="apoio" aria-labelledby="apoio-titulo">
+    <div class="container">
+      <h2 id="apoio-titulo" class="section-title">Como você pode apoiar</h2>
+      <ul class="apoio__grid" role="list">
+        {
+          apoio.map(({ titulo, descricao, href, externo, rotulo }) => (
+            <li>
+              <article class="apoio__card">
+                <h3 class="apoio__titulo">{titulo}</h3>
+                <p class="apoio__desc">{descricao}</p>
+                <a
+                  class="apoio__link"
+                  href={href}
+                  {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                >
+                  {rotulo}
+                </a>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="contato" aria-labelledby="contato-titulo">
+    <div class="container contato__inner">
+      <div class="contato__info">
+        <h2 id="contato-titulo" class="section-title">Fale conosco</h2>
+
+        <address class="contato__address">
+          <p class="contato__nome">Opportunità Pizzaria Social</p>
+          <p>Av. Vital Brasil, 478</p>
+          <p>Vila Açoreana — Poá — SP</p>
+          <p>
+            <a href="tel:+551146341149">(11) 4634-1149</a>
+          </p>
+          <p>
+            <a href={whatsappPedido} target="_blank" rel="noopener noreferrer">
+              WhatsApp (11) 96244-8909
+            </a>
+          </p>
+          <p>
+            <a href={mailtoContato}>contato@opportunitapizzaria.com.br</a>
+          </p>
+          <p>
+            <a href={mailtoParceiro}>gestao@opportunita.org.br</a>
+            <span class="contato__nota"> — parcerias institucionais</span>
+          </p>
+        </address>
+
+        <div class="contato__redes">
+          <h3 class="contato__subtitulo">Redes sociais</h3>
+          <ul role="list">
+            <li>
+              <a
+                href={instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram @opportunita.pizzaria.social"
+              >
+                Instagram — @opportunita.pizzaria.social
+              </a>
+            </li>
+            <li>
+              <a
+                href={facebookUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook @opportunita.pizzaria.social"
+              >
+                Facebook — @opportunita.pizzaria.social
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        {/*
+          Horário de funcionamento — descomentar e preencher:
+          <div class="contato__horario">
+            <h3 class="contato__subtitulo">Horário de funcionamento</h3>
+            <p>{horario.semana}</p>
+            <p>{horario.feriados}</p>
+          </div>
+        */}
+      </div>
+
+      <div class="contato__acoes">
+        <h2 id="acoes-titulo" class="section-title">Ação rápida</h2>
+        <p class="contato__acoes-intro">
+          Sem formulário — fale direto com a equipe pelo WhatsApp, com a mensagem certa para
+          cada assunto.
+        </p>
+        <ul class="acoes__lista" role="list" aria-labelledby="acoes-titulo">
+          {
+            acoes.map(({ label, href, descricao }) => (
+              <li>
+                <a
+                  class="btn btn--whatsapp"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span class="btn__label">{label}</span>
+                  <span class="btn__desc">{descricao}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .apoio {
+    padding-block: var(--space-8);
+  }
+
+  .apoio__grid {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+  }
+
+  .apoio__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    height: 100%;
+    padding: var(--space-5);
+    background-color: var(--branco);
+    border-radius: var(--radius);
+    border: 1px solid rgb(27 107 58 / 12%);
+    border-top: 4px solid var(--verde);
+  }
+
+  .apoio__titulo {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .apoio__desc {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--preto);
+    opacity: 0.85;
+    flex: 1;
+  }
+
+  .apoio__link {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--verde);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .apoio__link:hover,
+  .apoio__link:focus-visible {
+    color: var(--verde-escuro);
+    outline: none;
+  }
+
+  .contato {
+    padding-block: var(--space-8);
+    background-color: var(--creme);
+    border-top: 1px solid rgb(27 107 58 / 10%);
+  }
+
+  .contato__inner {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .contato__address {
+    margin-top: var(--space-5);
+    font-style: normal;
+    font-size: var(--text-base);
+    line-height: 1.8;
+  }
+
+  .contato__nome {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+    margin-bottom: var(--space-2);
+  }
+
+  .contato__address a {
+    color: var(--verde);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .contato__address a:hover,
+  .contato__address a:focus-visible {
+    color: var(--verde-escuro);
+    outline: none;
+  }
+
+  .contato__nota {
+    font-size: var(--text-sm);
+    opacity: 0.75;
+  }
+
+  .contato__redes {
+    margin-top: var(--space-6);
+  }
+
+  .contato__subtitulo {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--verde-escuro);
+    margin-bottom: var(--space-3);
+  }
+
+  .contato__redes ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .contato__redes a {
+    font-size: var(--text-sm);
+    color: var(--verde);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .contato__acoes-intro {
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    opacity: 0.85;
+    max-width: 36ch;
+  }
+
+  .acoes__lista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  @media (min-width: 40rem) {
+    .apoio__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .apoio__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .contato__inner {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+</style>

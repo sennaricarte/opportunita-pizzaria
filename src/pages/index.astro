@@ -1,0 +1,509 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Mascote from '../components/Mascote.astro';
+import StatsBand from '../components/StatsBand.astro';
+import { rasterFormats } from '../utils/image';
+
+import heroImage from '../assets/images/hero-opportunita.jpg';
+
+const whatsappUrl = 'https://wa.me/5511962448909';
+const cardapioUrl = 'https://menu.brendi.com.br/opportunita-pizzaria-social-vila-acoreana';
+
+const pizzasDestaque = (await getCollection('pizzas')).filter((p) => p.data.destaque);
+const depoimentos = await getCollection('depoimentos');
+const escolaDaPizza = await getEntry('projetos', 'escola-da-pizza');
+---
+
+<Base
+  title="Pizzaria Social em Poá — Delivery Artesanal"
+  description="Pizzaria social em Poá com delivery de pizza artesanal e propósito. 100% do lucro financia o Instituto Recomeçar. Peça pelo WhatsApp na Vila Açoreana."
+>
+  <!-- HERO -->
+  <section class="hero hero--home" aria-labelledby="hero-titulo">
+    <div class="hero__inner hero__inner--split container">
+      <div class="hero__content">
+        <h1 id="hero-titulo" class="hero__title">Sabor que transforma vidas</h1>
+        <p class="hero__subtitle">
+          A Opportunità é uma pizzaria social em Poá. Cada pedido gera trabalho,
+          capacitação e oportunidades — e <strong>100% do lucro</strong> financia os
+          projetos do Instituto Recomeçar, que reintegra egressos do sistema prisional.
+        </p>
+        <div class="hero__actions">
+          <a
+            class="btn btn--primary"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Peça sua pizza
+          </a>
+          <a class="btn btn--outline" href="/instituto-recomecar">
+            Conheça nossa causa
+          </a>
+        </div>
+      </div>
+
+      <figure class="hero__figure">
+        <Image
+          src={heroImage}
+          alt="Homem sorrindo segura a caixa verde da Opportunità Pizzaria Social, com a mensagem de que ao comer a pizza você colabora com projetos sociais"
+          width={1024}
+          height={768}
+          widths={[400, 800, 1024]}
+          formats={rasterFormats(heroImage)}
+          quality="mid"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="media-cover"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="como" aria-labelledby="como-titulo">
+    <div class="container">
+      <div class="como__intro">
+        <h2 id="como-titulo" class="section-title">Como funciona</h2>
+        <Mascote variant="delivery" size="md" class="como__mascote" />
+      </div>
+      <ol class="como__steps">
+        <li class="como__step">
+          <span class="como__icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 4L8 14v20l16 10 16-10V14L24 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M16 22c2 6 6 10 8 12 2-2 6-6 8-12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="24" cy="20" r="3" fill="currentColor"/>
+            </svg>
+          </span>
+          <h3 class="como__heading">Você pede uma pizza</h3>
+          <p class="como__text">
+            Saboreia uma pizza artesanal feita com carinho na Vila Açoreana, em Poá.
+          </p>
+        </li>
+        <li class="como__step">
+          <span class="como__icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 28c0-6 4-10 10-10h4c6 0 10 4 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M18 18V14a6 6 0 0112 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <rect x="10" y="28" width="28" height="14" rx="3" stroke="currentColor" stroke-width="2"/>
+              <path d="M24 32v6M20 35h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <h3 class="como__heading">Geramos trabalho e capacitação</h3>
+          <p class="como__text">
+            Cada pedido sustenta empregos e forma profissional na Escola da Pizza.
+          </p>
+        </li>
+        <li class="como__step">
+          <span class="como__icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 42s-14-9-14-22a10 10 0 0120 0c0 13-14 22-14 22z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M18 22h12M24 16v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <h3 class="como__heading">O lucro financia o Instituto Recomeçar</h3>
+          <p class="como__text">
+            100% do lucro apoia projetos de reintegração social na Grande São Paulo.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <StatsBand headingId="impacto-titulo" />
+
+  <!-- PIZZAS EM DESTAQUE -->
+  <section class="destaques" aria-labelledby="destaques-titulo">
+    <div class="container">
+      <div class="destaques__header">
+        <h2 id="destaques-titulo" class="section-title">Pizzas em destaque</h2>
+        <a
+          class="destaques__link"
+          href={cardapioUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Ver cardápio completo
+          <span class="sr-only"> (abre em nova aba)</span>
+        </a>
+      </div>
+
+      <ul class="destaques__grid">
+        {
+          pizzasDestaque.map((pizza) => (
+            <li>
+              <article class="pizza-card">
+                <span class="pizza-card__badge">{pizza.data.categoria}</span>
+                <h3 class="pizza-card__nome">{pizza.data.nome}</h3>
+                <p class="pizza-card__desc">{pizza.data.descricao}</p>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a
+        class="btn btn--secondary"
+        href={cardapioUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Explorar cardápio
+        <span class="sr-only"> (abre em nova aba)</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ESCOLA DA PIZZA -->
+  {
+    escolaDaPizza && (
+      <section class="escola" aria-labelledby="escola-titulo">
+        <div class="container escola__inner">
+          <div class="escola__copy">
+            <h2 id="escola-titulo" class="section-title">{escolaDaPizza.data.titulo}</h2>
+            <p class="escola__texto">{escolaDaPizza.data.resumo}</p>
+            <a class="btn btn--outline-dark" href="/escola-da-pizza">
+              Conheça a Escola da Pizza
+            </a>
+          </div>
+          <Mascote variant="chef" size="md" class="escola__mascote" />
+        </div>
+      </section>
+    )
+  }
+
+  <!-- DEPOIMENTOS -->
+  <section class="depoimentos" aria-labelledby="depoimentos-titulo">
+    <div class="container">
+      <h2 id="depoimentos-titulo" class="section-title">Depoimentos</h2>
+      <p class="depoimentos__hint">Deslize para ver mais</p>
+
+      <ul class="depoimentos__track" role="list">
+        {
+          depoimentos.map((item) => (
+            <li class="depoimentos__card">
+              <blockquote>
+                <p class="depoimentos__texto">&ldquo;{item.data.texto}&rdquo;</p>
+                <footer class="depoimentos__autor">
+                  <cite class="depoimentos__nome">{item.data.nome}</cite>
+                  <span class="depoimentos__papel">{item.data.papel}</span>
+                </footer>
+              </blockquote>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final" aria-labelledby="cta-final-titulo">
+    <div class="container cta-final__inner cta-with-mascote">
+      <Mascote variant="moto" size="lg" class="cta-final__mascote" />
+      <div class="cta-final__copy">
+        <h2 id="cta-final-titulo" class="cta-final__title">
+          Quem compra uma pizza da Opportunità, constrói pontes.
+        </h2>
+        <a
+          class="btn btn--light"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Peça sua pizza pelo WhatsApp"
+        >
+          Peça sua pizza
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Como funciona */
+  .como {
+    padding-block: var(--space-8);
+  }
+
+  .como__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    margin-bottom: var(--space-2);
+  }
+
+  .como__mascote {
+    align-self: center;
+  }
+
+  .como__steps {
+    display: grid;
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+  }
+
+  .como__step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    background-color: var(--branco);
+    border-radius: var(--radius);
+    border: 1px solid rgb(27 107 58 / 12%);
+  }
+
+  .como__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    color: var(--verde);
+    background-color: rgb(27 107 58 / 8%);
+    border-radius: var(--radius);
+  }
+
+  .como__heading {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .como__text {
+    font-size: var(--text-sm);
+    color: var(--preto);
+    opacity: 0.85;
+  }
+
+  /* Pizzas em destaque */
+  .destaques {
+    padding-block: var(--space-8);
+  }
+
+  .destaques__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .destaques__link {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--verde);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .destaques__grid {
+    display: grid;
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+  }
+
+  .pizza-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    background-color: var(--branco);
+    border-radius: var(--radius);
+    border: 1px solid rgb(27 107 58 / 12%);
+    height: 100%;
+  }
+
+  .pizza-card__badge {
+    align-self: flex-start;
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-transform: capitalize;
+    color: var(--verde-escuro);
+    background-color: rgb(244 180 0 / 25%);
+    border-radius: 999px;
+  }
+
+  .pizza-card__nome {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .pizza-card__desc {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--preto);
+    opacity: 0.85;
+  }
+
+  /* Escola da Pizza */
+  .escola {
+    padding-block: var(--space-8);
+    background-color: var(--branco);
+    border-block: 1px solid rgb(27 107 58 / 10%);
+  }
+
+  .escola__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    align-items: center;
+  }
+
+  .escola__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .escola__texto {
+    font-size: var(--text-base);
+    max-width: 60ch;
+    line-height: 1.7;
+  }
+
+  /* Depoimentos */
+  .depoimentos {
+    padding-block: var(--space-8);
+  }
+
+  .depoimentos__hint {
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--preto);
+    opacity: 0.6;
+  }
+
+  .depoimentos__track {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+    padding-bottom: var(--space-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--space-2);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--verde) transparent;
+  }
+
+  .depoimentos__card {
+    flex: 0 0 min(88%, 22rem);
+    scroll-snap-align: start;
+  }
+
+  .depoimentos__card blockquote {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    height: 100%;
+    padding: var(--space-5);
+    background-color: var(--branco);
+    border-radius: var(--radius);
+    border-left: 4px solid var(--verde);
+    box-shadow: 0 2px 12px rgb(0 0 0 / 6%);
+  }
+
+  .depoimentos__texto {
+    font-size: var(--text-base);
+    font-style: italic;
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .depoimentos__autor {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .depoimentos__nome {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    font-style: normal;
+    color: var(--verde-escuro);
+  }
+
+  .depoimentos__papel {
+    font-size: var(--text-sm);
+    color: var(--preto);
+    opacity: 0.7;
+  }
+
+  /* CTA final */
+  .cta-final {
+    padding-block: var(--space-8);
+    background-color: var(--vermelho);
+    color: var(--branco);
+  }
+
+  .cta-final__inner {
+    gap: var(--space-6);
+  }
+
+  .cta-final__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .cta-final__title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    max-width: 28ch;
+  }
+
+  /* Tablet+ */
+  @media (min-width: 40rem) {
+    .como__intro {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .como__mascote {
+      align-self: auto;
+    }
+
+    .cta-final__copy {
+      align-items: flex-start;
+    }
+
+    .como__steps {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .destaques__header {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .destaques__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .depoimentos__card {
+      flex-basis: min(45%, 22rem);
+    }
+
+    .escola__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cta-final__title {
+      font-size: var(--text-3xl);
+      max-width: 36ch;
+    }
+  }
+</style>
