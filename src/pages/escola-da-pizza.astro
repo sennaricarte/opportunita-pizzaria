@@ -32,9 +32,7 @@ const galeria = [
   },
 ] as const;
 
-const whatsappInscricao = `https://wa.me/5511962448909?text=${encodeURIComponent(
-  'Olá! Gostaria de me inscrever na Escola da Pizza da Opportunità. Podem me orientar sobre o processo seletivo?'
-)}`;
+const inscricaoUrl = 'https://wkf.ms/4ec71GV';
 
 const mailtoEmpresas = 'mailto:gestao@opportunita.org.br?subject=Contratação de formandos — Escola da Pizza';
 
@@ -86,7 +84,7 @@ const faq = [
   {
     pergunta: 'Qual a duração do curso?',
     resposta:
-      'O programa combina aulas teóricas e prática na cozinha ao longo de meses de formação intensiva, com carga horária compatível com a rotina dos participantes. A duração exata de cada turma é informada no processo seletivo.',
+      'O curso dura uma semana, com aulas teóricas e prática intensiva na cozinha da Opportunità.',
   },
   {
     pergunta: 'Há certificado ao final?',
@@ -251,7 +249,7 @@ const faq = [
       <div class="cta__actions">
         <a
           class="btn btn--primary"
-          href={whatsappInscricao}
+          href={inscricaoUrl}
           target="_blank"
           rel="noopener noreferrer"
         >
