@@ -5,6 +5,7 @@ const cardapioUrl = 'https://menu.brendi.com.br/opportunita-pizzaria-social-vila
 
 const navLinks = [
   { href: '/', label: 'Home' },
+  { href: '/sobre', label: 'Sobre' },
   { href: cardapioUrl, label: 'Cardápio', external: true },
   { href: '/escola-da-pizza', label: 'Escola da Pizza' },
   { href: '/espaco', label: 'Espaço' },
@@ -226,17 +227,25 @@ const currentPath = Astro.url.pathname;
     .nav {
       display: flex;
       position: static;
+      flex: 1;
       flex-direction: row;
+      flex-wrap: wrap;
       align-items: center;
-      gap: var(--space-5);
+      justify-content: flex-end;
+      gap: var(--space-3);
       padding: 0;
       background: transparent;
       border: none;
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .nav__list {
       flex-direction: row;
+      flex-wrap: wrap;
       align-items: center;
+      justify-content: flex-end;
       gap: var(--space-1);
     }
 

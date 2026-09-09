@@ -1,0 +1,142 @@
+---
+import Base from '../layouts/Base.astro';
+import Mascote from '../components/Mascote.astro';
+import Parceiros from '../components/Parceiros.astro';
+
+const whatsappUrl = 'https://wa.me/5511962448909';
+---
+
+<Base
+  title="Sobre a Opportunità — Pizzaria Social em Poá"
+  description="Conheça a história da Opportunità Pizzaria Social em Poá: um negócio de impacto criado com parceiros, cujo lucro financia 100% os projetos do Instituto Recomeçar."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Sobre', path: '/sobre' },
+  ]}
+>
+  <section class="hero hero--green" aria-labelledby="hero-titulo">
+    <div class="container hero__inner hero__inner--mascote">
+      <div>
+        <p class="hero__eyebrow">Nossa história</p>
+        <h1 id="hero-titulo" class="hero__title">Sobre a Opportunità</h1>
+        <p class="hero__subtitle">
+          Uma pizzaria social na Vila Açoreana, em Poá, nascida para gerar trabalho,
+          capacitação e recomeço — com o apoio de quem acreditou desde o primeiro forno.
+        </p>
+      </div>
+      <Mascote variant="chef" size="lg" />
+    </div>
+  </section>
+
+  <section class="historia" aria-labelledby="historia-titulo">
+    <div class="container historia__inner">
+      <h2 id="historia-titulo" class="section-title">Como a pizzaria nasceu</h2>
+      <p>
+        A Opportunità é um negócio de impacto do Instituto Recomeçar. Cada pizza artesanal
+        pedida na Vila Açoreana sustenta empregos, forma profissionais na Escola da Pizza
+        e devolve dignidade a quem está reconstruindo a própria história.
+      </p>
+      <p>
+        <strong>100% do lucro</strong> financia os projetos do instituto, que reintegra
+        egressos do sistema prisional na Grande São Paulo. Não é filantropia à parte do
+        cardápio: o sabor e a causa são o mesmo ofício.
+      </p>
+      <p>
+        Nada disso existiria sozinho. Fornecedores, ofícios, assessoria e instituições
+        colocaram equipamento, matéria-prima, identidade e confiança no projeto. Esta
+        página é o nosso obrigado a quem tornou a Opportunità possível.
+      </p>
+    </div>
+  </section>
+
+  <Parceiros headingId="parceiros-titulo" />
+
+  <section class="cta" aria-labelledby="cta-titulo">
+    <div class="container cta__inner">
+      <h2 id="cta-titulo" class="cta__title">Faça parte dessa história</h2>
+      <p class="cta__text">
+        Peça uma pizza, reserve o espaço ou fale com a gente sobre uma nova parceria.
+      </p>
+      <div class="cta__actions">
+        <a
+          class="btn btn--primary"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Peça sua pizza
+        </a>
+        <a class="btn btn--outline-dark" href="/contato">Fale conosco</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .historia {
+    padding-block: var(--space-8);
+    background-color: var(--branco);
+  }
+
+  .historia__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: 48rem;
+  }
+
+  .historia p {
+    font-size: var(--text-base);
+    line-height: 1.75;
+  }
+
+  .historia strong {
+    color: var(--verde);
+  }
+
+  .cta {
+    padding-block: var(--space-8);
+    background-color: var(--creme);
+    border-top: 1px solid rgb(27 107 58 / 10%);
+  }
+
+  .cta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+  }
+
+  .cta__title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .cta__text {
+    font-size: var(--text-base);
+    max-width: 42ch;
+    line-height: 1.7;
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    width: 100%;
+  }
+
+  @media (min-width: 40rem) {
+    .cta__actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: auto;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cta__title {
+      font-size: var(--text-3xl);
+    }
+  }
+</style>

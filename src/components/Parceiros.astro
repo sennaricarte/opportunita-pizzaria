@@ -1,0 +1,150 @@
+---
+import { Image } from 'astro:assets';
+import { rasterFormats } from '../utils/image';
+import dados from '../content/parceiros.json';
+import logoPietro from '../assets/images/parceiros/pietro-cafasso.png';
+import logoDcx from '../assets/images/parceiros/dcx.jpg';
+import logoSantaClara from '../assets/images/parceiros/moinho-santa-clara.png';
+import logoRotary from '../assets/images/parceiros/rotary.png';
+import logoPizzaPrime from '../assets/images/parceiros/pizza-prime.png';
+import logoRc from '../assets/images/parceiros/rc-assessoria.jpg';
+import logoHe from '../assets/images/parceiros/he-etiquetas.png';
+import logoRoffel from '../assets/images/parceiros/roffel.png';
+import logoStudio from '../assets/images/parceiros/studio-marcos-vargas.png';
+
+import type { ImageMetadata } from 'astro';
+
+const logos: Record<string, ImageMetadata> = {
+  'pietro-cafasso': logoPietro,
+  dcx: logoDcx,
+  'moinho-santa-clara': logoSantaClara,
+  rotary: logoRotary,
+  'pizza-prime': logoPizzaPrime,
+  'rc-assessoria': logoRc,
+  'he-etiquetas': logoHe,
+  roffel: logoRoffel,
+  'studio-marcos-vargas': logoStudio,
+};
+
+interface Props {
+  compact?: boolean;
+  headingId?: string;
+}
+
+const { compact = false, headingId = 'parceiros-titulo' } = Astro.props;
+
+const parceiros = dados.map((item) => ({
+  ...item,
+  logo: logos[item.id],
+}));
+---
+
+<section class:list={['parceiros', { 'parceiros--compact': compact }]} aria-labelledby={headingId}>
+  <div class="container">
+    <h2 id={headingId} class="section-title">Quem tornou a Opportunità possível</h2>
+    <p class="parceiros__intro">
+      Empresas e instituições que acreditaram no projeto desde o começo — e ajudaram a
+      transformar uma pizzaria social em Poá em trabalho, capacitação e recomeço.
+    </p>
+    {
+      compact && (
+        <a class="parceiros__link" href="/sobre">
+          Conheça nossa história
+        </a>
+      )
+    }
+
+    <ul class="parceiros__grid" role="list">
+      {
+        parceiros.map((parceiro) => (
+          <li>
+            <figure class="parceiros__card">
+              <Image
+                src={parceiro.logo}
+                alt={`Logo ${parceiro.nome} — ${parceiro.area}`}
+                width={parceiro.logo.width}
+                height={parceiro.logo.height}
+                widths={[200, 320, 480]}
+                formats={rasterFormats(parceiro.logo)}
+                quality="mid"
+                loading="lazy"
+                decoding="async"
+                class="parceiros__logo"
+              />
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .parceiros {
+    padding-block: var(--space-8);
+    background-color: var(--creme);
+  }
+
+  .parceiros--compact {
+    background-color: var(--branco);
+    border-block: 1px solid rgb(27 107 58 / 10%);
+  }
+
+  .parceiros__intro {
+    margin-top: var(--space-3);
+    max-width: 52ch;
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
+  .parceiros__link {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--verde);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .parceiros__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .parceiros__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    height: 100%;
+    min-height: 7.5rem;
+    padding: var(--space-4);
+    background-color: var(--branco);
+    border-radius: var(--radius);
+    border: 1px solid rgb(27 107 58 / 12%);
+  }
+
+  .parceiros__logo {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 5rem;
+    object-fit: contain;
+  }
+
+  @media (min-width: 40rem) {
+    .parceiros__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .parceiros__logo {
+      max-height: 5.75rem;
+    }
+  }
+</style>

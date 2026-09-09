@@ -1,0 +1,47 @@
+[
+  {
+    "id": "pietro-cafasso",
+    "nome": "Pietro Cafasso",
+    "area": "Fornos de esteira"
+  },
+  {
+    "id": "dcx",
+    "nome": "DCX",
+    "area": "Embalagens"
+  },
+  {
+    "id": "moinho-santa-clara",
+    "nome": "Moinho Santa Clara",
+    "area": "Farinha de trigo"
+  },
+  {
+    "id": "rotary",
+    "nome": "Rotary",
+    "area": "Apoio institucional"
+  },
+  {
+    "id": "pizza-prime",
+    "nome": "Pizza Prime",
+    "area": "Parceiro de operação"
+  },
+  {
+    "id": "rc-assessoria",
+    "nome": "RC Assessoria Empresarial",
+    "area": "Assessoria empresarial"
+  },
+  {
+    "id": "he-etiquetas",
+    "nome": "HE Etiquetas",
+    "area": "Etiquetas"
+  },
+  {
+    "id": "roffel",
+    "nome": "ROFFEL",
+    "area": "Engenharia e serviços"
+  },
+  {
+    "id": "studio-marcos-vargas",
+    "nome": "Studio Marcos Vargas",
+    "area": "Design e interiores"
+  }
+]

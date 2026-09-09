@@ -15,6 +15,7 @@ const recomecarUrl = 'https://www.recomecar360.org';
         <Logo variant="footer" />
       </a>
       <p class="footer__tagline">Sabor que transforma vidas</p>
+      <a class="footer__sobre" href="/sobre">Sobre a Opportunità</a>
       <p class="footer__mission">
         100% do lucro é revertido para o
         <a href={recomecarUrl} target="_blank" rel="noopener noreferrer">
@@ -122,6 +123,16 @@ const recomecarUrl = 'https://www.recomecar360.org';
     font-size: var(--text-lg);
     font-weight: 600;
     color: var(--amarelo);
+  }
+
+  .footer__sobre {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--amarelo);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .footer__mission {

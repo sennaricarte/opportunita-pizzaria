@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import { getCollection, getEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Mascote from '../components/Mascote.astro';
+import Parceiros from '../components/Parceiros.astro';
 import StatsBand from '../components/StatsBand.astro';
 import { rasterFormats } from '../utils/image';
 
@@ -175,6 +176,8 @@ const escolaDaPizza = await getEntry('projetos', 'escola-da-pizza');
       </section>
     )
   }
+
+  <Parceiros compact headingId="parceiros-home" />
 
   <!-- DEPOIMENTOS -->
   <section class="depoimentos" aria-labelledby="depoimentos-titulo">
