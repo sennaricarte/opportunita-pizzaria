@@ -8,6 +8,7 @@ import fotoAbertura from '../assets/images/escola/abertura-massa.jpg';
 import fotoMontagem from '../assets/images/escola/montagem-pizza.jpg';
 import fotoTurma from '../assets/images/escola/turma.jpg';
 import fotoEquipe from '../assets/images/escola/pratica-equipe.jpg';
+import fotoRecheio from '../assets/images/escola/recheio-catupiry.jpg';
 
 const galeria = [
   {
@@ -29,6 +30,10 @@ const galeria = [
   {
     src: fotoEquipe,
     alt: 'Equipe da Escola da Pizza coloca coberturas juntos sobre a massa',
+  },
+  {
+    src: fotoRecheio,
+    alt: 'Pizzaiolo da Escola da Pizza aplica recheio cremoso sobre a pizza na cozinha',
   },
 ] as const;
 
@@ -179,8 +184,8 @@ const faq = [
               <Image
                 src={src}
                 alt={alt}
-                width={768}
-                height={1024}
+                width={src.width}
+                height={src.height}
                 widths={[400, 600, 768]}
                 formats={rasterFormats(src)}
                 quality="mid"

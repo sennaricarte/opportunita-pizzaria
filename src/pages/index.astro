@@ -58,7 +58,7 @@ const escolaDaPizza = await getEntry('projetos', 'escola-da-pizza');
           loading="eager"
           fetchpriority="high"
           decoding="async"
-          class="media-cover"
+          class="media-cover hero__photo"
         />
       </figure>
     </div>
@@ -226,6 +226,10 @@ const escolaDaPizza = await getEntry('projetos', 'escola-da-pizza');
 </Base>
 
 <style>
+  .hero__photo {
+    object-position: top center;
+  }
+
   /* Como funciona */
   .como {
     padding-block: var(--space-8);
