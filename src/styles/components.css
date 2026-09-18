@@ -200,11 +200,23 @@
 
 .hero--home .hero__subtitle {
   margin-top: var(--space-4);
-  max-width: 52ch;
+  max-width: 58ch;
 }
 
-.hero--home .hero__subtitle strong {
+.hero--home .hero__subtitle strong,
+.hero--home .hero__subtitle a {
   color: var(--verde);
+}
+
+.hero--home .hero__subtitle a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.hero--home .hero__subtitle a:hover,
+.hero--home .hero__subtitle a:focus-visible {
+  color: var(--verde-escuro);
 }
 
 .hero__actions {
