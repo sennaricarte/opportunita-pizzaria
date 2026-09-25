@@ -1,0 +1,182 @@
+---
+interface Dado {
+  rotulo: string;
+  valor: number;
+}
+
+interface Props {
+  dados: Dado[];
+  titulo: string;
+  descricao: string;
+  colunaRotulo?: string;
+  colunaValor?: string;
+}
+
+const { dados, titulo, descricao, colunaRotulo = 'Turma', colunaValor = 'Valor' } = Astro.props;
+
+const titleId = `grafico-titulo-${titulo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-')}`;
+const descId = `${titleId}-desc`;
+
+const vbWidth = 640;
+const vbHeight = 280;
+const pad = { top: 36, right: 12, bottom: 56, left: 12 };
+const innerW = vbWidth - pad.left - pad.right;
+const innerH = vbHeight - pad.top - pad.bottom;
+const quantidade = Math.max(dados.length, 1);
+const gap = quantidade > 1 ? Math.min(16, innerW / quantidade / 4) : 0;
+const barW = (innerW - gap * (quantidade - 1)) / quantidade;
+const maximo = Math.max(...dados.map((dado) => dado.valor), 1);
+const baseY = pad.top + innerH;
+
+const barras = dados.map((dado, indice) => {
+  const altura = dado.valor === 0 ? 0 : Math.max(2, Math.round((dado.valor / maximo) * innerH));
+  const x = Math.round(pad.left + indice * (barW + gap));
+  const largura = Math.max(1, Math.round(barW));
+  const y = baseY - altura;
+  return {
+    ...dado,
+    x,
+    y,
+    largura,
+    altura,
+    centro: x + largura / 2,
+    valorTexto: dado.valor.toLocaleString('pt-BR'),
+  };
+});
+
+const serie = dados.map((dado) => `${dado.rotulo}: ${dado.valor.toLocaleString('pt-BR')}`).join('. ');
+const descTexto = `${descricao} ${serie}.`;
+---
+
+<figure class="grafico">
+  <svg
+    class="grafico__svg"
+    viewBox={`0 0 ${vbWidth} ${vbHeight}`}
+    width="100%"
+    role="img"
+    aria-labelledby={titleId}
+    aria-describedby={descId}
+  >
+    <title id={titleId}>{titulo}</title>
+    <desc id={descId}>{descTexto}</desc>
+    <line
+      x1={pad.left}
+      y1={baseY}
+      x2={vbWidth - pad.right}
+      y2={baseY}
+      stroke="rgb(27 107 58 / 25%)"
+      stroke-width="1"
+    />
+    {
+      barras.map((barra) => (
+        <g>
+          <rect
+            x={barra.x}
+            y={barra.y}
+            width={barra.largura}
+            height={barra.altura}
+            rx="4"
+            fill="var(--verde)"
+          />
+          <text
+            x={barra.centro}
+            y={Math.max(16, barra.y - 8)}
+            text-anchor="middle"
+            fill="var(--verde-escuro)"
+            font-size="14"
+            font-weight="600"
+          >
+            {barra.valorTexto}
+          </text>
+          <text
+            x={barra.centro}
+            y={baseY + 22}
+            text-anchor="middle"
+            fill="var(--preto)"
+            font-size="13"
+          >
+            {barra.rotulo}
+          </text>
+        </g>
+      ))
+    }
+  </svg>
+
+  <details class="grafico__dados">
+    <summary>Ver dados do gráfico</summary>
+    <table class="grafico__tabela">
+      <caption>{titulo}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{colunaRotulo}</th>
+          <th scope="col">{colunaValor}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          dados.map((dado) => (
+            <tr>
+              <th scope="row">{dado.rotulo}</th>
+              <td>{dado.valor.toLocaleString('pt-BR')}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </details>
+</figure>
+
+<style>
+  .grafico {
+    margin: 0;
+  }
+
+  .grafico__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: 'Poppins', system-ui, sans-serif;
+  }
+
+  .grafico__dados {
+    margin-top: var(--space-3);
+  }
+
+  .grafico__dados summary {
+    cursor: pointer;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--verde);
+  }
+
+  .grafico__dados summary:focus-visible {
+    outline: 2px solid var(--amarelo);
+    outline-offset: 2px;
+  }
+
+  .grafico__tabela {
+    width: 100%;
+    margin-top: var(--space-3);
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .grafico__tabela caption {
+    margin-bottom: var(--space-2);
+    font-weight: 600;
+    text-align: left;
+    color: var(--verde-escuro);
+  }
+
+  .grafico__tabela th,
+  .grafico__tabela td {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid rgb(27 107 58 / 15%);
+    text-align: left;
+  }
+
+  .grafico__tabela td,
+  .grafico__tabela thead th:last-child {
+    text-align: right;
+  }
+</style>

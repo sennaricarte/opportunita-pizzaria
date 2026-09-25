@@ -5,9 +5,11 @@ import { rasterFormats } from '../utils/image';
 
 interface Props {
   variant?: 'header' | 'footer';
+  /** true só quando este logo é a imagem LCP da página. */
+  priority?: boolean;
 }
 
-const { variant = 'header' } = Astro.props;
+const { variant = 'header', priority = false } = Astro.props;
 ---
 
 <Image
@@ -17,7 +19,8 @@ const { variant = 'header' } = Astro.props;
   height={769}
   widths={variant === 'footer' ? [200, 320, 480] : [200, 280, 400]}
   formats={rasterFormats(logo)}
-  loading="eager"
+  loading={priority ? 'eager' : 'lazy'}
+  fetchpriority={priority ? 'high' : undefined}
   decoding="async"
   class:list={['logo-image', `logo-image--${variant}`]}
 />

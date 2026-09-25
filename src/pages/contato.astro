@@ -1,8 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import Mascote from '../components/Mascote.astro';
+import { WHATSAPP_PEDIDOS_URL } from '../config/site';
 
-const whatsappBase = 'https://wa.me/5511962448909';
+const whatsappBase = WHATSAPP_PEDIDOS_URL;
 
 const whatsappPedido = `${whatsappBase}?text=${encodeURIComponent(
   'Olá! Gostaria de fazer um pedido de pizza na Opportunità. Podem me ajudar?'
@@ -89,7 +90,7 @@ const acoes = [
           e falar com nossa equipe.
         </p>
       </div>
-      <Mascote variant="delivery" size="lg" />
+      <Mascote variant="delivery" size="lg" priority />
     </div>
   </section>
 
@@ -106,7 +107,13 @@ const acoes = [
                 <a
                   class="apoio__link"
                   href={href}
-                  {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  {...(externo
+                    ? {
+                        target: '_blank',
+                        rel: 'noopener noreferrer',
+                        'aria-label': `${rotulo} (abre em nova aba)`,
+                      }
+                    : {})}
                 >
                   {rotulo}
                 </a>
@@ -131,7 +138,7 @@ const acoes = [
             <a href="tel:+551146341149">(11) 4634-1149</a>
           </p>
           <p>
-            <a href={whatsappPedido} target="_blank" rel="noopener noreferrer">
+            <a href={whatsappPedido} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp (11) 96244-8909 (abre em nova aba)">
               WhatsApp (11) 96244-8909
             </a>
           </p>
@@ -152,7 +159,7 @@ const acoes = [
                 href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram @opportunita.pizzaria.social"
+                aria-label="Instagram @opportunita.pizzaria.social (abre em nova aba)"
               >
                 Instagram — @opportunita.pizzaria.social
               </a>
@@ -162,7 +169,7 @@ const acoes = [
                 href={facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Facebook @opportunita.pizzaria.social"
+                aria-label="Facebook @opportunita.pizzaria.social (abre em nova aba)"
               >
                 Facebook — @opportunita.pizzaria.social
               </a>
@@ -195,6 +202,7 @@ const acoes = [
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`${label} — ${descricao} (abre em nova aba)`}
                 >
                   <span class="btn__label">{label}</span>
                   <span class="btn__desc">{descricao}</span>

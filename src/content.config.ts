@@ -30,6 +30,27 @@ const projetos = defineCollection({
   }),
 });
 
+const turmas = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/turmas' }),
+  schema: ({ image }) =>
+    z.object({
+      numero: z.number(),
+      nome: z.string(),
+      conclusao: z.coerce.date(),
+      formados: z.number(),
+      publicado: z.boolean().default(false),
+      cidades: z.array(z.string()).optional(),
+      fotos: z
+        .array(
+          z.object({
+            src: image(),
+            alt: z.string(),
+          }),
+        )
+        .min(1),
+    }),
+});
+
 const stats = defineCollection({
   loader: file('src/content/stats.json'),
   schema: z.object({
@@ -41,7 +62,8 @@ const stats = defineCollection({
     reincidenciaPrograma: z.number(),
     reincidenciaMediaNacional: z.number(),
     fonteReincidencia: z.string(),
+    caixasEntreguesPorMes: z.number().nullable().optional(),
   }),
 });
 
-export const collections = { pizzas, depoimentos, projetos, stats };
+export const collections = { pizzas, depoimentos, projetos, turmas, stats };

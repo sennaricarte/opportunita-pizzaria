@@ -1,8 +1,11 @@
 ---
 import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Mascote from '../components/Mascote.astro';
+import GraficoBarras from '../components/GraficoBarras.astro';
 import { rasterFormats } from '../utils/image';
+import { getAncoraResultados, INSCRICAO_URL, WHATSAPP_INSTITUCIONAL } from '../config/site';
 import fotoMassa from '../assets/images/escola/massa-aluna.jpg';
 import fotoAbertura from '../assets/images/escola/abertura-massa.jpg';
 import fotoMontagem from '../assets/images/escola/montagem-pizza.jpg';
@@ -37,9 +40,43 @@ const galeria = [
   },
 ] as const;
 
-const inscricaoUrl = 'https://wkf.ms/4ec71GV';
+const turmas = (await getCollection('turmas'))
+  .filter((turma) => turma.data.publicado === true)
+  .sort((a, b) => {
+    const porData = a.data.conclusao.getTime() - b.data.conclusao.getTime();
+    return porData !== 0 ? porData : a.data.numero - b.data.numero;
+  });
 
-const whatsappEmpresas = `https://wa.me/5511953054694?text=${encodeURIComponent(
+const temResultados = turmas.length > 0;
+const ancoraResultados = await getAncoraResultados();
+
+const totalFormados = turmas.reduce((total, turma) => total + turma.data.formados, 0);
+const mostrarNumeros = totalFormados > 0;
+const cidadesAtendidas = [
+  ...new Set(turmas.flatMap((turma) => turma.data.cidades ?? []).map((cidade) => cidade.trim()).filter(Boolean)),
+];
+
+let acumulado = 0;
+const formadosPorTurma = turmas.map((turma) => ({
+  rotulo: turma.data.nome,
+  valor: turma.data.formados,
+}));
+const formadosAcumulados = turmas.map((turma) => {
+  acumulado += turma.data.formados;
+  return { rotulo: turma.data.nome, valor: acumulado };
+});
+
+const turmasRecentes = [...turmas].sort((a, b) => b.data.conclusao.getTime() - a.data.conclusao.getTime());
+
+function mesAno(data: Date) {
+  return data.toLocaleDateString('pt-BR', {
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+}
+
+const whatsappEmpresas = `https://wa.me/${WHATSAPP_INSTITUCIONAL}?text=${encodeURIComponent(
   'Olá! Sou empresa e gostaria de contratar formandos da Escola da Pizza.',
 )}`;
 
@@ -64,23 +101,59 @@ const pilares = [
   },
 ] as const;
 
+const cidadesAltoTiete = [
+  'Poá',
+  'Suzano',
+  'Ferraz de Vasconcelos',
+  'Itaquaquecetuba',
+  'Mogi das Cruzes',
+  'Arujá',
+  'Guararema',
+  'Biritiba Mirim',
+  'Salesópolis',
+  'Santa Isabel',
+] as const;
+
 const publico = [
   {
-    titulo: 'Egressos do sistema prisional',
-    descricao:
-      'Pessoas em processo de reintegração social que buscam uma nova oportunidade profissional na gastronomia.',
+    titulo: 'Moradores do Alto Tietê',
+    descricao: 'Quem quer uma profissão na gastronomia, sem experiência prévia.',
   },
   {
-    titulo: 'Familiares de pessoas privadas de liberdade',
-    descricao:
-      'Parentes de egressos que desejam qualificação profissional e geração de renda para sustentar a família.',
+    titulo: 'Egressos do sistema prisional e seus familiares',
+    descricao: 'A origem do nosso trabalho e o compromisso central do Instituto Recomeçar.',
   },
   {
-    titulo: 'Moradores de comunidades periféricas',
-    descricao:
-      'Moradores de Poá e região em situação de vulnerabilidade social com interesse em atuar na área de alimentação.',
+    titulo: 'Quem quer empreender',
+    descricao: 'Quem deseja abrir o próprio negócio de alimentação.',
   },
 ] as const;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://opportunitapizzaria.com.br';
+const courseDescription =
+  'Curso de pizzaiolo gratuito no Alto Tietê, com prática real na Opportunità em Poá. Aberto a toda a comunidade.';
+
+const courseSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: 'Escola da Pizza',
+  description: courseDescription,
+  url: new URL('/escola-da-pizza', siteUrl).href,
+  provider: {
+    '@type': 'Organization',
+    name: 'Instituto Recomeçar',
+    url: new URL('/instituto-recomecar', siteUrl).href,
+  },
+  offers: {
+    '@type': 'Offer',
+    price: 0,
+    priceCurrency: 'BRL',
+  },
+  areaServed: cidadesAltoTiete.map((cidade) => ({
+    '@type': 'City',
+    name: cidade,
+  })),
+};
 
 const faq = [
   {
@@ -101,7 +174,7 @@ const faq = [
   {
     pergunta: 'Como faço para me inscrever?',
     resposta:
-      'Entre em contato pelo WhatsApp da Opportunità ou compareça à pizzaria. O processo seletivo inclui inscrição e entrevista para conhecer seu perfil e disponibilidade.',
+      'A inscrição é feita pelo formulário online, seguida de entrevista para conhecer seu perfil e disponibilidade.',
   },
   {
     pergunta: 'Preciso ter experiência na cozinha?',
@@ -112,8 +185,10 @@ const faq = [
 ---
 
 <Base
-  title="Curso de Pizzaiolo Gratuito em Poá"
-  description="Curso de pizzaiolo gratuito em Poá: Escola da Pizza da Opportunità forma pizzaiolos, ajudantes de cozinha e atendentes com certificação e inserção no mercado de trabalho."
+  title="Curso de Pizzaiolo Gratuito no Alto Tietê | Escola da Pizza em Poá"
+  description={courseDescription}
+  appendSiteName={false}
+  extraSchema={courseSchema}
   breadcrumbs={[
     { name: 'Home', path: '/' },
     { name: 'Escola da Pizza', path: '/escola-da-pizza' },
@@ -126,13 +201,130 @@ const faq = [
         <p class="hero__eyebrow">Formação profissional gratuita</p>
         <h1 id="hero-titulo" class="hero__title">Escola da Pizza</h1>
         <p class="hero__subtitle">
-          Programa gratuito de capacitação profissional que forma pizzaiolos, ajudantes de
-          cozinha e atendentes — com prática real na Opportunità Pizzaria Social, em Poá.
+          Programa gratuito aberto a moradores de todo o Alto Tietê, com prática real na
+          Opportunità, em Poá.
         </p>
+        <div class="hero__actions">
+          <a
+            class="btn btn--primary"
+            href={INSCRICAO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Quero me inscrever (abre em nova aba)"
+          >
+            Quero me inscrever
+          </a>
+          <a class="btn btn--outline-light" href={ancoraResultados}>
+            Ver resultados
+          </a>
+        </div>
       </div>
-      <Mascote variant="chef" size="lg" />
+      <Mascote variant="chef" size="lg" priority />
     </div>
   </section>
+
+  {
+    temResultados && (
+  <section class="resultados" id="resultados" aria-labelledby="resultados-titulo">
+    <div class="container">
+      <h2 id="resultados-titulo" class="section-title">Nossos resultados</h2>
+
+      {
+        mostrarNumeros && (
+          <>
+            <ul class="resultados__cards" role="list">
+              <li class="resultados__card">
+                <p class="resultados__numero">{totalFormados.toLocaleString('pt-BR')}</p>
+                <p class="resultados__rotulo">
+                  {totalFormados === 1 ? 'pessoa formada' : 'pessoas formadas'}
+                </p>
+              </li>
+              <li class="resultados__card">
+                <p class="resultados__numero">{turmas.length.toLocaleString('pt-BR')}</p>
+                <p class="resultados__rotulo">{turmas.length === 1 ? 'turma' : 'turmas'}</p>
+              </li>
+              {
+                cidadesAtendidas.length > 0 && (
+                  <li class="resultados__card">
+                    <p class="resultados__numero">{cidadesAtendidas.length.toLocaleString('pt-BR')}</p>
+                    <p class="resultados__rotulo">
+                      {cidadesAtendidas.length === 1 ? 'cidade atendida' : 'cidades atendidas'}
+                    </p>
+                  </li>
+                )
+              }
+            </ul>
+
+            <div class="resultados__graficos">
+              <div>
+                <h3 class="resultados__subtitulo">Formados por turma</h3>
+                <GraficoBarras
+                  dados={formadosPorTurma}
+                  titulo="Formados por turma"
+                  descricao="Quantidade de pessoas formadas em cada turma da Escola da Pizza, da mais antiga para a mais recente."
+                  colunaRotulo="Turma"
+                  colunaValor="Formados"
+                />
+              </div>
+              <div>
+                <h3 class="resultados__subtitulo">Total acumulado</h3>
+                <GraficoBarras
+                  dados={formadosAcumulados}
+                  titulo="Total acumulado de formados"
+                  descricao="Total acumulado de pessoas formadas ao longo das turmas, da mais antiga para a mais recente."
+                  colunaRotulo="Turma"
+                  colunaValor="Total acumulado"
+                />
+              </div>
+            </div>
+          </>
+        )
+      }
+
+      <h3 class="resultados__subtitulo resultados__subtitulo--turmas">Nossas turmas</h3>
+      <ul class="turmas" role="list">
+        {
+          turmasRecentes.map((turma) => {
+            const foto = turma.data.fotos[0];
+            return (
+              <li>
+                <article class="turma-card">
+                  <div class="turma-card__midia">
+                    <Image
+                      src={foto.src}
+                      alt={foto.alt}
+                      width={foto.src.width}
+                      height={foto.src.height}
+                      widths={[400, 600, 800]}
+                      formats={rasterFormats(foto.src)}
+                      quality="mid"
+                      loading="lazy"
+                      decoding="async"
+                      class="media-cover"
+                    />
+                  </div>
+                  <div class="turma-card__corpo">
+                    <h4 class="turma-card__nome">{turma.data.nome}</h4>
+                    <p class="turma-card__meta">{mesAno(turma.data.conclusao)}</p>
+                    {
+                      turma.data.formados > 0 && (
+                        <p class="turma-card__meta">
+                          {turma.data.formados.toLocaleString('pt-BR')}{' '}
+                          {turma.data.formados === 1 ? 'formado' : 'formados'}
+                        </p>
+                      )
+                    }
+                  </div>
+                </article>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+    )
+  }
 
   <!-- O que você aprende -->
   <section class="pilares" aria-labelledby="pilares-titulo">
@@ -173,7 +365,7 @@ const faq = [
     </div>
   </section>
 
-  <section class="galeria" aria-labelledby="galeria-titulo">
+  <section class="galeria" id="na-pratica" aria-labelledby="galeria-titulo">
     <div class="container">
       <h2 id="galeria-titulo" class="section-title">Na prática</h2>
       <p class="galeria__intro">
@@ -202,10 +394,14 @@ const faq = [
     </div>
   </section>
 
-  <!-- Quem pode participar -->
+  <!-- Aberta à comunidade -->
   <section class="publico" aria-labelledby="publico-titulo">
     <div class="container">
-      <h2 id="publico-titulo" class="section-title">Quem pode participar</h2>
+      <h2 id="publico-titulo" class="section-title">Aberta a toda a comunidade do Alto Tietê</h2>
+      <p class="publico__intro">
+        A formação recebe quem mora em Poá, Suzano, Ferraz de Vasconcelos, Itaquaquecetuba,
+        Mogi das Cruzes, Arujá, Guararema, Biritiba Mirim, Salesópolis e Santa Isabel.
+      </p>
       <ul class="publico__grid" role="list">
         {
           publico.map(({ titulo, descricao }) => (
@@ -218,6 +414,14 @@ const faq = [
           ))
         }
       </ul>
+
+      <aside class="publico__essencia" aria-labelledby="essencia-titulo">
+        <h3 id="essencia-titulo" class="publico__essencia-titulo">Nossa essência</h3>
+        <p>
+          O Instituto Recomeçar nasceu para a reintegração de egressos e acompanha o
+          desenvolvimento de quem passa pela formação mesmo depois do curso.
+        </p>
+      </aside>
 
       <aside class="publico__info" aria-label="Informações sobre o processo seletivo">
         <p>
@@ -238,7 +442,24 @@ const faq = [
           faq.map(({ pergunta, resposta }) => (
             <details class="faq__item">
               <summary class="faq__pergunta">{pergunta}</summary>
-              <p class="faq__resposta">{resposta}</p>
+              {
+                pergunta === 'Como faço para me inscrever?' ? (
+                  <p class="faq__resposta">
+                    A inscrição é feita pelo{' '}
+                    <a
+                      href={INSCRICAO_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="formulário online (abre em nova aba)"
+                    >
+                      formulário online
+                    </a>
+                    , seguida de entrevista para conhecer seu perfil e disponibilidade.
+                  </p>
+                ) : (
+                  <p class="faq__resposta">{resposta}</p>
+                )
+              }
             </details>
           ))
         }
@@ -256,9 +477,10 @@ const faq = [
       <div class="cta__actions">
         <a
           class="btn btn--primary"
-          href={inscricaoUrl}
+          href={INSCRICAO_URL}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Quero me inscrever (abre em nova aba)"
         >
           Quero me inscrever
         </a>
@@ -267,7 +489,7 @@ const faq = [
           href={whatsappEmpresas}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Falar no WhatsApp para contratar formandos da Escola da Pizza"
+          aria-label="Falar no WhatsApp para contratar formandos da Escola da Pizza (abre em nova aba)"
         >
           Sou empresa e quero contratar formandos
         </a>
@@ -277,6 +499,114 @@ const faq = [
 </Base>
 
 <style>
+  .resultados {
+    padding-block: var(--space-8);
+    background-color: var(--branco);
+  }
+
+  .resultados__cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: 0;
+    list-style: none;
+  }
+
+  .resultados__card {
+    padding: var(--space-5);
+    background-color: var(--creme);
+    border-radius: var(--radius);
+    border: 1px solid rgb(27 107 58 / 12%);
+  }
+
+  .resultados__numero {
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--verde);
+  }
+
+  .resultados__rotulo {
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .resultados__graficos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+    margin-top: var(--space-7);
+  }
+
+  .resultados__subtitulo {
+    margin-bottom: var(--space-4);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .resultados__subtitulo--turmas {
+    margin-top: var(--space-7);
+  }
+
+  .turmas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .turma-card {
+    overflow: hidden;
+    background-color: var(--creme);
+    border: 1px solid rgb(27 107 58 / 12%);
+    border-radius: var(--radius);
+  }
+
+  .turma-card__midia {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .turma-card__corpo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+  }
+
+  .turma-card__nome {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .turma-card__meta {
+    font-size: var(--text-sm);
+    color: var(--preto);
+  }
+
+  @media (min-width: 40rem) {
+    .resultados__cards {
+      grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    }
+
+    .turmas {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .turmas {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
   /* Pilares */
   .pilares {
     padding-block: var(--space-8);
@@ -377,11 +707,37 @@ const faq = [
     color: var(--verde-escuro);
   }
 
+  .publico__intro {
+    margin-top: var(--space-3);
+    max-width: 62ch;
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
   .publico__text {
     font-size: var(--text-sm);
     line-height: 1.7;
     color: var(--preto);
     opacity: 0.85;
+  }
+
+  .publico__essencia {
+    margin-top: var(--space-6);
+    padding: var(--space-5);
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+    border-radius: var(--radius);
+  }
+
+  .publico__essencia-titulo {
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+
+  .publico__essencia p {
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+    line-height: 1.7;
   }
 
   .publico__info {
@@ -463,6 +819,13 @@ const faq = [
     line-height: 1.7;
     color: var(--preto);
     opacity: 0.85;
+  }
+
+  .faq__resposta a {
+    color: var(--verde);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
   }
 
   /* CTA */

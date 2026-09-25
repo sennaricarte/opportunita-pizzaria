@@ -1,8 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import Mascote from '../components/Mascote.astro';
+import { WHATSAPP_PEDIDOS_URL } from '../config/site';
 
-const whatsappOrcamento = `https://wa.me/5511962448909?text=${encodeURIComponent(
+const whatsappOrcamento = `${WHATSAPP_PEDIDOS_URL}?text=${encodeURIComponent(
   'Olá! Gostaria de pedir um orçamento para um evento corporativo com a Opportunità Pizzaria Social. Podem me ajudar?'
 )}`;
 
@@ -46,7 +47,7 @@ const servicos = [
           Cada evento contratado contribui diretamente com a causa do Instituto Recomeçar.
         </p>
       </div>
-      <Mascote variant="moto" size="lg" />
+      <Mascote variant="moto" size="lg" priority />
     </div>
   </section>
 
@@ -120,7 +121,7 @@ const servicos = [
         href={whatsappOrcamento}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Pedir orçamento para evento corporativo pelo WhatsApp"
+        aria-label="Pedir orçamento para evento corporativo pelo WhatsApp (abre em nova aba)"
       >
         Pedir orçamento
       </a>

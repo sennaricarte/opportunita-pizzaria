@@ -1,0 +1,281 @@
+---
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Parceiros from '../components/Parceiros.astro';
+import { getAncoraResultados, WHATSAPP_INSTITUCIONAL } from '../config/site';
+
+const whatsappPatrocinio = `https://wa.me/${WHATSAPP_INSTITUCIONAL}?text=${encodeURIComponent(
+  'Olá! Tenho interesse em patrocinar a Opportunità / Escola da Pizza.',
+)}`;
+
+const ancoraResultados = await getAncoraResultados();
+
+const { data: stats } = await getEntry('stats', 'impacto');
+const caixasEntreguesPorMes = stats.caixasEntreguesPorMes;
+const mostrarCirculacao = typeof caixasEntreguesPorMes === 'number' && caixasEntreguesPorMes > 0;
+
+const motivos = [
+  {
+    titulo: 'Visibilidade local',
+    texto:
+      'Sua marca vai nas caixas que circulam em casas do Alto Tietê, junto com cada pizza pedida na Vila Açoreana.',
+  },
+  {
+    titulo: 'Causa com impacto',
+    texto:
+      'A Opportunità é a extensão da Escola da Pizza: 100% do lucro financia novas turmas e os projetos do Instituto Recomeçar.',
+    href: `/escola-da-pizza${ancoraResultados}`,
+    rotulo: 'Veja os resultados da Escola da Pizza',
+  },
+  {
+    titulo: 'Relacionamento com a comunidade',
+    texto:
+      'A pizzaria é ponto de encontro da comunidade de Poá e da Vila Açoreana — e um patrocínio aproxima sua marca desse convívio.',
+  },
+] as const;
+
+const formatos = [
+  {
+    titulo: 'Sua marca na caixa da pizza',
+    texto: 'A identidade da sua empresa acompanha a pizza até a casa de quem pede, no Alto Tietê.',
+  },
+  {
+    titulo: 'Espaço no ponto de venda',
+    texto: 'Presença no balcão da Opportunità, na Av. Vital Brasil, 478 — Vila Açoreana, Poá.',
+  },
+  {
+    titulo: 'Destaque no site e redes',
+    texto: 'Nome e marca em destaque neste site e nos perfis da Opportunità.',
+  },
+  {
+    titulo: 'Patrocínio de turma da Escola da Pizza',
+    texto:
+      'Apoio direto a uma turma da formação gratuita na cozinha da pizzaria, com certificação ao final.',
+  },
+] as const;
+---
+
+<Base
+  title="Seja um patrocinador"
+  description="Patrocine a Escola da Pizza e leve sua marca a lares do Alto Tietê. Caixa, ponto de venda, site e turma — valores sob consulta."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Seja um patrocinador', path: '/seja-patrocinador' },
+  ]}
+>
+  <section class="hero hero--green" aria-labelledby="hero-titulo">
+    <div class="container hero__inner hero__inner--narrow">
+      <p class="hero__eyebrow">Marca e causa no mesmo ofício</p>
+      <h1 id="hero-titulo" class="hero__title">Seja um patrocinador da Opportunità</h1>
+      <p class="hero__subtitle">
+        Patrocine a Escola da Pizza e leve sua marca a milhares de lares do Alto Tietê.
+      </p>
+      <div class="hero__actions">
+        <a
+          class="btn btn--primary"
+          href={whatsappPatrocinio}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Falar no WhatsApp sobre patrocínio (abre em nova aba)"
+        >
+          Quero patrocinar
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="motivos" aria-labelledby="motivos-titulo">
+    <div class="container">
+      <h2 id="motivos-titulo" class="section-title">Por que patrocinar</h2>
+      <ul class="cards" role="list">
+        {
+          motivos.map((motivo) => (
+            <li>
+              <article class="card">
+                <h3 class="card__titulo">{motivo.titulo}</h3>
+                <p class="card__texto">{motivo.texto}</p>
+                {'href' in motivo && (
+                  <a class="card__link" href={motivo.href}>
+                    {motivo.rotulo}
+                  </a>
+                )}
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+      {
+        mostrarCirculacao && (
+          <p class="circulacao">
+            <span class="circulacao__numero">{caixasEntreguesPorMes.toLocaleString('pt-BR')}</span>
+            caixas entregues por mês
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="formatos" aria-labelledby="formatos-titulo">
+    <div class="container">
+      <h2 id="formatos-titulo" class="section-title">Formatos de patrocínio</h2>
+      <ul class="cards cards--formatos" role="list">
+        {
+          formatos.map(({ titulo, texto }) => (
+            <li>
+              <article class="card">
+                <h3 class="card__titulo">{titulo}</h3>
+                <p class="card__texto">{texto}</p>
+                <p class="card__consulta">Valores sob consulta</p>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Parceiros headingId="apoiadores-titulo" />
+
+  <section class="cta" aria-labelledby="cta-titulo">
+    <div class="container cta__inner">
+      <h2 id="cta-titulo" class="cta__title">Vamos conversar sobre a sua marca</h2>
+      <p class="cta__text">
+        Conte o formato que faz sentido para a sua empresa. Retornamos com uma proposta sob consulta.
+      </p>
+      <a
+        class="btn btn--primary"
+        href={whatsappPatrocinio}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Falar no WhatsApp sobre patrocínio (abre em nova aba)"
+      >
+        Quero patrocinar
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .motivos {
+    padding-block: var(--space-8);
+    background-color: var(--branco);
+  }
+
+  .formatos {
+    padding-block: var(--space-8);
+    background-color: var(--creme);
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: 0;
+    list-style: none;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    height: 100%;
+    padding: var(--space-5);
+    background-color: var(--creme);
+    border: 1px solid rgb(27 107 58 / 12%);
+    border-radius: var(--radius);
+  }
+
+  .formatos .card {
+    background-color: var(--branco);
+  }
+
+  .card__titulo {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .card__texto {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+
+  .card__link {
+    margin-top: auto;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--verde);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .card__consulta {
+    margin-top: auto;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--verde);
+  }
+
+  .circulacao {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-6);
+    max-width: 28rem;
+    padding: var(--space-5);
+    background-color: var(--verde);
+    color: var(--branco);
+    border-radius: var(--radius);
+  }
+
+  .circulacao__numero {
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    line-height: 1.1;
+  }
+
+  .cta {
+    padding-block: var(--space-8);
+    background-color: var(--verde-escuro);
+    color: var(--branco);
+  }
+
+  .cta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+  }
+
+  .cta__title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+  }
+
+  .cta__text {
+    max-width: 42ch;
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
+  @media (min-width: 40rem) {
+    .cards--formatos {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cards--formatos {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cta__title {
+      font-size: var(--text-3xl);
+    }
+  }
+</style>

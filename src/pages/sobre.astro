@@ -2,8 +2,9 @@
 import Base from '../layouts/Base.astro';
 import Mascote from '../components/Mascote.astro';
 import Parceiros from '../components/Parceiros.astro';
+import { WHATSAPP_PEDIDOS_URL } from '../config/site';
 
-const whatsappUrl = 'https://wa.me/5511962448909';
+const whatsappUrl = WHATSAPP_PEDIDOS_URL;
 ---
 
 <Base
@@ -24,7 +25,7 @@ const whatsappUrl = 'https://wa.me/5511962448909';
           capacitação e recomeço — com o apoio de quem acreditou desde o primeiro forno.
         </p>
       </div>
-      <Mascote variant="chef" size="lg" />
+      <Mascote variant="chef" size="lg" priority />
     </div>
   </section>
 
@@ -49,6 +50,22 @@ const whatsappUrl = 'https://wa.me/5511962448909';
     </div>
   </section>
 
+  <section class="comunidade" aria-labelledby="comunidade-titulo">
+    <div class="container comunidade__inner">
+      <h2 id="comunidade-titulo" class="section-title">Uma pizzaria da comunidade</h2>
+      <p>
+        A Opportunità não é um negócio à parte. Ela é a extensão da
+        <a href="/escola-da-pizza">Escola da Pizza</a>: a sala de aula prática
+        onde a turma aprende na cozinha, nos fornos da pizzaria, na Vila Açoreana.
+      </p>
+      <p>
+        Também é um ponto de encontro da comunidade da Vila Açoreana e de Poá.
+        Cada pizza vendida gera trabalho na região, e 100% do lucro financia
+        novas turmas e os projetos do Instituto Recomeçar no Alto Tietê.
+      </p>
+    </div>
+  </section>
+
   <Parceiros headingId="parceiros-titulo" />
 
   <section class="cta" aria-labelledby="cta-titulo">
@@ -63,6 +80,7 @@ const whatsappUrl = 'https://wa.me/5511962448909';
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Peça sua pizza (abre em nova aba)"
         >
           Peça sua pizza
         </a>
@@ -92,6 +110,36 @@ const whatsappUrl = 'https://wa.me/5511962448909';
 
   .historia strong {
     color: var(--verde);
+  }
+
+  .comunidade {
+    padding-block: var(--space-8);
+    background-color: var(--creme);
+    border-top: 1px solid rgb(27 107 58 / 10%);
+  }
+
+  .comunidade__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: 48rem;
+  }
+
+  .comunidade p {
+    font-size: var(--text-base);
+    line-height: 1.75;
+  }
+
+  .comunidade a {
+    color: var(--verde);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .comunidade a:hover,
+  .comunidade a:focus-visible {
+    color: var(--verde-escuro);
   }
 
   .cta {

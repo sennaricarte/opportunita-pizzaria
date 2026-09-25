@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { rasterFormats } from '../utils/image';
+import { WHATSAPP_PEDIDOS_URL } from '../config/site';
 
 // Substituir placeholders por fotos reais do espaço:
 // import salao1 from '../assets/images/espaco/salao-principal.jpg';
@@ -14,7 +15,7 @@ import { rasterFormats } from '../utils/image';
 import placeholderSalao from '../assets/images/espaco/placeholder-salao.svg';
 import placeholderMapa from '../assets/images/espaco/placeholder-mapa.svg';
 
-const whatsappDisponibilidade = `https://wa.me/5511962448909?text=${encodeURIComponent(
+const whatsappDisponibilidade = `${WHATSAPP_PEDIDOS_URL}?text=${encodeURIComponent(
   'Olá! Gostaria de consultar a disponibilidade do Espaço Opportunità para um evento. Podem me passar mais informações?'
 )}`;
 
@@ -123,13 +124,13 @@ const galeria = [
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Ver no Google Maps — Av. Vital Brasil, 478, Poá (abre em nova aba)"
         >
           Ver no Google Maps
-          <span class="sr-only"> — Av. Vital Brasil, 478, Poá</span>
         </a>
       </div>
       <figure class="localizacao__mapa media-slot media-slot--16-9">
-        <a href={mapsUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir localização no Google Maps">
+        <a href={mapsUrl} target="_blank" rel="noopener noreferrer" aria-label="Abrir localização no Google Maps (abre em nova aba)">
           <Image
             src={placeholderMapa}
             alt="Mapa estático da localização da Opportunità na Av. Vital Brasil, 478, Poá — placeholder"
@@ -161,6 +162,7 @@ const galeria = [
         href={whatsappDisponibilidade}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Consultar disponibilidade (abre em nova aba)"
       >
         Consultar disponibilidade
       </a>

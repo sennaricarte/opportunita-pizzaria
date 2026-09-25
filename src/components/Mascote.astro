@@ -30,10 +30,12 @@ interface Props {
   variant: keyof typeof catalog;
   size?: 'sm' | 'md' | 'lg';
   decorative?: boolean;
+  /** true só quando o mascote é a imagem LCP da página. */
+  priority?: boolean;
   class?: string;
 }
 
-const { variant, size = 'md', decorative = true, class: className } = Astro.props;
+const { variant, size = 'md', decorative = true, priority = false, class: className } = Astro.props;
 const mascote = catalog[variant];
 const widths = size === 'sm' ? [160, 240] : size === 'md' ? [240, 360, 480] : [320, 480, 640];
 ---
@@ -47,7 +49,8 @@ const widths = size === 'sm' ? [160, 240] : size === 'md' ? [240, 360, 480] : [3
     widths={widths}
     formats={rasterFormats(mascote.src)}
     quality="mid"
-    loading="lazy"
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : undefined}
     decoding="async"
     class:list={['mascote', `mascote--${size}`]}
   />

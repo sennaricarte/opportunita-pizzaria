@@ -46,13 +46,16 @@ const parceiros = dados.map((item) => ({
       Empresas e instituições que acreditaram no projeto desde o começo — e ajudaram a
       transformar uma pizzaria social em Poá em trabalho, capacitação e recomeço.
     </p>
-    {
-      compact && (
-        <a class="parceiros__link" href="/sobre">
-          Conheça nossa história
-        </a>
-      )
-    }
+    <div class="parceiros__acoes">
+      {
+        compact && (
+          <a class="parceiros__link" href="/sobre">
+            Conheça nossa história
+          </a>
+        )
+      }
+      <a class="btn btn--primary" href="/seja-patrocinador">Quero patrocinar</a>
+    </div>
 
     <ul class="parceiros__grid" role="list">
       {
@@ -97,9 +100,16 @@ const parceiros = dados.map((item) => ({
     line-height: 1.7;
   }
 
+  .parceiros__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
   .parceiros__link {
     display: inline-block;
-    margin-top: var(--space-3);
     font-size: var(--text-sm);
     font-weight: 600;
     color: var(--verde);

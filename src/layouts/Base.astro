@@ -20,12 +20,14 @@ interface Props {
   description: string;
   ogImage?: string;
   breadcrumbs?: BreadcrumbItem[];
+  appendSiteName?: boolean;
+  extraSchema?: Record<string, unknown> | null;
 }
 
-const { title, description, ogImage, breadcrumbs } = Astro.props;
+const { title, description, ogImage, breadcrumbs, appendSiteName = true, extraSchema = null } = Astro.props;
 
 const siteName = 'Opportunità Pizzaria Social';
-const fullTitle = `${title} | ${siteName}`;
+const fullTitle = appendSiteName ? `${title} | ${siteName}` : title;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const defaultOg = await getImage({ src: logoOg, width: 1024, height: 769 });
 const ogImageUrl = ogImage
@@ -77,7 +79,7 @@ const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <SeoSchema isHome={isHome} breadcrumbs={breadcrumbs} />
+    <SeoSchema isHome={isHome} breadcrumbs={breadcrumbs} extra={extraSchema} />
   </head>
   <body>
     <Header />

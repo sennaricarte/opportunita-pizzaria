@@ -1,6 +1,6 @@
 ---
 titulo: Escola da Pizza
-resumo: Formação profissional em panificação e pizzaria para egressos do sistema prisional, familiares de egressos e de pessoas privadas de liberdade, e moradores da periferia — com oficinas práticas e acompanhamento para inserção no mercado de trabalho.
+resumo: Formação profissional gratuita em panificação e pizzaria, aberta a moradores de todo o Alto Tietê, com prática na Opportunità em Poá. Egressos do sistema prisional e seus familiares seguem no centro do compromisso do Instituto Recomeçar.
 ordem: 1
 ---
 

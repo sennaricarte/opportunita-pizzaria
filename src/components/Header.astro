@@ -1,12 +1,11 @@
 ---
 import Logo from './Logo.astro';
-
-const cardapioUrl = 'https://menu.brendi.com.br/opportunita-pizzaria-social-vila-acoreana';
+import { CARDAPIO_URL, INSCRICAO_URL, WHATSAPP_PEDIDOS_URL } from '../config/site';
 
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/sobre', label: 'Sobre' },
-  { href: cardapioUrl, label: 'Cardápio', external: true },
+  { href: CARDAPIO_URL, label: 'Cardápio', external: true },
   { href: '/escola-da-pizza', label: 'Escola da Pizza' },
   { href: '/espaco', label: 'Espaço' },
   { href: '/eventos-corporativos', label: 'Eventos' },
@@ -14,14 +13,16 @@ const navLinks = [
   { href: '/contato', label: 'Contato' },
 ] as const;
 
-const whatsappUrl = 'https://wa.me/5511962448909';
+const whatsappUrl = WHATSAPP_PEDIDOS_URL;
 const currentPath = Astro.url.pathname;
+const path = currentPath.replace(/\/$/, '') || '/';
+const logoIsLcp = path === '/espaco' || path === '/instituto-recomecar';
 ---
 
 <header class="header">
   <div class="header__inner container">
     <a href="/" class="logo" aria-label="Opportunità Pizzaria Social — página inicial">
-      <Logo variant="header" />
+      <Logo variant="header" priority={logoIsLcp} />
     </a>
 
     <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-hidden="true" tabindex="-1" />
@@ -32,6 +33,15 @@ const currentPath = Astro.url.pathname;
     </label>
 
     <nav class="nav" aria-label="Principal">
+      <a
+        class="btn btn--primary btn--compact nav__inscricao"
+        href={INSCRICAO_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Inscreva-se na Escola (abre em nova aba)"
+      >
+        Inscreva-se na Escola
+      </a>
       <ul class="nav__list">
         {
           navLinks.map(({ href, label, ...rest }) => (
@@ -59,7 +69,7 @@ const currentPath = Astro.url.pathname;
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Peça sua pizza pelo WhatsApp"
+        aria-label="Peça sua pizza pelo WhatsApp (abre em nova aba)"
       >
         Peça sua pizza
       </a>
@@ -165,6 +175,10 @@ const currentPath = Astro.url.pathname;
     pointer-events: auto;
   }
 
+  .nav__inscricao {
+    width: 100%;
+  }
+
   .nav__list {
     display: flex;
     flex-direction: column;
@@ -242,11 +256,17 @@ const currentPath = Astro.url.pathname;
     }
 
     .nav__list {
+      order: 1;
       flex-direction: row;
       flex-wrap: wrap;
       align-items: center;
       justify-content: flex-end;
       gap: var(--space-1);
+    }
+
+    .nav__inscricao {
+      order: 2;
+      width: auto;
     }
 
     .nav__link {
@@ -255,6 +275,7 @@ const currentPath = Astro.url.pathname;
     }
 
     .cta {
+      order: 3;
       white-space: nowrap;
     }
   }

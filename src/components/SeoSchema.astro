@@ -1,4 +1,6 @@
 ---
+import { CARDAPIO_URL } from '../config/site';
+
 interface BreadcrumbItem {
   name: string;
   path: string;
@@ -7,9 +9,10 @@ interface BreadcrumbItem {
 interface Props {
   isHome?: boolean;
   breadcrumbs?: BreadcrumbItem[];
+  extra?: Record<string, unknown> | null;
 }
 
-const { isHome = false, breadcrumbs = [] } = Astro.props;
+const { isHome = false, breadcrumbs = [], extra = null } = Astro.props;
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://opportunitapizzaria.com.br';
 
@@ -31,7 +34,7 @@ const restaurantSchema = {
   },
   telephone: '+55-11-4634-1149',
   url: siteUrl,
-  menu: 'https://menu.brendi.com.br/opportunita-pizzaria-social-vila-acoreana',
+  menu: CARDAPIO_URL,
   sameAs: [instagramUrl, facebookUrl],
   priceRange: '$$',
   description:
@@ -58,5 +61,10 @@ const schema = isHome ? restaurantSchema : breadcrumbSchema;
 {
   schema && (
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  )
+}
+{
+  extra && (
+    <script type="application/ld+json" set:html={JSON.stringify(extra)} />
   )
 }
