@@ -11,89 +11,81 @@ const recomecarUrl = 'https://www.recomecar360.org';
 
 <footer class="footer">
   <div class="footer__inner container">
-    <div class="footer__brand">
-      <a href="/" class="footer__logo" aria-label="Opportunità Pizzaria Social — página inicial">
-        <Logo variant="footer" />
-      </a>
-      <p class="footer__tagline">Sabor que transforma vidas</p>
-      <a class="footer__sobre" href="/sobre">Sobre a Opportunità</a>
-      <a class="footer__sobre" href="/seja-patrocinador">Seja um patrocinador</a>
-      <p class="footer__mission">
-        100% do lucro é revertido para o
-        <a href={recomecarUrl} target="_blank" rel="noopener noreferrer" aria-label="Instituto Recomeçar (abre em nova aba)">
-          Instituto Recomeçar
-        </a>, que reintegra egressos do sistema prisional.
-      </p>
-      <Mascote variant="chef" size="sm" class="footer__mascote" />
-    </div>
+    <a href="/" class="footer__logo" aria-label="Opportunità Pizzaria Social — página inicial">
+      <Logo variant="footer" />
+    </a>
+    <p class="footer__tagline">Sabor que transforma vidas</p>
 
-    <div class="footer__grid">
-      <section class="footer__section" aria-labelledby="footer-contato">
-        <h2 id="footer-contato" class="footer__heading">Contato</h2>
-        <address class="footer__address">
-          <p>Av. Vital Brasil, 478</p>
-          <p>Vila Açoreana — Poá — SP</p>
-        </address>
-        <ul class="footer__contacts">
-          <li>
-            <a href="tel:+551146341149">(11) 4634-1149</a>
-          </li>
-          <li>
-            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp (11) 96244-8909 (abre em nova aba)">
-              WhatsApp (11) 96244-8909
-            </a>
-          </li>
-          <li>
-            <a href="mailto:contato@opportunitapizzaria.com.br">
-              contato@opportunitapizzaria.com.br
-            </a>
-          </li>
-        </ul>
-      </section>
-
-      <section class="footer__section" aria-labelledby="footer-redes">
-        <h2 id="footer-redes" class="footer__heading">Redes sociais</h2>
-        <ul class="footer__social">
-          <li>
-            <a
-              href={instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram @opportunita.pizzaria.social (abre em nova aba)"
-            >
-              Instagram
-            </a>
-          </li>
-          <li>
-            <a
-              href={facebookUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook @opportunita.pizzaria.social (abre em nova aba)"
-            >
-              Facebook
-            </a>
-          </li>
-        </ul>
-        <p class="footer__handle">@opportunita.pizzaria.social</p>
-      </section>
-
-      <section class="footer__section" aria-labelledby="footer-instituto">
-        <h2 id="footer-instituto" class="footer__heading">Instituto Recomeçar</h2>
-        <p>
-          Conheça o trabalho de reintegração social promovido pelo instituto parceiro.
-        </p>
+    <ul class="footer__social">
+      <li>
         <a
-          class="footer__link"
-          href={recomecarUrl}
+          href={instagramUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="www.recomecar360.org (abre em nova aba)"
+          aria-label="Instagram @opportunita.pizzaria.social (abre em nova aba)"
         >
-          www.recomecar360.org
+          Instagram
         </a>
-      </section>
-    </div>
+      </li>
+      <li>
+        <a
+          href={facebookUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook @opportunita.pizzaria.social (abre em nova aba)"
+        >
+          Facebook
+        </a>
+      </li>
+    </ul>
+    <p class="footer__handle">@opportunita.pizzaria.social</p>
+
+    <ul class="footer__contacts">
+      <li>
+        <a href="tel:+551146341149">(11) 4634-1149</a>
+      </li>
+      <li>
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp (11) 96244-8909 (abre em nova aba)">
+          WhatsApp (11) 96244-8909
+        </a>
+      </li>
+      <li>
+        <a href="mailto:contato@opportunitapizzaria.com.br">
+          contato@opportunitapizzaria.com.br
+        </a>
+      </li>
+    </ul>
+
+    <address class="footer__address">
+      Av. Vital Brasil, 478<br />
+      Vila Açoreana — Poá — SP
+    </address>
+
+    <p class="footer__mission">
+      100% do lucro é revertido para o
+      <a href={recomecarUrl} target="_blank" rel="noopener noreferrer" aria-label="Instituto Recomeçar (abre em nova aba)">
+        Instituto Recomeçar
+      </a>, que reintegra egressos do sistema prisional.
+    </p>
+    <p class="footer__instituto">
+      Conheça o trabalho de reintegração social promovido pelo instituto parceiro.
+      <a
+        class="footer__link"
+        href={recomecarUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="www.recomecar360.org (abre em nova aba)"
+      >
+        www.recomecar360.org
+      </a>
+    </p>
+
+    <p class="footer__links">
+      <a href="/sobre">Sobre a Opportunità</a>
+      <a href="/seja-patrocinador">Seja um patrocinador</a>
+    </p>
+
+    <Mascote variant="chef" size="sm" class="footer__mascote" />
 
     <p class="footer__copy">
       &copy; {new Date().getFullYear()} Opportunità Pizzaria Social. Todos os direitos reservados.
@@ -112,7 +104,9 @@ const recomecarUrl = 'https://www.recomecar360.org';
   .footer__inner {
     display: flex;
     flex-direction: column;
-    gap: var(--space-7);
+    align-items: center;
+    gap: var(--space-4);
+    text-align: center;
   }
 
   .footer__logo {
@@ -122,26 +116,16 @@ const recomecarUrl = 'https://www.recomecar360.org';
   }
 
   .footer__tagline {
-    margin-top: var(--space-4);
     font-size: var(--text-lg);
     font-weight: 600;
     color: var(--amarelo);
   }
 
-  .footer__sobre {
-    display: inline-block;
-    margin-top: var(--space-3);
+  .footer__mission,
+  .footer__instituto {
+    max-width: 42ch;
     font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--amarelo);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .footer__mission {
-    margin-top: var(--space-3);
-    max-width: 36ch;
-    font-size: var(--text-sm);
+    line-height: 1.7;
     opacity: 0.9;
   }
 
@@ -152,34 +136,32 @@ const recomecarUrl = 'https://www.recomecar360.org';
   }
 
   .footer__mascote {
-    margin-top: var(--space-4);
-  }
-
-  .footer__grid {
-    display: grid;
-    gap: var(--space-6);
-  }
-
-  .footer__heading {
-    font-size: var(--text-base);
-    font-weight: 600;
-    margin-bottom: var(--space-3);
-    color: var(--amarelo);
+    margin-top: var(--space-2);
   }
 
   .footer__address {
     font-style: normal;
     font-size: var(--text-sm);
     line-height: 1.7;
-    margin-bottom: var(--space-3);
+    opacity: 0.9;
   }
 
   .footer__contacts,
-  .footer__social {
+  .footer__links {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: var(--space-2);
     font-size: var(--text-sm);
+  }
+
+  .footer__social {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: 600;
   }
 
   .footer a {
@@ -203,27 +185,26 @@ const recomecarUrl = 'https://www.recomecar360.org';
 
   .footer__link {
     display: inline-block;
-    margin-top: var(--space-3);
+    margin-top: var(--space-2);
     font-weight: 500;
   }
 
-  .footer__section p {
-    font-size: var(--text-sm);
-    line-height: 1.7;
-    opacity: 0.9;
-  }
-
   .footer__copy {
+    width: 100%;
+    margin-top: var(--space-4);
     padding-top: var(--space-5);
     border-top: 1px solid rgb(255 255 255 / 15%);
     font-size: var(--text-sm);
     opacity: 0.75;
-    text-align: center;
   }
 
-  @media (min-width: 48rem) {
-    .footer__grid {
-      grid-template-columns: repeat(3, 1fr);
+  @media (min-width: 40rem) {
+    .footer__contacts,
+    .footer__links {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-4);
     }
   }
 </style>

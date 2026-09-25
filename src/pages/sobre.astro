@@ -1,10 +1,32 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Mascote from '../components/Mascote.astro';
 import Parceiros from '../components/Parceiros.astro';
+import { rasterFormats } from '../utils/image';
 import { WHATSAPP_PEDIDOS_URL } from '../config/site';
+import fotoAbertura from '../assets/images/escola/abertura-massa.jpg';
+import fotoMontagem from '../assets/images/escola/montagem-pizza.jpg';
+import fotoEquipe from '../assets/images/escola/pratica-equipe.jpg';
 
 const whatsappUrl = WHATSAPP_PEDIDOS_URL;
+const depoimentos = await getCollection('depoimentos');
+
+const fotos = [
+  {
+    src: fotoAbertura,
+    alt: 'Aluno abre a massa de pizza sobre a pá de madeira na aula prática',
+  },
+  {
+    src: fotoMontagem,
+    alt: 'Alunos montam uma pizza com queijo e recheio na bancada da cozinha',
+  },
+  {
+    src: fotoEquipe,
+    alt: 'Equipe da Escola da Pizza coloca coberturas juntos sobre a massa',
+  },
+] as const;
 ---
 
 <Base
@@ -29,40 +51,94 @@ const whatsappUrl = WHATSAPP_PEDIDOS_URL;
     </div>
   </section>
 
+  <section class="faixa" aria-label="Fotos da cozinha e da equipe">
+    <ul class="faixa__lista">
+      {
+        fotos.map(({ src, alt }) => (
+          <li class="faixa__item">
+            <Image
+              src={src}
+              alt={alt}
+              width={src.width}
+              height={src.height}
+              widths={[400, 700, 900]}
+              formats={rasterFormats(src)}
+              quality="mid"
+              loading="lazy"
+              decoding="async"
+              class="media-cover"
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
   <section class="historia" aria-labelledby="historia-titulo">
-    <div class="container historia__inner">
-      <h2 id="historia-titulo" class="section-title">Como a pizzaria nasceu</h2>
-      <p>
-        A Opportunità é um negócio de impacto do Instituto Recomeçar. Cada pizza artesanal
-        pedida na Vila Açoreana sustenta empregos, forma profissionais na Escola da Pizza
-        e devolve dignidade a quem está reconstruindo a própria história.
-      </p>
-      <p>
-        <strong>100% do lucro</strong> financia os projetos do instituto, que reintegra
-        egressos do sistema prisional na Grande São Paulo. Não é filantropia à parte do
-        cardápio: o sabor e a causa são o mesmo ofício.
-      </p>
-      <p>
-        Nada disso existiria sozinho. Fornecedores, ofícios, assessoria e instituições
-        colocaram equipamento, matéria-prima, identidade e confiança no projeto. Esta
-        página é o nosso obrigado a quem tornou a Opportunità possível.
-      </p>
+    <div class="container historia__grid">
+      <div class="historia__texto">
+        <h2 id="historia-titulo" class="section-title">Como a pizzaria nasceu</h2>
+        <p>
+          A Opportunità é um negócio de impacto do Instituto Recomeçar. Cada pizza artesanal
+          pedida na Vila Açoreana sustenta empregos, forma profissionais na Escola da Pizza
+          e devolve dignidade a quem está reconstruindo a própria história.
+        </p>
+        <p>
+          <strong>100% do lucro</strong> financia os projetos do instituto, que reintegra
+          egressos do sistema prisional na Grande São Paulo. Não é filantropia à parte do
+          cardápio: o sabor e a causa são o mesmo ofício.
+        </p>
+        <p>
+          Nada disso existiria sozinho. Fornecedores, ofícios, assessoria e instituições
+          colocaram equipamento, matéria-prima, identidade e confiança no projeto. Esta
+          página é o nosso obrigado a quem tornou a Opportunità possível.
+        </p>
+      </div>
+
+      <div class="comunidade">
+        <h2 id="comunidade-titulo" class="section-title">Uma pizzaria da comunidade</h2>
+        <ul class="citacoes">
+          <li>
+            <blockquote class="citacao">
+              <p>
+                A Opportunità não é um negócio à parte. Ela é a extensão da
+                <a href="/escola-da-pizza">Escola da Pizza</a>: a sala de aula prática
+                onde a turma aprende na cozinha, nos fornos da pizzaria, na Vila Açoreana.
+              </p>
+            </blockquote>
+          </li>
+          <li>
+            <blockquote class="citacao">
+              <p>
+                Também é um ponto de encontro da comunidade da Vila Açoreana e de Poá.
+                Cada pizza vendida gera trabalho na região, e 100% do lucro financia
+                novas turmas e os projetos do Instituto Recomeçar no Alto Tietê.
+              </p>
+            </blockquote>
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <section class="comunidade" aria-labelledby="comunidade-titulo">
-    <div class="container comunidade__inner">
-      <h2 id="comunidade-titulo" class="section-title">Uma pizzaria da comunidade</h2>
-      <p>
-        A Opportunità não é um negócio à parte. Ela é a extensão da
-        <a href="/escola-da-pizza">Escola da Pizza</a>: a sala de aula prática
-        onde a turma aprende na cozinha, nos fornos da pizzaria, na Vila Açoreana.
-      </p>
-      <p>
-        Também é um ponto de encontro da comunidade da Vila Açoreana e de Poá.
-        Cada pizza vendida gera trabalho na região, e 100% do lucro financia
-        novas turmas e os projetos do Instituto Recomeçar no Alto Tietê.
-      </p>
+  <section class="depoimentos" aria-labelledby="depoimentos-titulo">
+    <div class="container">
+      <h2 id="depoimentos-titulo" class="section-title">Depoimentos</h2>
+      <ul class="citacoes citacoes--grade">
+        {
+          depoimentos.map((item) => (
+            <li>
+              <blockquote class="citacao">
+                <p>{item.data.texto}</p>
+                <footer class="citacao__autor">
+                  <cite>{item.data.nome}</cite>
+                  <span>{item.data.papel}</span>
+                </footer>
+              </blockquote>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
@@ -91,21 +167,50 @@ const whatsappUrl = WHATSAPP_PEDIDOS_URL;
 </Base>
 
 <style>
+  .faixa__lista {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 85%;
+    gap: var(--space-3);
+    padding-inline: var(--space-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--verde) transparent;
+  }
+
+  .faixa__item {
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    scroll-snap-align: start;
+    background-color: var(--creme);
+  }
+
+  .faixa__item :global(img) {
+    object-fit: contain;
+    object-position: center;
+  }
+
   .historia {
     padding-block: var(--space-8);
     background-color: var(--branco);
   }
 
-  .historia__inner {
+  .historia__grid {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .historia__texto {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-    max-width: 48rem;
   }
 
   .historia p {
     font-size: var(--text-base);
     line-height: 1.75;
+    color: var(--preto);
   }
 
   .historia strong {
@@ -113,33 +218,79 @@ const whatsappUrl = WHATSAPP_PEDIDOS_URL;
   }
 
   .comunidade {
-    padding-block: var(--space-8);
-    background-color: var(--creme);
-    border-top: 1px solid rgb(27 107 58 / 10%);
-  }
-
-  .comunidade__inner {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-    max-width: 48rem;
   }
 
-  .comunidade p {
-    font-size: var(--text-base);
-    line-height: 1.75;
+  .citacoes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
   }
 
-  .comunidade a {
+  .citacao {
+    position: relative;
+    padding: var(--space-5);
+    padding-right: var(--space-7);
+    background-color: var(--branco);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 28px rgb(0 0 0 / 8%);
+  }
+
+  .citacao::after {
+    content: '\201D';
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-4);
+    color: var(--vermelho);
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .citacao p {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+
+  .citacao a {
     color: var(--verde);
     font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 0.12em;
   }
 
-  .comunidade a:hover,
-  .comunidade a:focus-visible {
+  .citacao a:hover,
+  .citacao a:focus-visible {
     color: var(--verde-escuro);
+  }
+
+  .depoimentos {
+    padding-block: var(--space-8);
+    background-color: var(--creme);
+  }
+
+  .citacoes--grade {
+    display: grid;
+    margin-top: var(--space-6);
+  }
+
+  .citacao__autor {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin-top: var(--space-4);
+  }
+
+  .citacao__autor cite {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .citacao__autor span {
+    font-size: var(--text-sm);
   }
 
   .cta {
@@ -175,6 +326,14 @@ const whatsappUrl = WHATSAPP_PEDIDOS_URL;
   }
 
   @media (min-width: 40rem) {
+    .faixa__lista {
+      grid-auto-flow: unset;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      padding-inline: 0;
+      overflow: visible;
+    }
+
     .cta__actions {
       flex-direction: row;
       flex-wrap: wrap;
@@ -183,6 +342,17 @@ const whatsappUrl = WHATSAPP_PEDIDOS_URL;
   }
 
   @media (min-width: 64rem) {
+    .historia__grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: start;
+      gap: var(--space-8);
+    }
+
+    .citacoes--grade {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+
     .cta__title {
       font-size: var(--text-3xl);
     }

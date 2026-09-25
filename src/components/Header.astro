@@ -19,7 +19,7 @@ const path = currentPath.replace(/\/$/, '') || '/';
 const logoIsLcp = path === '/espaco' || path === '/instituto-recomecar';
 ---
 
-<header class="header">
+<header class="header" id="topo">
   <div class="header__inner container">
     <a href="/" class="logo" aria-label="Opportunità Pizzaria Social — página inicial">
       <Logo variant="header" priority={logoIsLcp} />
@@ -76,6 +76,23 @@ const logoIsLcp = path === '/espaco' || path === '/instituto-recomecar';
     </nav>
   </div>
 </header>
+
+<div class="faixa">
+  <div class="container faixa__inner">
+    <p>Sabor que transforma vidas. 100% do lucro financia o Instituto Recomeçar.</p>
+    <a
+      class="faixa__acao"
+      href={CARDAPIO_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Ver cardápio (abre em nova aba)"
+    >
+      Ver cardápio
+    </a>
+  </div>
+</div>
+
+<a class="voltar" href="#topo">Voltar ao topo</a>
 
 <style>
   .header {
@@ -188,8 +205,10 @@ const logoIsLcp = path === '/espaco' || path === '/instituto-recomecar';
   .nav__link {
     display: block;
     padding: var(--space-3) var(--space-2);
-    font-size: var(--text-base);
-    font-weight: 500;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     text-decoration: none;
     color: var(--branco);
     border-radius: calc(var(--radius) / 2);
@@ -271,12 +290,95 @@ const logoIsLcp = path === '/espaco' || path === '/instituto-recomecar';
 
     .nav__link {
       padding: var(--space-2) var(--space-3);
-      font-size: var(--text-sm);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
     }
 
     .cta {
       order: 3;
       white-space: nowrap;
+    }
+  }
+
+  .faixa {
+    background-color: var(--vermelho);
+    color: var(--branco);
+  }
+
+  .faixa__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding-block: var(--space-4);
+  }
+
+  .faixa__inner p {
+    font-size: var(--text-sm);
+    line-height: 1.5;
+  }
+
+  .faixa__acao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    padding: var(--space-2) var(--space-4);
+    border: 2px solid var(--branco);
+    border-radius: var(--radius);
+    color: var(--branco);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .faixa__acao:hover,
+  .faixa__acao:focus-visible {
+    background-color: var(--branco);
+    color: var(--vermelho);
+    outline: none;
+  }
+
+  .voltar {
+    position: fixed;
+    right: var(--space-4);
+    bottom: var(--space-4);
+    z-index: 90;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    overflow: hidden;
+    background-color: var(--vermelho);
+    color: transparent;
+    text-indent: -999px;
+    white-space: nowrap;
+  }
+
+  .voltar::before {
+    content: '';
+    position: absolute;
+    width: 0.65rem;
+    height: 0.65rem;
+    border-top: 2px solid var(--branco);
+    border-right: 2px solid var(--branco);
+    transform: translateY(0.15rem) rotate(-45deg);
+  }
+
+  .voltar:hover,
+  .voltar:focus-visible {
+    background-color: var(--verde-escuro);
+    outline: 2px solid var(--amarelo);
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 40rem) {
+    .faixa__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
     }
   }
 </style>
