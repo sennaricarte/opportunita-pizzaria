@@ -2,9 +2,13 @@
 import { getCollection, getEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import StatsBand from '../components/StatsBand.astro';
+import { getPostsPublicados } from '../utils/blog';
 
 const { data: stats } = await getEntry('stats', 'impacto');
 const projetos = (await getCollection('projetos')).sort((a, b) => a.data.ordem - b.data.ordem);
+const postReintegracao = (await getPostsPublicados()).find(
+  (post) => post.id === 'reintegracao-de-egressos-pelo-trabalho',
+);
 
 const mailtoParceiro =
   'mailto:gestao@opportunita.org.br?subject=Parceria institucional — Instituto Recomeçar';
@@ -175,6 +179,16 @@ const reincidenciaNacional = stats.reincidenciaMediaNacional.toLocaleString('pt-
           })
         }
       </ul>
+      {
+        postReintegracao && (
+          <p class="projetos__leitura">
+            Leia:{' '}
+            <a href="/blog/reintegracao-de-egressos-pelo-trabalho/">
+              reintegração de egressos pelo trabalho
+            </a>
+          </p>
+        )
+      }
     </div>
   </section>
 
@@ -447,6 +461,32 @@ const reincidenciaNacional = stats.reincidenciaMediaNacional.toLocaleString('pt-
     color: var(--verde);
     text-decoration: underline;
     text-underline-offset: 3px;
+  }
+
+  .projetos__leitura {
+    margin-top: var(--space-5);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--preto);
+    opacity: 0.8;
+  }
+
+  .projetos__leitura a {
+    color: var(--verde);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .projetos__leitura a:hover,
+  .projetos__leitura a:focus-visible {
+    color: var(--verde-escuro);
+    outline: none;
+  }
+
+  .projetos__leitura a:focus-visible {
+    outline: 2px solid var(--amarelo);
+    outline-offset: 2px;
   }
 
   /* Negócios */
