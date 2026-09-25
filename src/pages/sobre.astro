@@ -6,12 +6,16 @@ import Mascote from '../components/Mascote.astro';
 import Parceiros from '../components/Parceiros.astro';
 import { rasterFormats } from '../utils/image';
 import { WHATSAPP_PEDIDOS_URL } from '../config/site';
+import { getPostsPublicados } from '../utils/blog';
 import fotoAbertura from '../assets/images/escola/abertura-massa.jpg';
 import fotoMontagem from '../assets/images/escola/montagem-pizza.jpg';
 import fotoEquipe from '../assets/images/escola/pratica-equipe.jpg';
 
 const whatsappUrl = WHATSAPP_PEDIDOS_URL;
 const depoimentos = await getCollection('depoimentos');
+const postPizzariaSocial = (await getPostsPublicados()).find(
+  (post) => post.id === 'por-que-a-opportunita-e-uma-pizzaria-social',
+);
 
 const fotos = [
   {
@@ -117,6 +121,16 @@ const fotos = [
             </blockquote>
           </li>
         </ul>
+        {
+          postPizzariaSocial && (
+            <p class="comunidade__leitura">
+              Leia:{' '}
+              <a href="/blog/por-que-a-opportunita-e-uma-pizzaria-social/">
+                por que somos uma pizzaria social
+              </a>
+            </p>
+          )
+        }
       </div>
     </div>
   </section>
@@ -221,6 +235,31 @@ const fotos = [
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+  }
+
+  .comunidade__leitura {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--preto);
+    opacity: 0.8;
+  }
+
+  .comunidade__leitura a {
+    color: var(--verde);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .comunidade__leitura a:hover,
+  .comunidade__leitura a:focus-visible {
+    color: var(--verde-escuro);
+    outline: none;
+  }
+
+  .comunidade__leitura a:focus-visible {
+    outline: 2px solid var(--amarelo);
+    outline-offset: 2px;
   }
 
   .citacoes {
