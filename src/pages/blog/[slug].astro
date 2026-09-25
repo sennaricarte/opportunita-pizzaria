@@ -1,0 +1,351 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import {
+  categorias,
+  formatarData,
+  getPostsPublicados,
+  tempoLeitura,
+} from '../../utils/blog';
+import {
+  INSCRICAO_URL,
+  WHATSAPP_PEDIDOS_URL,
+} from '../../config/site';
+import { rasterFormats } from '../../utils/image';
+import logoOg from '../../assets/images/logo-opportunita.png';
+
+export async function getStaticPaths() {
+  const posts = await getPostsPublicados();
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { data, body } = post;
+const { Content } = await render(post);
+const categoria = categorias[data.categoria];
+const minutos = tempoLeitura(body ?? '');
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://opportunitapizzaria.com.br';
+
+const capaOg = await getImage({
+  src: data.capa.src,
+  width: 1200,
+  height: 630,
+});
+const logoSchema = await getImage({
+  src: logoOg,
+  width: 512,
+  height: 384,
+});
+
+const dataPublicacaoIso = data.dataPublicacao.toISOString();
+const dataModificacaoIso = (data.dataAtualizacao ?? data.dataPublicacao).toISOString();
+
+const ctas = {
+  inscricao: {
+    href: INSCRICAO_URL,
+    label: 'Quero me inscrever na Escola da Pizza',
+    desc: 'Formação gratuita com prática real na cozinha da Opportunità.',
+    externo: true,
+  },
+  pedido: {
+    href: WHATSAPP_PEDIDOS_URL,
+    label: 'Peça sua pizza',
+    desc: 'Delivery artesanal na Vila Açoreana — Poá e região.',
+    externo: true,
+  },
+  patrocinio: {
+    href: '/seja-patrocinador',
+    label: 'Seja um patrocinador',
+    desc: 'Leve sua marca às caixas e às turmas da Escola da Pizza.',
+    externo: false,
+  },
+} as const;
+
+const cta = ctas[data.cta];
+
+const todos = await getPostsPublicados();
+const mesmaCategoria = todos.filter(
+  (p) => p.id !== post.id && p.data.categoria === data.categoria,
+);
+const outros = todos.filter(
+  (p) => p.id !== post.id && p.data.categoria !== data.categoria,
+);
+const relacionados = [...mesmaCategoria, ...outros].slice(0, 3);
+
+const blogPostingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: data.titulo,
+  description: data.descricao,
+  image: new URL(capaOg.src, siteUrl).href,
+  datePublished: dataPublicacaoIso,
+  dateModified: dataModificacaoIso,
+  author: {
+    '@type': 'Person',
+    name: data.autor,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Opportunità',
+    logo: {
+      '@type': 'ImageObject',
+      url: new URL(logoSchema.src, siteUrl).href,
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': new URL(`/blog/${post.id}/`, siteUrl).href,
+  },
+};
+---
+
+<Base
+  title={`${data.titulo} | Blog Opportunità`}
+  description={data.descricao}
+  appendSiteName={false}
+  ogType="article"
+  ogImage={capaOg.src}
+  extraSchema={blogPostingSchema}
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Blog', path: '/blog/' },
+    { name: categoria.nome, path: `/blog/categoria/${categoria.slug}/` },
+    { name: data.titulo, path: `/blog/${post.id}/` },
+  ]}
+>
+  <article class="post">
+    <div class="container post__inner">
+      <nav class="post__crumbs" aria-label="Breadcrumb">
+        <ol class="post__crumbs-lista">
+          <li><a href="/">Home</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li>
+            <a href={`/blog/categoria/${categoria.slug}/`}>{categoria.nome}</a>
+          </li>
+          <li aria-current="page">{data.titulo}</li>
+        </ol>
+      </nav>
+
+      <header class="post__header">
+        <a class="post__categoria" href={`/blog/categoria/${categoria.slug}/`}>
+          {categoria.nome}
+        </a>
+        <h1 class="post__titulo">{data.titulo}</h1>
+        <p class="post__meta">
+          <time datetime={data.dataPublicacao.toISOString().slice(0, 10)}>
+            {formatarData(data.dataPublicacao)}
+          </time>
+          {
+            data.dataAtualizacao && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>
+                  atualizado em{' '}
+                  <time datetime={data.dataAtualizacao.toISOString().slice(0, 10)}>
+                    {formatarData(data.dataAtualizacao)}
+                  </time>
+                </span>
+              </>
+            )
+          }
+          <span aria-hidden="true">·</span>
+          <span>{data.autor}</span>
+          <span aria-hidden="true">·</span>
+          <span>{minutos} min de leitura</span>
+        </p>
+      </header>
+
+      <figure class="post__capa media-slot media-slot--16-9">
+        <Image
+          src={data.capa.src}
+          alt={data.capa.alt}
+          width={1200}
+          height={675}
+          widths={[400, 800, 1200]}
+          formats={rasterFormats(data.capa.src)}
+          quality="mid"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="media-cover"
+        />
+      </figure>
+
+      <div class="prose post__conteudo">
+        <Content />
+      </div>
+
+      <aside class="post__cta" aria-labelledby="cta-titulo">
+        <h2 id="cta-titulo" class="post__cta-titulo">{cta.label}</h2>
+        <p class="post__cta-desc">{cta.desc}</p>
+        <a
+          class="btn btn--primary"
+          href={cta.href}
+          {...(cta.externo
+            ? { target: '_blank', rel: 'noopener noreferrer' }
+            : {})}
+        >
+          {cta.label}
+        </a>
+      </aside>
+    </div>
+  </article>
+
+  {
+    relacionados.length > 0 && (
+      <section class="post-rel" aria-labelledby="rel-titulo">
+        <div class="container">
+          <h2 id="rel-titulo" class="section-title">Continue lendo</h2>
+          <ul class="post-rel__grid">
+            {relacionados.map((rel) => (
+              <li>
+                <PostCard post={rel} headingLevel="h3" />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .post {
+    padding-block: var(--space-6) var(--space-8);
+  }
+
+  .post__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: 48rem;
+  }
+
+  .post__crumbs-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--preto);
+    opacity: 0.75;
+  }
+
+  .post__crumbs-lista li:not(:last-child)::after {
+    content: '›';
+    margin-left: var(--space-2);
+    opacity: 0.6;
+  }
+
+  .post__crumbs a {
+    color: var(--verde);
+    text-decoration: none;
+  }
+
+  .post__crumbs a:hover,
+  .post__crumbs a:focus-visible {
+    text-decoration: underline;
+    outline: none;
+  }
+
+  .post__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .post__categoria {
+    align-self: start;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--verde);
+    text-decoration: none;
+  }
+
+  .post__categoria:hover,
+  .post__categoria:focus-visible {
+    color: var(--verde-escuro);
+    text-decoration: underline;
+    outline: none;
+  }
+
+  .post__titulo {
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    color: var(--verde-escuro);
+    line-height: 1.15;
+  }
+
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    opacity: 0.75;
+  }
+
+  .post__capa {
+    margin: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .post__conteudo {
+    width: 100%;
+  }
+
+  .post__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, var(--verde) 0%, var(--verde-escuro) 100%);
+    color: var(--branco);
+  }
+
+  .post__cta-titulo {
+    font-size: var(--text-xl);
+    font-weight: 600;
+  }
+
+  .post__cta-desc {
+    font-size: var(--text-base);
+    line-height: 1.6;
+    opacity: 0.95;
+    max-width: 40ch;
+  }
+
+  .post-rel {
+    padding-block: 0 var(--space-8);
+  }
+
+  .post-rel .section-title {
+    margin-bottom: var(--space-5);
+  }
+
+  .post-rel__grid {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 40rem) {
+    .post-rel__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .post-rel__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

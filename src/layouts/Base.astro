@@ -19,12 +19,23 @@ interface Props {
   title: string;
   description: string;
   ogImage?: string;
+  ogType?: 'website' | 'article';
   breadcrumbs?: BreadcrumbItem[];
   appendSiteName?: boolean;
   extraSchema?: Record<string, unknown> | null;
+  noindex?: boolean;
 }
 
-const { title, description, ogImage, breadcrumbs, appendSiteName = true, extraSchema = null } = Astro.props;
+const {
+  title,
+  description,
+  ogImage,
+  ogType = 'website',
+  breadcrumbs,
+  appendSiteName = true,
+  extraSchema = null,
+  noindex = false,
+} = Astro.props;
 
 const siteName = 'Opportunità Pizzaria Social';
 const fullTitle = appendSiteName ? `${title} | ${siteName}` : title;
@@ -49,9 +60,16 @@ const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Blog da Opportunità"
+      href={new URL('/rss.xml', Astro.site)}
+    />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={fullTitle} />

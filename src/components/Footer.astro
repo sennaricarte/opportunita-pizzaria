@@ -2,11 +2,14 @@
 import Logo from './Logo.astro';
 import Mascote from './Mascote.astro';
 import { WHATSAPP_PEDIDOS_URL } from '../config/site';
+import { getPostsPublicados } from '../utils/blog';
 
 const whatsappUrl = WHATSAPP_PEDIDOS_URL;
 const instagramUrl = 'https://www.instagram.com/opportunita.pizzaria.social/';
 const facebookUrl = 'https://www.facebook.com/opportunita.pizzaria.social';
 const recomecarUrl = 'https://www.recomecar360.org';
+const postsPublicados = await getPostsPublicados();
+const mostrarBlog = postsPublicados.length > 0;
 ---
 
 <footer class="footer">
@@ -81,6 +84,7 @@ const recomecarUrl = 'https://www.recomecar360.org';
     </p>
 
     <p class="footer__links">
+      {mostrarBlog && <a href="/blog/">Blog</a>}
       <a href="/sobre">Sobre a Opportunità</a>
       <a href="/seja-patrocinador">Seja um patrocinador</a>
     </p>

@@ -6,6 +6,7 @@ import Mascote from '../components/Mascote.astro';
 import GraficoBarras from '../components/GraficoBarras.astro';
 import { rasterFormats } from '../utils/image';
 import { getAncoraResultados, INSCRICAO_URL, WHATSAPP_INSTITUCIONAL } from '../config/site';
+import { getPostsPublicados } from '../utils/blog';
 import fotoMassa from '../assets/images/escola/massa-aluna.jpg';
 import fotoAbertura from '../assets/images/escola/abertura-massa.jpg';
 import fotoMontagem from '../assets/images/escola/montagem-pizza.jpg';
@@ -46,6 +47,10 @@ const turmas = (await getCollection('turmas'))
     const porData = a.data.conclusao.getTime() - b.data.conclusao.getTime();
     return porData !== 0 ? porData : a.data.numero - b.data.numero;
   });
+
+const postComoFunciona = (await getPostsPublicados()).find(
+  (post) => post.id === 'como-funciona-a-escola-da-pizza',
+);
 
 const temResultados = turmas.length > 0;
 const ancoraResultados = await getAncoraResultados();
@@ -423,6 +428,17 @@ const faq = [
         </p>
       </aside>
 
+      {
+        postComoFunciona && (
+          <p class="publico__leitura">
+            Quer saber mais? Leia:{' '}
+            <a href="/blog/como-funciona-a-escola-da-pizza/">
+              Como funciona a Escola da Pizza
+            </a>
+          </p>
+        )
+      }
+
       <aside class="publico__info" aria-label="Informações sobre o processo seletivo">
         <p>
           <strong>Processo seletivo por inscrição e entrevista.</strong> Não é necessária
@@ -738,6 +754,32 @@ const faq = [
     margin-top: var(--space-3);
     font-size: var(--text-sm);
     line-height: 1.7;
+  }
+
+  .publico__leitura {
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--preto);
+    opacity: 0.8;
+  }
+
+  .publico__leitura a {
+    color: var(--verde);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .publico__leitura a:hover,
+  .publico__leitura a:focus-visible {
+    color: var(--verde-escuro);
+    outline: none;
+  }
+
+  .publico__leitura a:focus-visible {
+    outline: 2px solid var(--amarelo);
+    outline-offset: 2px;
   }
 
   .publico__info {

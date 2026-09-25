@@ -1,0 +1,138 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { categorias, getPostsPublicados } from '../../utils/blog';
+
+const posts = await getPostsPublicados();
+const vazio = posts.length === 0;
+const listaCategorias = Object.values(categorias).filter((cat) =>
+  posts.some((post) => post.data.categoria === cat.slug),
+);
+
+const description = vazio
+  ? 'Em breve, novidades da Escola da Pizza e da comunidade do Alto Tietê no blog da Opportunità.'
+  : 'Notícias, histórias e bastidores da Escola da Pizza, da pizzaria social em Poá e da comunidade do Alto Tietê.';
+---
+
+<Base
+  title="Blog da Opportunità"
+  description={description}
+  noindex={vazio}
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Blog', path: '/blog/' },
+  ]}
+>
+  <section class="hero hero--green" aria-labelledby="blog-titulo">
+    <div class="container hero__inner hero__inner--narrow">
+      <h1 id="blog-titulo" class="hero__title">Blog da Opportunità</h1>
+      <p class="hero__subtitle">
+        Histórias da cozinha, da formação e da causa por trás de cada pizza em Poá.
+      </p>
+    </div>
+  </section>
+
+  {
+    listaCategorias.length > 0 && (
+      <section class="blog-nav" aria-label="Categorias do blog">
+        <div class="container">
+          <ul class="blog-nav__lista">
+            {listaCategorias.map((cat) => (
+              <li>
+                <a class="blog-nav__link" href={`/blog/categoria/${cat.slug}/`}>
+                  {cat.nome}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="blog-lista" aria-labelledby="posts-titulo">
+    <div class="container">
+      <h2 id="posts-titulo" class="sr-only">Posts recentes</h2>
+
+      {
+        vazio ? (
+          <p class="blog-lista__vazio">
+            Em breve, novidades da Escola da Pizza e da comunidade do Alto Tietê.
+          </p>
+        ) : (
+          <ul class="blog-lista__grid">
+            {posts.map((post) => (
+              <li>
+                <PostCard post={post} headingLevel="h2" />
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .blog-nav {
+    padding-block: var(--space-5);
+    border-bottom: 1px solid rgb(27 107 58 / 12%);
+    background-color: var(--branco);
+  }
+
+  .blog-nav__lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-5);
+  }
+
+  .blog-nav__link {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--verde);
+    text-decoration: none;
+  }
+
+  .blog-nav__link:hover,
+  .blog-nav__link:focus-visible {
+    color: var(--verde-escuro);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+    outline: none;
+  }
+
+  .blog-nav__link:focus-visible {
+    outline: 2px solid var(--amarelo);
+    outline-offset: 2px;
+  }
+
+  .blog-lista {
+    padding-block: var(--space-7) var(--space-8);
+  }
+
+  .blog-lista__vazio {
+    max-width: 40ch;
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    color: var(--verde-escuro);
+  }
+
+  .blog-lista__grid {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 40rem) {
+    .blog-lista__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .blog-lista__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-7);
+    }
+  }
+</style>

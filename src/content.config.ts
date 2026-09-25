@@ -51,6 +51,30 @@ const turmas = defineCollection({
     }),
 });
 
+const blog = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
+  schema: ({ image }) =>
+    z.object({
+      titulo: z.string(),
+      descricao: z.string().max(155),
+      dataPublicacao: z.coerce.date(),
+      dataAtualizacao: z.coerce.date().optional(),
+      autor: z.string().default('Equipe Opportunità'),
+      categoria: z.enum([
+        'escola-da-pizza',
+        'receitas-e-tecnicas',
+        'impacto-social',
+        'alto-tiete',
+      ]),
+      capa: z.object({
+        src: image(),
+        alt: z.string(),
+      }),
+      cta: z.enum(['inscricao', 'pedido', 'patrocinio']).default('inscricao'),
+      publicado: z.boolean().default(false),
+    }),
+});
+
 const stats = defineCollection({
   loader: file('src/content/stats.json'),
   schema: z.object({
@@ -66,4 +90,4 @@ const stats = defineCollection({
   }),
 });
 
-export const collections = { pizzas, depoimentos, projetos, turmas, stats };
+export const collections = { pizzas, depoimentos, projetos, turmas, blog, stats };

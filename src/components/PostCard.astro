@@ -1,0 +1,155 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { rasterFormats } from '../utils/image';
+import { categorias, formatarData, tempoLeitura } from '../utils/blog';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { post, headingLevel = 'h2' } = Astro.props;
+const { data, id, body } = post;
+const categoria = categorias[data.categoria];
+const href = `/blog/${id}/`;
+const minutos = tempoLeitura(body ?? '');
+const Heading = headingLevel;
+---
+
+<article class="post-card">
+  <div class="post-card__media media-slot media-slot--16-9" aria-hidden="true">
+    <Image
+      src={data.capa.src}
+      alt=""
+      width={800}
+      height={450}
+      widths={[400, 600, 800]}
+      formats={rasterFormats(data.capa.src)}
+      quality="mid"
+      loading="lazy"
+      decoding="async"
+      class="media-cover"
+    />
+  </div>
+
+  <div class="post-card__body">
+    <a class="post-card__categoria" href={`/blog/categoria/${categoria.slug}/`}>
+      {categoria.nome}
+    </a>
+
+    <Heading class="post-card__titulo">
+      <a class="post-card__link" href={href}>{data.titulo}</a>
+    </Heading>
+
+    <p class="post-card__descricao">{data.descricao}</p>
+
+    <p class="post-card__meta">
+      <time datetime={data.dataPublicacao.toISOString().slice(0, 10)}>
+        {formatarData(data.dataPublicacao)}
+      </time>
+      <span aria-hidden="true">·</span>
+      <span>{minutos} min de leitura</span>
+    </p>
+  </div>
+</article>
+
+<style>
+  .post-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    height: 100%;
+  }
+
+  .post-card__media {
+    border-radius: var(--radius);
+    overflow: hidden;
+    background-color: rgb(27 107 58 / 8%);
+  }
+
+  .post-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    flex: 1;
+  }
+
+  .post-card__categoria {
+    position: relative;
+    z-index: 2;
+    align-self: start;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--verde);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .post-card__categoria:hover,
+  .post-card__categoria:focus-visible {
+    color: var(--verde-escuro);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+    outline: none;
+  }
+
+  .post-card__categoria:focus-visible {
+    outline: 2px solid var(--amarelo);
+    outline-offset: 2px;
+  }
+
+  .post-card__titulo {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--verde-escuro);
+    line-height: 1.25;
+  }
+
+  .post-card__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .post-card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: var(--radius);
+  }
+
+  .post-card:has(.post-card__link:hover) .post-card__titulo,
+  .post-card:has(.post-card__link:focus-visible) .post-card__titulo {
+    color: var(--verde);
+  }
+
+  .post-card__link:focus-visible {
+    outline: none;
+  }
+
+  .post-card__link:focus-visible::after {
+    outline: 2px solid var(--amarelo);
+    outline-offset: 2px;
+  }
+
+  .post-card__descricao {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--preto);
+    opacity: 0.85;
+  }
+
+  .post-card__meta {
+    margin-top: auto;
+    padding-top: var(--space-2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--preto);
+    opacity: 0.7;
+  }
+</style>

@@ -1,0 +1,89 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { categorias, getPostsPublicados } from '../../../utils/blog';
+import type { CollectionEntry } from 'astro:content';
+
+type CategoriaSlug = CollectionEntry<'blog'>['data']['categoria'];
+
+export async function getStaticPaths() {
+  const posts = await getPostsPublicados();
+  const porCategoria = new Map<CategoriaSlug, CollectionEntry<'blog'>[]>();
+
+  for (const post of posts) {
+    const lista = porCategoria.get(post.data.categoria) ?? [];
+    lista.push(post);
+    porCategoria.set(post.data.categoria, lista);
+  }
+
+  return [...porCategoria.entries()].map(([categoria, postsCategoria]) => ({
+    params: { categoria },
+    props: {
+      categoria,
+      posts: postsCategoria,
+    },
+  }));
+}
+
+const { categoria, posts } = Astro.props;
+const meta = categorias[categoria];
+---
+
+<Base
+  title={`${meta.nome} | Blog Opportunità`}
+  description={meta.descricao}
+  appendSiteName={false}
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Blog', path: '/blog/' },
+    { name: meta.nome, path: `/blog/categoria/${meta.slug}/` },
+  ]}
+>
+  <section class="hero hero--green" aria-labelledby="cat-titulo">
+    <div class="container hero__inner hero__inner--narrow">
+      <p class="hero__eyebrow">Categoria</p>
+      <h1 id="cat-titulo" class="hero__title">{meta.nome}</h1>
+      <p class="hero__subtitle">{meta.descricao}</p>
+    </div>
+  </section>
+
+  <section class="cat-lista" aria-labelledby="cat-posts-titulo">
+    <div class="container">
+      <h2 id="cat-posts-titulo" class="sr-only">Posts em {meta.nome}</h2>
+      <ul class="cat-lista__grid">
+        {
+          posts.map((post) => (
+            <li>
+              <PostCard post={post} headingLevel="h2" />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cat-lista {
+    padding-block: var(--space-7) var(--space-8);
+  }
+
+  .cat-lista__grid {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 40rem) {
+    .cat-lista__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cat-lista__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-7);
+    }
+  }
+</style>
