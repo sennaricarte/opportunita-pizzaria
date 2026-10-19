@@ -21,6 +21,9 @@ const whatsappEscola = `${whatsappBase}?text=${encodeURIComponent(
   'Olá! Gostaria de informações sobre inscrição na Escola da Pizza. Podem me ajudar?'
 )}`;
 
+// Áreas de entrega confirmadas pelo cliente (19/10/2026). Manter em sincronia com areaServed em SeoSchema.astro.
+const areasEntrega = ['Poá', 'Suzano', 'Itaquaquecetuba', 'Ferraz de Vasconcelos', 'Cidade Kemel'] as const;
+
 const mailtoParceiro =
   'mailto:gestao@opportunita.org.br?subject=Parceria institucional — Opportunità';
 const mailtoContato = 'mailto:contato@opportunitapizzaria.com.br';
@@ -182,6 +185,11 @@ const horario = [
         <div class="contato__horario">
           <h3 class="contato__subtitulo">Horário de funcionamento</h3>
           {horario.map(({ dias, horas }) => <p>{dias}: {horas}</p>)}
+        </div>
+
+        <div class="contato__horario">
+          <h3 class="contato__subtitulo">Áreas de entrega</h3>
+          <p>{areasEntrega.join(', ')}.</p>
         </div>
       </div>
 

@@ -51,7 +51,18 @@ const restaurantSchema = {
   url: `${siteUrl}/`,
   menu: CARDAPIO_URL,
   hasMap: mapsUrl,
-  areaServed: { '@type': 'City', name: 'Poá' },
+  // Áreas de entrega confirmadas pelo cliente (19/10/2026).
+  areaServed: [
+    { '@type': 'City', name: 'Poá' },
+    { '@type': 'City', name: 'Suzano' },
+    { '@type': 'City', name: 'Itaquaquecetuba' },
+    { '@type': 'City', name: 'Ferraz de Vasconcelos' },
+    {
+      '@type': 'Place',
+      name: 'Cidade Kemel',
+      containedInPlace: { '@type': 'City', name: 'Poá' },
+    },
+  ],
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
