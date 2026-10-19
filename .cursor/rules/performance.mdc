@@ -16,7 +16,7 @@ alwaysApply: true
 - Interatividade preferencial via HTML/CSS nativo: `details`/`summary`, `scroll-snap`, `:has()`, Popover API.
 - **Último recurso:** vanilla JS inline mínimo, sem dependências.
 - **Proibido instalar:** React, Vue, jQuery, sliders, lightboxes ou qualquer biblioteca de UI.
-- **Exceção autorizada (19/10/2026): Google Analytics 4.** `src/components/Analytics.astro` carrega o gtag.js (async) e um listener de cliques em vanilla JS, apenas em produção. Não remover. Novos eventos: mapear em `Analytics.astro` ou usar `data-evento` no link. Não adicionar outros scripts de terceiros sem aprovação.
+- **Exceção autorizada (19/10/2026): Google Analytics 4 com consentimento (LGPD).** `src/components/Analytics.astro` renderiza o aviso de cookies, o Consent Mode v2 e um listener de cliques em vanilla JS, apenas em produção. O gtag.js só é carregado após o "Aceitar". Não remover nem carregar o GA antes do consentimento. Novos eventos: mapear em `Analytics.astro` ou usar `data-evento` no link. Não adicionar outros scripts de terceiros sem aprovação.
 
 ## Imagens
 

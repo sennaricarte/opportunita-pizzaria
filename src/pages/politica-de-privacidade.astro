@@ -1,0 +1,218 @@
+---
+import Base from '../layouts/Base.astro';
+
+const email = 'contato@opportunitapizzaria.com.br';
+const atualizadoEm = '19 de outubro de 2026';
+
+const cookies = [
+  {
+    nome: '_ga',
+    finalidade: 'Distingue visitantes para gerar estatísticas de uso do site.',
+    duracao: 'Até 2 anos',
+  },
+  {
+    nome: '_ga_ + identificador do fluxo',
+    finalidade: 'Mantém o estado da sessão de navegação no Google Analytics.',
+    duracao: 'Até 2 anos',
+  },
+] as const;
+---
+
+<Base
+  title="Política de Privacidade e Cookies"
+  description="Saiba quais dados o site da Opportunità trata, como usamos cookies de medição do Google Analytics e como exercer seus direitos pela LGPD."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Política de Privacidade', path: '/politica-de-privacidade/' },
+  ]}
+>
+  <section class="hero hero--green" aria-labelledby="hero-titulo">
+    <div class="container hero__inner hero__inner--narrow">
+      <h1 id="hero-titulo" class="hero__title">Política de Privacidade e Cookies</h1>
+      <p class="hero__subtitle">
+        Transparência sobre os dados que tratamos neste site. Atualizada em {atualizadoEm}.
+      </p>
+    </div>
+  </section>
+
+  <section class="politica" aria-label="Conteúdo da política">
+    <div class="container politica__texto">
+      <h2>Quem somos</h2>
+      <p>
+        Este site é operado pela Opportunità Pizzaria Social, na Av. Vital Brasil, 478, Vila
+        Açoreana, Poá (SP). Para qualquer assunto sobre privacidade, fale conosco em
+        <a href={`mailto:${email}`}>{email}</a>.
+      </p>
+
+      <h2>Quais dados tratamos</h2>
+      <p>O site não tem formulários próprios. Os dados que tratamos vêm de duas fontes.</p>
+      <ul>
+        <li>
+          <strong>Medição de uso (somente com seu consentimento):</strong> páginas visitadas,
+          cliques em botões como pedir pizza, ver cardápio e se inscrever na Escola da Pizza,
+          tipo de dispositivo e navegador, localização aproximada e identificadores de cookie.
+        </li>
+        <li>
+          <strong>Contato que você inicia:</strong> ao chamar pelo WhatsApp, telefone ou e-mail,
+          recebemos os dados que você mesmo informar, como nome, número e conteúdo da mensagem.
+        </li>
+      </ul>
+
+      <h2>Para que usamos os dados</h2>
+      <ul>
+        <li>Entender como o site é usado e melhorar o conteúdo e a navegação.</li>
+        <li>Responder pedidos, dúvidas, inscrições e propostas de parceria.</li>
+      </ul>
+
+      <h2>Cookies</h2>
+      <p>
+        Usamos apenas cookies de medição do Google Analytics. Eles só são gravados depois que
+        você clica em <strong>Aceitar</strong> no aviso de cookies. Não usamos cookies de
+        publicidade.
+      </p>
+      <div class="politica__tabela" role="region" aria-label="Lista de cookies" tabindex="0">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Cookie</th>
+              <th scope="col">Finalidade</th>
+              <th scope="col">Duração</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              cookies.map(({ nome, finalidade, duracao }) => (
+                <tr>
+                  <td>
+                    <code>{nome}</code>
+                  </td>
+                  <td>{finalidade}</td>
+                  <td>{duracao}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Guardamos sua escolha no próprio navegador. Para mudar de ideia, use o botão
+        <strong>Preferências de cookies</strong> no rodapé do site. Ao recusar, apagamos os
+        cookies de medição e paramos a coleta. Você também pode bloquear cookies nas
+        configurações do navegador.
+      </p>
+
+      <h2>Com quem compartilhamos</h2>
+      <ul>
+        <li>
+          <strong>Google (Google Analytics):</strong> recebe os dados de medição após o seu
+          aceite. O tratamento pode ocorrer em servidores fora do Brasil.
+        </li>
+        <li>
+          <strong>Serviços externos que o site indica:</strong> cardápio e pedidos (Brendi),
+          WhatsApp, formulário de inscrição da Escola da Pizza e redes sociais. Ao clicar nesses
+          links, você passa a seguir as regras de privacidade de cada serviço.
+        </li>
+      </ul>
+
+      <h2>Por quanto tempo guardamos</h2>
+      <p>
+        Os dados de medição ficam no Google Analytics pelo período definido na configuração da
+        nossa propriedade. As mensagens que você envia são guardadas pelo tempo necessário para
+        atender sua solicitação.
+      </p>
+
+      <h2>Seus direitos</h2>
+      <p>Pela Lei Geral de Proteção de Dados (LGPD, Lei nº 13.709/2018), você pode pedir:</p>
+      <ul>
+        <li>Confirmação de que tratamos seus dados e acesso a eles.</li>
+        <li>Correção de dados incompletos, inexatos ou desatualizados.</li>
+        <li>Anonimização, bloqueio ou eliminação de dados desnecessários ou excessivos.</li>
+        <li>Portabilidade dos dados, quando aplicável.</li>
+        <li>Eliminação dos dados tratados com base no seu consentimento.</li>
+        <li>Informação sobre com quem compartilhamos os dados.</li>
+        <li>Informação sobre a possibilidade de não consentir e suas consequências.</li>
+        <li>Revogação do consentimento, a qualquer momento.</li>
+      </ul>
+      <p>
+        Envie seu pedido para <a href={`mailto:${email}`}>{email}</a>. Você também pode
+        apresentar uma reclamação à Autoridade Nacional de Proteção de Dados (ANPD).
+      </p>
+
+      <h2>Mudanças nesta política</h2>
+      <p>
+        Podemos atualizar este texto quando o site ou a lei mudarem. A data no topo da página
+        mostra a última revisão.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .politica {
+    padding-block: var(--space-7);
+    background-color: var(--creme);
+  }
+
+  .politica__texto {
+    max-width: 760px;
+  }
+
+  .politica h2 {
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-3);
+    font-size: var(--text-xl);
+    color: var(--verde-escuro);
+  }
+
+  .politica h2:first-child {
+    margin-top: 0;
+  }
+
+  .politica p,
+  .politica li {
+    font-size: var(--text-base);
+    line-height: 1.65;
+  }
+
+  .politica p {
+    margin-bottom: var(--space-3);
+  }
+
+  .politica ul {
+    margin: 0 0 var(--space-3) var(--space-5);
+    padding: 0;
+    list-style: disc;
+  }
+
+  .politica li + li {
+    margin-top: var(--space-2);
+  }
+
+  .politica a {
+    color: var(--verde-escuro);
+    text-decoration: underline;
+  }
+
+  .politica__tabela {
+    overflow-x: auto;
+    margin-bottom: var(--space-4);
+  }
+
+  .politica table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .politica th,
+  .politica td {
+    padding: var(--space-3);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(20, 80, 43, 0.25);
+  }
+
+  .politica th {
+    color: var(--verde-escuro);
+  }
+</style>
