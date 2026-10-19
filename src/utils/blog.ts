@@ -29,6 +29,21 @@ export const categorias: Record<
     nome: 'Alto Tietê',
     descricao: 'A região, a comunidade e os parceiros em torno da Opportunità.',
   },
+  'carreira-e-qualificacao': {
+    slug: 'carreira-e-qualificacao',
+    nome: 'Carreira e Qualificação',
+    descricao: 'Como entrar na gastronomia, o que aprender e onde se qualificar.',
+  },
+  'gestao-gastronomia': {
+    slug: 'gestao-gastronomia',
+    nome: 'Gestão e Negócios',
+    descricao: 'Custos, precificação, delivery e operação para quem empreende em gastronomia.',
+  },
+  'pizza-e-delivery': {
+    slug: 'pizza-e-delivery',
+    nome: 'Pizza e Delivery',
+    descricao: 'Sabores, como pedir e as regiões atendidas pela Opportunità.',
+  },
 };
 
 /** Em produção, só posts com publicado === true. No dev, inclui rascunhos. */
