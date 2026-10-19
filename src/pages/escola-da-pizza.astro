@@ -143,11 +143,11 @@ const courseSchema = {
   '@type': 'Course',
   name: 'Escola da Pizza',
   description: courseDescription,
-  url: new URL('/escola-da-pizza', siteUrl).href,
+  url: new URL('/escola-da-pizza/', siteUrl).href,
   provider: {
     '@type': 'Organization',
     name: 'Instituto Recomeçar',
-    url: new URL('/instituto-recomecar', siteUrl).href,
+    url: new URL('/instituto-recomecar/', siteUrl).href,
   },
   offers: {
     '@type': 'Offer',
@@ -196,7 +196,7 @@ const faq = [
   extraSchema={courseSchema}
   breadcrumbs={[
     { name: 'Home', path: '/' },
-    { name: 'Escola da Pizza', path: '/escola-da-pizza' },
+    { name: 'Escola da Pizza', path: '/escola-da-pizza/' },
   ]}
 >
   <!-- Hero -->

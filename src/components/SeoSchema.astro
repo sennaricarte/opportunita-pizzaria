@@ -1,5 +1,8 @@
 ---
-import { CARDAPIO_URL } from '../config/site';
+import { getImage } from 'astro:assets';
+import { CARDAPIO_URL, WHATSAPP_PEDIDOS_URL } from '../config/site';
+import heroImage from '../assets/images/hero-opportunita.jpg';
+import logoImage from '../assets/images/logo-opportunita.png';
 
 interface BreadcrumbItem {
   name: string;
@@ -18,24 +21,68 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://opportunit
 
 const instagramUrl = 'https://www.instagram.com/opportunita.pizzaria.social/';
 const facebookUrl = 'https://www.facebook.com/opportunita.pizzaria.social';
+const tiktokUrl = 'https://www.tiktok.com/@opportunita.pizzaria';
+const mapsUrl =
+  'https://www.google.com/maps/search/?api=1&query=Av.+Vital+Brasil,+478+-+Vila+A%C3%A7oreana+-+Po%C3%A1+-+SP';
 
+const heroSchema = isHome ? await getImage({ src: heroImage, width: 1200, height: 900 }) : null;
+const logoSchema = isHome ? await getImage({ src: logoImage, width: 512, height: 384 }) : null;
+
+// Horários confirmados pelo cliente (19/10/2026). Segunda e terça: fechado.
 const restaurantSchema = {
   '@context': 'https://schema.org',
   '@type': 'Restaurant',
+  '@id': `${siteUrl}/#restaurant`,
   name: 'Opportunità Pizzaria Social',
+  alternateName: 'Opportunità Pizzaria',
   servesCuisine: 'Pizza',
+  image: heroSchema ? new URL(heroSchema.src, siteUrl).href : undefined,
+  logo: logoSchema ? new URL(logoSchema.src, siteUrl).href : undefined,
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Av. Vital Brasil, 478',
     addressNeighborhood: 'Vila Açoreana',
     addressLocality: 'Poá',
     addressRegion: 'SP',
+    postalCode: '08557-000',
     addressCountry: 'BR',
   },
   telephone: '+55-11-4634-1149',
-  url: siteUrl,
+  url: `${siteUrl}/`,
   menu: CARDAPIO_URL,
-  sameAs: [instagramUrl, facebookUrl],
+  hasMap: mapsUrl,
+  areaServed: { '@type': 'City', name: 'Poá' },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Wednesday', 'Thursday', 'Friday'],
+      opens: '15:00',
+      closes: '23:50',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Saturday', 'Sunday'],
+      opens: '17:00',
+      closes: '23:50',
+    },
+  ],
+  potentialAction: {
+    '@type': 'OrderAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: WHATSAPP_PEDIDOS_URL,
+      actionPlatform: [
+        'http://schema.org/DesktopWebPlatform',
+        'http://schema.org/MobileWebPlatform',
+      ],
+    },
+  },
+  parentOrganization: {
+    '@type': 'NGO',
+    name: 'Instituto Recomeçar',
+    url: 'https://recomecar360.org/',
+  },
+  sameAs: [instagramUrl, facebookUrl, tiktokUrl],
   priceRange: '$$',
   description:
     'Pizzaria social em Poá-SP. Delivery de pizza artesanal com propósito — 100% do lucro financia o Instituto Recomeçar.',

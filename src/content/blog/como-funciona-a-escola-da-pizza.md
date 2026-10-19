@@ -48,7 +48,7 @@ As aulas misturam teoria e muita prática. Na cozinha da Opportunità, a turma a
 
 O **curso de pizzaiolo em Poá** dura **uma semana**, com aulas teóricas e prática intensiva. Quem conclui o programa recebe **certificação de capacitação profissional em panificação e pizzaria**, reconhecendo as competências técnicas desenvolvidas.
 
-Datas e turnos de cada turma são divulgados na abertura das inscrições — acompanhe as informações atualizadas na página da [Escola da Pizza](/escola-da-pizza).
+Datas e turnos de cada turma são divulgados na abertura das inscrições — acompanhe as informações atualizadas na página da [Escola da Pizza](/escola-da-pizza/).
 
 A Opportunità não é um negócio à parte da Escola: ela é a extensão da formação — a sala de aula prática onde a turma aprende de verdade.
 
@@ -60,11 +60,11 @@ O processo seletivo é por inscrição e entrevista. O passo a passo é direto:
 2. Participe de uma **entrevista** para a equipe conhecer seu perfil e sua disponibilidade.
 3. Acompanhe o retorno sobre a turma e os próximos passos.
 
-Todos os detalhes atualizados — e o botão de inscrição — estão na página da [Escola da Pizza](/escola-da-pizza). Vale conferir lá antes de se candidatar, para alinhar expectativas sobre o curso de pizzaiolo gratuito e a dinâmica das aulas. Vagas e prazos de cada abertura também são divulgados junto com as inscrições, na mesma página.
+Todos os detalhes atualizados — e o botão de inscrição — estão na página da [Escola da Pizza](/escola-da-pizza/). Vale conferir lá antes de se candidatar, para alinhar expectativas sobre o curso de pizzaiolo gratuito e a dinâmica das aulas. Vagas e prazos de cada abertura também são divulgados junto com as inscrições, na mesma página.
 
 ## Quem mantém a Escola da Pizza
 
-A Escola da Pizza é **totalmente gratuita**. O programa é financiado pelo lucro da Opportunità Pizzaria Social, revertido integralmente para o [Instituto Recomeçar](/instituto-recomecar).
+A Escola da Pizza é **totalmente gratuita**. O programa é financiado pelo lucro da Opportunità Pizzaria Social, revertido integralmente para o [Instituto Recomeçar](/instituto-recomecar/).
 
 Cada pizza artesanal pedida na Vila Açoreana sustenta empregos, forma profissionais e devolve dignidade a quem está reconstruindo a própria história. **100% do lucro** financia novas turmas e os projetos do instituto no Alto Tietê.
 
@@ -74,9 +74,9 @@ O Instituto Recomeçar nasceu para a reintegração de egressos do sistema prisi
 
 Concluir a semana não significa ficar sozinho. Há acompanhamento após a formação e parcerias com empresas interessadas em contratar formandos. Quem deseja empreender também encontra apoio para seguir no setor de alimentação.
 
-Empresas que querem contratar formandos da Escola da Pizza ou apoiar o programa podem conhecer os formatos de parceria em [Seja um patrocinador](/seja-patrocinador). Patrocinar a Escola é uma forma de levar marca e causa no mesmo ofício — nas caixas, no ponto de venda e nas turmas.
+Empresas que querem contratar formandos da Escola da Pizza ou apoiar o programa podem conhecer os formatos de parceria em [Seja um patrocinador](/seja-patrocinador/). Patrocinar a Escola é uma forma de levar marca e causa no mesmo ofício — nas caixas, no ponto de venda e nas turmas.
 
-Para conhecer os resultados da Escola — turmas, histórias e o impacto do programa — visite a página da [Escola da Pizza](/escola-da-pizza).
+Para conhecer os resultados da Escola — turmas, histórias e o impacto do programa — visite a página da [Escola da Pizza](/escola-da-pizza/).
 
 ## Vale a pena se candidatar?
 

@@ -26,7 +26,7 @@ Além da reincidência, segundo dados do Instituto Recomeçar, os resultados de 
 
 ## Quem é o Instituto Recomeçar
 
-O [Instituto Recomeçar](/instituto-recomecar) nasceu na Rede Gerando Falcões e, desde 2015, dedica-se à reintegração de egressos do sistema prisional por meio da educação profissional e cidadã — formando pessoas, gerando emprego e reconstruindo histórias em Poá e região.
+O [Instituto Recomeçar](/instituto-recomecar/) nasceu na Rede Gerando Falcões e, desde 2015, dedica-se à reintegração de egressos do sistema prisional por meio da educação profissional e cidadã — formando pessoas, gerando emprego e reconstruindo histórias em Poá e região.
 
 A **missão** é promover a reintegração social de egressos do sistema prisional por meio da educação profissional e cidadã, restaurando dignidade, autonomia e pertencimento. A **visão** é ser referência nacional em reintegração social, com uma rede de projetos que transforma vidas e comunidades na Grande São Paulo. A **atuação** combina qualificação profissional, geração de renda, formação de lideranças e negócios de impacto que sustentam programas gratuitos para quem mais precisa recomeçar.
 
@@ -68,9 +68,9 @@ Empresas e instituições têm dois caminhos claros para participar:
 1. **Contratar formandos** da Escola da Pizza — a formação inclui inserção no mercado, com parcerias para contratação e apoio a quem deseja empreender.
 2. **Patrocinar** a Opportunità e a Escola da Pizza — levando marca e causa no mesmo ofício, nas caixas, no ponto de venda e nas turmas.
 
-Parcerias institucionais também amplificam o impacto do Recomeçar, com visibilidade, prestação de contas e presença junto aos projetos. Se a sua empresa quer apoiar com propósito, conheça os formatos em [Seja um patrocinador](/seja-patrocinador).
+Parcerias institucionais também amplificam o impacto do Recomeçar, com visibilidade, prestação de contas e presença junto aos projetos. Se a sua empresa quer apoiar com propósito, conheça os formatos em [Seja um patrocinador](/seja-patrocinador/).
 
-Empresas que desejam contratar formandos podem falar com o Instituto pelo [WhatsApp](https://wa.me/5511953054694?text=Ol%C3%A1!%20Sou%20empresa%20e%20gostaria%20de%20contratar%20formandos%20da%20Escola%20da%20Pizza.) ou pela página de [Contato](/contato).
+Empresas que desejam contratar formandos podem falar com o Instituto pelo [WhatsApp](https://wa.me/5511953054694?text=Ol%C3%A1!%20Sou%20empresa%20e%20gostaria%20de%20contratar%20formandos%20da%20Escola%20da%20Pizza.) ou pela página de [Contato](/contato/).
 
 ## Recomeçar é possível
 
