@@ -16,11 +16,11 @@ Se você busca uma pizzaria em Poá com delivery artesanal e propósito claro, e
 
 ## Para onde vai o lucro
 
-Na Opportunità, o sabor e a causa são o mesmo ofício. Não é filantropia à parte do cardápio: **100% do lucro** financia os projetos do [Instituto Recomeçar](/instituto-recomecar), que promove a reintegração social de egressos do sistema prisional por meio da educação profissional e cidadã.
+Na Opportunità, o sabor e a causa são o mesmo ofício. Não é filantropia à parte do cardápio: **100% do lucro** financia os projetos do [Instituto Recomeçar](/instituto-recomecar/), que promove a reintegração social de egressos do sistema prisional por meio da educação profissional e cidadã.
 
 O instituto nasceu na Rede Gerando Falcões e, desde 2015, dedica-se a restaurar dignidade, autonomia e pertencimento. A Opportunità é um dos negócios de impacto que sustentam essa missão — cada pizza artesanal pedida na Vila Açoreana ajuda a manter empregos, a Escola da Pizza e os demais programas.
 
-Para conhecer o impacto do trabalho de reintegração, visite a página do [Instituto Recomeçar](/instituto-recomecar).
+Para conhecer o impacto do trabalho de reintegração, visite a página do [Instituto Recomeçar](/instituto-recomecar/).
 
 ## A pizzaria é a sala de aula da Escola da Pizza
 
@@ -45,9 +45,9 @@ A pizzaria é o motor econômico dos projetos sociais: sem pedido, o ciclo enfra
 
 Além de cozinha-escola, a Opportunità é um ponto de encontro da comunidade da Vila Açoreana e de Poá. É o lugar onde o bairro se encontra em torno da pizza artesanal — e onde o delivery de pizza em Poá carrega, na caixa verde, a lembrança de que comer também colabora com projetos sociais.
 
-Fornecedores, ofícios, assessoria e instituições colocaram equipamento, matéria-prima, identidade e confiança no projeto. Nada disso existiria sozinho. A página [Sobre a Opportunità](/sobre) conta essa história e agradece quem tornou a pizzaria possível.
+Fornecedores, ofícios, assessoria e instituições colocaram equipamento, matéria-prima, identidade e confiança no projeto. Nada disso existiria sozinho. A página [Sobre a Opportunità](/sobre/) conta essa história e agradece quem tornou a pizzaria possível.
 
-Horários e bairros atendidos estão no [cardápio online](https://menu.brendi.com.br/opportunita-pizzaria-social-vila-acoreana) e na página de [Contato](/contato).
+Horários e bairros atendidos estão no [cardápio online](https://menu.brendi.com.br/opportunita-pizzaria-social-vila-acoreana) e na página de [Contato](/contato/).
 
 ## O que tem no cardápio
 

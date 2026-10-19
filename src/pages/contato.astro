@@ -21,6 +21,9 @@ const whatsappEscola = `${whatsappBase}?text=${encodeURIComponent(
   'Olá! Gostaria de informações sobre inscrição na Escola da Pizza. Podem me ajudar?'
 )}`;
 
+// Áreas de entrega confirmadas pelo cliente (19/10/2026). Manter em sincronia com areaServed em SeoSchema.astro.
+const areasEntrega = ['Poá', 'Suzano', 'Itaquaquecetuba', 'Ferraz de Vasconcelos', 'Cidade Kemel'] as const;
+
 const mailtoParceiro =
   'mailto:gestao@opportunita.org.br?subject=Parceria institucional — Opportunità';
 const mailtoContato = 'mailto:contato@opportunitapizzaria.com.br';
@@ -39,14 +42,14 @@ const apoio = [
   {
     titulo: 'Reserve nosso espaço',
     descricao: 'Aniversários, workshops e confraternizações para até 50 pessoas na sede em Poá.',
-    href: '/espaco',
+    href: '/espaco/',
     externo: false,
     rotulo: 'Conhecer o espaço',
   },
   {
     titulo: 'Contrate para eventos',
     descricao: 'Pizza party, workshop de team building e catering corporativo com impacto social.',
-    href: '/eventos-corporativos',
+    href: '/eventos-corporativos/',
     externo: false,
     rotulo: 'Ver eventos corporativos',
   },
@@ -66,11 +69,13 @@ const acoes = [
   { label: 'Escola da Pizza', href: whatsappEscola, descricao: 'Inscrição e informações' },
 ] as const;
 
-// Horário de funcionamento — preencher quando confirmado:
-// const horario = {
-//   semana: 'Terça a domingo: 18h às 23h',
-//   feriados: 'Consultar disponibilidade',
-// };
+// Horário de funcionamento confirmado pelo cliente (19/10/2026).
+// Manter em sincronia com openingHoursSpecification em SeoSchema.astro e com o Google Business Profile.
+const horario = [
+  { dias: 'Quarta a sexta', horas: '15h às 23h50' },
+  { dias: 'Sábado e domingo', horas: '17h às 23h50' },
+  { dias: 'Segunda e terça', horas: 'Fechado' },
+] as const;
 ---
 
 <Base
@@ -78,7 +83,7 @@ const acoes = [
   description="Fale com a Opportunità em Poá: delivery de pizza pelo WhatsApp, reserva de espaço para eventos, catering corporativo e parcerias com o Instituto Recomeçar. Av. Vital Brasil, 478."
   breadcrumbs={[
     { name: 'Home', path: '/' },
-    { name: 'Contato', path: '/contato' },
+    { name: 'Contato', path: '/contato/' },
   ]}
 >
   <section class="hero hero--green" aria-labelledby="hero-titulo">
@@ -177,14 +182,15 @@ const acoes = [
           </ul>
         </div>
 
-        {/*
-          Horário de funcionamento — descomentar e preencher:
-          <div class="contato__horario">
-            <h3 class="contato__subtitulo">Horário de funcionamento</h3>
-            <p>{horario.semana}</p>
-            <p>{horario.feriados}</p>
-          </div>
-        */}
+        <div class="contato__horario">
+          <h3 class="contato__subtitulo">Horário de funcionamento</h3>
+          {horario.map(({ dias, horas }) => <p>{dias}: {horas}</p>)}
+        </div>
+
+        <div class="contato__horario">
+          <h3 class="contato__subtitulo">Áreas de entrega</h3>
+          <p>{areasEntrega.join(', ')}.</p>
+        </div>
       </div>
 
       <div class="contato__acoes">
@@ -309,8 +315,13 @@ const acoes = [
     opacity: 0.75;
   }
 
-  .contato__redes {
+  .contato__redes,
+  .contato__horario {
     margin-top: var(--space-6);
+  }
+
+  .contato__horario p {
+    font-size: var(--text-sm);
   }
 
   .contato__subtitulo {

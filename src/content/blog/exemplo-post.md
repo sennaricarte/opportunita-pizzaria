@@ -21,4 +21,4 @@ Na cozinha da Opportunità, cada turma aprende a sentir a massa antes de abrir a
 
 > A massa responde a quem trabalha com calma e repetição.
 
-Conheça a formação na [Escola da Pizza](/escola-da-pizza).
+Conheça a formação na [Escola da Pizza](/escola-da-pizza/).
