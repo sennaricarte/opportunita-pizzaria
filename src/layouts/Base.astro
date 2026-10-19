@@ -100,7 +100,6 @@ const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <SeoSchema isHome={isHome} breadcrumbs={breadcrumbs} extra={extraSchema} />
-    {import.meta.env.PROD && GA_MEASUREMENT_ID && <Analytics />}
   </head>
   <body>
     <Header />
@@ -108,5 +107,6 @@ const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
       <slot />
     </main>
     <Footer />
+    {import.meta.env.PROD && GA_MEASUREMENT_ID && <Analytics />}
   </body>
 </html>

@@ -1,38 +1,159 @@
 ---
 /**
- * Google Analytics 4 (gtag.js) + eventos de clique.
- * Renderizado só em produção (ver Base.astro).
+ * Consentimento de cookies (Consent Mode v2) + Google Analytics 4 + eventos de clique.
+ * Renderizado só em produção, no fim do <body> (ver Base.astro).
+ *
+ * Comportamento (LGPD):
+ *  - Por padrão tudo é "denied" e o gtag.js NÃO é carregado.
+ *  - "Aceitar": grava a escolha, concede analytics_storage e carrega o GA4.
+ *  - "Recusar": grava a escolha, desativa o GA4 e apaga os cookies _ga*.
+ *  - Publicidade (ad_storage, ad_user_data, ad_personalization) fica sempre "denied".
+ *  - O botão "Preferências de cookies" no rodapé reabre o aviso (revogação a qualquer momento).
+ *  - Eventos de clique só são enviados com consentimento.
  *
  * Eventos (marcar como "eventos principais" no GA4):
- *  - click_pedido_whatsapp          → delivery
- *  - click_cardapio                 → delivery (Brendi)
- *  - click_inscricao_escola         → inscrição na Escola da Pizza
- *  - click_escola_whatsapp          → dúvidas da Escola pelo WhatsApp
- *  - click_whatsapp_institucional   → patrocínio / contratação de formandos
- *  - click_patrocinio_pagina        → interesse em patrocínio (link para /seja-patrocinador/)
- *  - click_evento_corporativo       → eventos corporativos
- *  - click_parceria_institucional   → parcerias
- *  - click_ligacao / click_email    → contato direto
- *
+ *  click_pedido_whatsapp, click_cardapio, click_inscricao_escola, click_escola_whatsapp,
+ *  click_whatsapp_institucional, click_patrocinio_pagina, click_evento_corporativo,
+ *  click_parceria_institucional, click_ligacao, click_email.
  * Parâmetros: pagina (pathname) e rotulo (texto do link, até 60 caracteres).
  * Links podem forçar o nome do evento com o atributo data-evento.
  */
 import { GA_MEASUREMENT_ID } from '../config/site';
-
-const gtagSrc = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
 ---
 
-<script is:inline async src={gtagSrc}></script>
+<div
+  id="cookie-banner"
+  class="cookie-banner"
+  role="region"
+  aria-label="Aviso de cookies"
+  tabindex="-1"
+  hidden
+>
+  <p class="cookie-banner__texto">
+    Usamos o Google Analytics, com cookies de medição, para entender como o site é usado.
+    Não usamos cookies de publicidade. Você escolhe e pode mudar de ideia quando quiser.
+    <a href="/politica-de-privacidade/">Política de privacidade</a>.
+  </p>
+  <div class="cookie-banner__acoes">
+    <button type="button" class="btn btn--outline-dark btn--compact" data-cookies="recusar">
+      Recusar
+    </button>
+    <button type="button" class="btn btn--outline-dark btn--compact" data-cookies="aceitar">
+      Aceitar
+    </button>
+  </div>
+</div>
+
 <script is:inline define:vars={{ gaId: GA_MEASUREMENT_ID }}>
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function () {
-    window.dataLayer.push(arguments);
-  };
-  window.gtag('js', new Date());
-  window.gtag('config', gaId);
-</script>
-<script is:inline>
   (function () {
+    var CHAVE = 'opportunita-consentimento';
+    var DESATIVAR = 'ga-disable-' + gaId;
+    var carregado = false;
+    var banner = document.getElementById('cookie-banner');
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () {
+      window.dataLayer.push(arguments);
+    };
+    window.gaConsentido = false;
+    window.gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+    });
+
+    function ler() {
+      try {
+        return window.localStorage.getItem(CHAVE);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function gravar(valor) {
+      try {
+        window.localStorage.setItem(CHAVE, valor);
+      } catch (e) {}
+    }
+
+    function mostrar(comFoco) {
+      banner.hidden = false;
+      if (comFoco) banner.focus();
+    }
+
+    function esconder() {
+      banner.hidden = true;
+    }
+
+    function carregarGA() {
+      if (carregado) return;
+      carregado = true;
+      var tag = document.createElement('script');
+      tag.async = true;
+      tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+      document.head.appendChild(tag);
+      window.gtag('js', new Date());
+      window.gtag('config', gaId);
+    }
+
+    function limparCookies() {
+      var host = window.location.hostname.replace(/^www\./, '');
+      var dominios = ['', 'domain=' + host + ';', 'domain=.' + host + ';'];
+      document.cookie.split(';').forEach(function (par) {
+        var nome = par.split('=')[0].trim();
+        if (nome.indexOf('_ga') !== 0) return;
+        dominios.forEach(function (dominio) {
+          document.cookie =
+            nome + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; ' + dominio;
+        });
+      });
+    }
+
+    function aceitar() {
+      gravar('aceito');
+      window.gaConsentido = true;
+      window[DESATIVAR] = false;
+      window.gtag('consent', 'update', { analytics_storage: 'granted' });
+      carregarGA();
+      esconder();
+    }
+
+    function recusar() {
+      gravar('recusado');
+      window.gaConsentido = false;
+      window[DESATIVAR] = true;
+      window.gtag('consent', 'update', { analytics_storage: 'denied' });
+      limparCookies();
+      esconder();
+    }
+
+    var escolha = ler();
+    if (escolha === 'aceito') {
+      window.gaConsentido = true;
+      window.gtag('consent', 'update', { analytics_storage: 'granted' });
+      carregarGA();
+    } else if (escolha === 'recusado') {
+      window[DESATIVAR] = true;
+    } else {
+      mostrar(false);
+    }
+
+    banner.addEventListener('click', function (evento) {
+      var alvo = evento.target;
+      var botao = alvo && alvo.closest ? alvo.closest('[data-cookies]') : null;
+      if (!botao) return;
+      if (botao.getAttribute('data-cookies') === 'aceitar') aceitar();
+      else recusar();
+    });
+
+    document.querySelectorAll('[data-abrir-cookies]').forEach(function (elemento) {
+      elemento.hidden = false;
+      elemento.addEventListener('click', function () {
+        mostrar(true);
+      });
+    });
+
     var REGRAS = [
       ['wa.me/5511953054694', 'click_whatsapp_institucional'],
       ['wa.me/5511962448909', 'click_pedido_whatsapp'],
@@ -54,9 +175,10 @@ const gtagSrc = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID
     }
 
     document.addEventListener('click', function (evento) {
+      if (!window.gaConsentido) return;
       var alvo = evento.target;
       var link = alvo && alvo.closest ? alvo.closest('a[href]') : null;
-      if (!link || typeof window.gtag !== 'function') return;
+      if (!link) return;
       var nome = nomeDoEvento(link);
       if (!nome) return;
       window.gtag('event', nome, {
@@ -67,3 +189,58 @@ const gtagSrc = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID
     });
   })();
 </script>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    left: var(--space-4);
+    right: var(--space-4);
+    bottom: var(--space-4);
+    z-index: 1000;
+    max-width: 720px;
+    margin-inline: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    background-color: var(--branco);
+    color: var(--preto);
+    border: 2px solid var(--verde-escuro);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  }
+
+  .cookie-banner[hidden] {
+    display: none;
+  }
+
+  .cookie-banner:focus-visible {
+    outline: 3px solid var(--verde);
+    outline-offset: 2px;
+  }
+
+  .cookie-banner__texto {
+    flex: 1 1 280px;
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+
+  .cookie-banner__texto a {
+    color: var(--verde-escuro);
+    text-decoration: underline;
+  }
+
+  .cookie-banner__acoes {
+    display: flex;
+    gap: var(--space-3);
+    flex: 0 0 auto;
+  }
+
+  @media print {
+    .cookie-banner {
+      display: none;
+    }
+  }
+</style>

@@ -87,6 +87,10 @@ const mostrarBlog = postsPublicados.length > 0;
       {mostrarBlog && <a href="/blog/">Blog</a>}
       <a href="/sobre/">Sobre a Opportunità</a>
       <a href="/seja-patrocinador/">Seja um patrocinador</a>
+      <a href="/politica-de-privacidade/">Política de privacidade</a>
+      <button type="button" class="footer__cookies" data-abrir-cookies hidden>
+        Preferências de cookies
+      </button>
     </p>
 
     <Mascote variant="chef" size="sm" class="footer__mascote" />
@@ -171,6 +175,20 @@ const mostrarBlog = postsPublicados.length > 0;
   .footer a {
     color: var(--branco);
     text-decoration: none;
+  }
+
+  .footer__cookies {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--branco);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .footer__cookies:hover,
+  .footer__cookies:focus-visible {
+    text-decoration: underline;
   }
 
   .footer a:hover,
