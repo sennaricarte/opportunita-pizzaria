@@ -63,10 +63,10 @@ const apoio = [
 ] as const;
 
 const acoes = [
-  { label: 'Fazer um pedido', href: whatsappPedido, descricao: 'Pizzas para delivery ou retirada' },
-  { label: 'Evento corporativo', href: whatsappEvento, descricao: 'Orçamento para sua empresa' },
-  { label: 'Parceria institucional', href: whatsappParceria, descricao: 'Apoio ao Instituto Recomeçar' },
-  { label: 'Escola da Pizza', href: whatsappEscola, descricao: 'Inscrição e informações' },
+  { label: 'Fazer um pedido', href: whatsappPedido, descricao: 'Pizzas para delivery ou retirada', evento: 'click_pedido_whatsapp' },
+  { label: 'Evento corporativo', href: whatsappEvento, descricao: 'Orçamento para sua empresa', evento: 'click_evento_corporativo' },
+  { label: 'Parceria institucional', href: whatsappParceria, descricao: 'Apoio ao Instituto Recomeçar', evento: 'click_parceria_institucional' },
+  { label: 'Escola da Pizza', href: whatsappEscola, descricao: 'Inscrição e informações', evento: 'click_escola_whatsapp' },
 ] as const;
 
 // Horário de funcionamento confirmado pelo cliente (19/10/2026).
@@ -201,11 +201,12 @@ const horario = [
         </p>
         <ul class="acoes__lista" role="list" aria-labelledby="acoes-titulo">
           {
-            acoes.map(({ label, href, descricao }) => (
+            acoes.map(({ label, href, descricao, evento }) => (
               <li>
                 <a
                   class="btn btn--whatsapp"
                   href={href}
+                  data-evento={evento}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${label} — ${descricao} (abre em nova aba)`}

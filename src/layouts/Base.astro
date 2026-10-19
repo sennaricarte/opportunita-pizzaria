@@ -3,6 +3,8 @@ import { getImage } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SeoSchema from '../components/SeoSchema.astro';
+import Analytics from '../components/Analytics.astro';
+import { GA_MEASUREMENT_ID } from '../config/site';
 import logoOg from '../assets/images/logo-opportunita.png';
 import '../styles/global.css';
 import '../styles/components.css';
@@ -98,6 +100,7 @@ const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <SeoSchema isHome={isHome} breadcrumbs={breadcrumbs} extra={extraSchema} />
+    {import.meta.env.PROD && GA_MEASUREMENT_ID && <Analytics />}
   </head>
   <body>
     <Header />
