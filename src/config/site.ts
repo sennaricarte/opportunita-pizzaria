@@ -12,3 +12,20 @@ export async function getAncoraResultados() {
   const temPublicada = turmas.some((turma) => turma.data.publicado === true);
   return temPublicada ? '#resultados' : '#na-pratica';
 }
+
+// Horário de funcionamento confirmado pelo cliente (19/10/2026).
+// Manter em sincronia com openingHoursSpecification em SeoSchema.astro e com o Google Business Profile.
+export const HORARIO_FUNCIONAMENTO = [
+  { dias: 'Quarta a sexta', horas: '15h às 23h50' },
+  { dias: 'Sábado e domingo', horas: '17h às 23h50' },
+  { dias: 'Segunda e terça', horas: 'Fechado' },
+] as const;
+
+// Áreas de entrega confirmadas pelo cliente (19/10/2026).
+export const AREAS_ENTREGA = [
+  'Poá',
+  'Suzano',
+  'Itaquaquecetuba',
+  'Ferraz de Vasconcelos',
+  'Cidade Kemel',
+] as const;

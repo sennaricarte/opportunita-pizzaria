@@ -1,7 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import Mascote from './Mascote.astro';
-import { WHATSAPP_PEDIDOS_URL } from '../config/site';
+import { HORARIO_FUNCIONAMENTO, WHATSAPP_PEDIDOS_URL } from '../config/site';
 import { getPostsPublicados } from '../utils/blog';
 
 const whatsappUrl = WHATSAPP_PEDIDOS_URL;
@@ -63,6 +63,15 @@ const mostrarBlog = postsPublicados.length > 0;
       Av. Vital Brasil, 478<br />
       Vila Açoreana — Poá — SP
     </address>
+
+    <p class="footer__horario">
+      {HORARIO_FUNCIONAMENTO.map(({ dias, horas }, i) => (
+        <>
+          {i > 0 && <br />}
+          {dias}: {horas}
+        </>
+      ))}
+    </p>
 
     <p class="footer__mission">
       100% do lucro é revertido para o
@@ -147,6 +156,7 @@ const mostrarBlog = postsPublicados.length > 0;
     margin-top: var(--space-2);
   }
 
+  .footer__horario,
   .footer__address {
     font-style: normal;
     font-size: var(--text-sm);

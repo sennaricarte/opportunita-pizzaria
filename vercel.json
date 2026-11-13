@@ -1,0 +1,55 @@
+{
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/about",
+      "destination": "/sobre/",
+      "statusCode": 301
+    },
+    {
+      "source": "/about/",
+      "destination": "/sobre/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sobre-nos",
+      "destination": "/sobre/",
+      "statusCode": 301
+    },
+    {
+      "source": "/sobre-nos/",
+      "destination": "/sobre/",
+      "statusCode": 301
+    },
+    {
+      "source": "/fale-conosco",
+      "destination": "/contato/",
+      "statusCode": 301
+    },
+    {
+      "source": "/fale-conosco/",
+      "destination": "/contato/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog-de-causa-social",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog-de-causa-social/",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/pizzas",
+      "destination": "https://menu.brendi.com.br/opportunita-pizzaria-social-vila-acoreana",
+      "statusCode": 301
+    },
+    {
+      "source": "/pizzas/",
+      "destination": "https://menu.brendi.com.br/opportunita-pizzaria-social-vila-acoreana",
+      "statusCode": 301
+    }
+  ]
+}
