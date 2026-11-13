@@ -29,3 +29,8 @@ export const AREAS_ENTREGA = [
   'Ferraz de Vasconcelos',
   'Cidade Kemel',
 ] as const;
+
+// Dados cadastrais (cartão CNPJ emitido em 13/11/2026). A pizzaria opera sob o Instituto Recomeçar,
+// estabelecimento filial no mesmo endereço. Não publicar telefone/e-mail do cartão CNPJ.
+export const EMPRESA_RAZAO_SOCIAL = 'Instituto Recomeçar';
+export const EMPRESA_CNPJ = '37.129.166/0002-01';

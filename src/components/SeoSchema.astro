@@ -1,6 +1,11 @@
 ---
 import { getImage } from 'astro:assets';
-import { CARDAPIO_URL, WHATSAPP_PEDIDOS_URL } from '../config/site';
+import {
+  CARDAPIO_URL,
+  EMPRESA_CNPJ,
+  EMPRESA_RAZAO_SOCIAL,
+  WHATSAPP_PEDIDOS_URL,
+} from '../config/site';
 import heroImage from '../assets/images/hero-opportunita.jpg';
 import logoImage from '../assets/images/logo-opportunita.png';
 
@@ -35,6 +40,8 @@ const restaurantSchema = {
   '@id': `${siteUrl}/#restaurant`,
   name: 'Opportunità Pizzaria Social',
   alternateName: ['Opportunità Pizzaria', 'Opportunità', 'Opportunita', 'Oportunita'],
+  legalName: EMPRESA_RAZAO_SOCIAL,
+  taxID: EMPRESA_CNPJ,
   servesCuisine: 'Pizza',
   image: heroSchema ? new URL(heroSchema.src, siteUrl).href : undefined,
   logo: logoSchema ? new URL(logoSchema.src, siteUrl).href : undefined,
