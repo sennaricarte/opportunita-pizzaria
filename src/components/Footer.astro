@@ -1,7 +1,12 @@
 ---
 import Logo from './Logo.astro';
 import Mascote from './Mascote.astro';
-import { HORARIO_FUNCIONAMENTO, WHATSAPP_PEDIDOS_URL } from '../config/site';
+import {
+  EMPRESA_CNPJ,
+  EMPRESA_RAZAO_SOCIAL,
+  HORARIO_FUNCIONAMENTO,
+  WHATSAPP_PEDIDOS_URL,
+} from '../config/site';
 import { getPostsPublicados } from '../utils/blog';
 
 const whatsappUrl = WHATSAPP_PEDIDOS_URL;
@@ -110,6 +115,8 @@ const mostrarBlog = postsPublicados.length > 0;
 
     <p class="footer__copy">
       &copy; {new Date().getFullYear()} Opportunità Pizzaria Social. Todos os direitos reservados.
+      <br />
+      {EMPRESA_RAZAO_SOCIAL} · CNPJ {EMPRESA_CNPJ}
     </p>
   </div>
 </footer>
