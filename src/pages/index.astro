@@ -8,7 +8,6 @@ import StatsBand from '../components/StatsBand.astro';
 import { rasterFormats } from '../utils/image';
 import {
   AREAS_ENTREGA,
-  CARDAPIO_URL,
   HORARIO_FUNCIONAMENTO,
   INSCRICAO_URL,
   WHATSAPP_PEDIDOS_URL,
@@ -17,7 +16,6 @@ import {
 import heroImage from '../assets/images/hero-opportunita.jpg';
 
 const whatsappUrl = WHATSAPP_PEDIDOS_URL;
-const cardapioUrl = CARDAPIO_URL;
 
 const pizzasDestaque = (await getCollection('pizzas')).filter((p) => p.data.destaque);
 const depoimentos = await getCollection('depoimentos');
@@ -40,7 +38,8 @@ const turmasTexto =
   <section class="hero hero--home" aria-labelledby="hero-titulo">
     <div class="hero__inner hero__inner--split container">
       <div class="hero__content">
-        <h1 id="hero-titulo" class="hero__title">Sabor que transforma vidas</h1>
+        <p class="hero__eyebrow">Sabor que transforma vidas</p>
+        <h1 id="hero-titulo" class="hero__title">Pizzaria em Poá com delivery e propósito</h1>
         <p class="hero__subtitle">
           A Opportunità é uma pizzaria social em Poá. Cada pedido gera trabalho,
           capacitação e oportunidades — e <strong>100% do lucro</strong> financia os
@@ -96,7 +95,7 @@ const turmasTexto =
         <h2 class="horario__titulo">Entrega e endereço</h2>
         <p class="horario__texto">
           Entregamos em {AREAS_ENTREGA.join(', ')}. Sede na Av. Vital Brasil, 478, Vila Açoreana, Poá.
-          Veja <a href="/contato/">como pedir e falar com a equipe</a>.
+          Veja <a href="/delivery-pizza-poa/">como pedir delivery de pizza em Poá</a> ou <a href="/contato/">fale com a equipe</a>.
         </p>
       </div>
     </div>
@@ -150,15 +149,7 @@ const turmasTexto =
     <div class="container">
       <div class="destaques__header">
         <h2 id="destaques-titulo" class="section-title">Pizzas em destaque</h2>
-        <a
-          class="destaques__link"
-          href={cardapioUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Ver cardápio completo (abre em nova aba)"
-        >
-          Ver cardápio completo
-        </a>
+        <a class="destaques__link" href="/cardapio/">Ver cardápio de pizzas</a>
       </div>
 
       <ul class="destaques__grid">
@@ -175,15 +166,7 @@ const turmasTexto =
         }
       </ul>
 
-      <a
-        class="btn btn--secondary"
-        href={cardapioUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Explorar cardápio (abre em nova aba)"
-      >
-        Explorar cardápio
-      </a>
+      <a class="btn btn--secondary" href="/cardapio/">Explorar todos os sabores</a>
     </div>
   </section>
 
@@ -210,9 +193,9 @@ const turmasTexto =
                 href={INSCRICAO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Inscreva-se (abre em nova aba)"
+                aria-label="Inscreva-se no curso de pizzaiolo gratuito (abre em nova aba)"
               >
-                Inscreva-se
+                Inscreva-se no curso gratuito
               </a>
               <a class="btn btn--outline-dark" href="/escola-da-pizza/">
                 Conheça a Escola da Pizza
@@ -224,6 +207,18 @@ const turmasTexto =
       </section>
     )
   }
+
+  <!-- ESPAÇO E EVENTOS -->
+  <section class="mais" aria-labelledby="mais-titulo">
+    <div class="container">
+      <h2 id="mais-titulo" class="section-title">Eventos na Opportunità</h2>
+      <p class="mais__texto">
+        <a href="/espaco/">Alugue o Espaço Opportunità para eventos de até 50 pessoas</a> ou
+        contrate <a href="/eventos-corporativos/">eventos corporativos com pizza em Poá e região</a>.
+        Cada contratação apoia o <a href="/instituto-recomecar/">Instituto Recomeçar</a>.
+      </p>
+    </div>
+  </section>
 
   <Parceiros compact headingId="parceiros-home" />
 
@@ -274,6 +269,24 @@ const turmasTexto =
 </Base>
 
 <style>
+  .mais {
+    padding-block: var(--space-8) 0;
+  }
+
+  .mais__texto {
+    margin-top: var(--space-4);
+    max-width: 62ch;
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
+  .mais__texto a {
+    color: var(--verde);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
   .horario {
     padding-block: var(--space-6);
     background-color: var(--branco);

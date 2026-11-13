@@ -1,0 +1,180 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { CARDAPIO_URL, WHATSAPP_PEDIDOS_URL } from '../config/site';
+
+const pizzas = await getCollection('pizzas');
+
+const secoes = [
+  { chave: 'tradicional', titulo: 'Pizzas tradicionais' },
+  { chave: 'especial', titulo: 'Pizzas especiais' },
+  { chave: 'doce', titulo: 'Pizzas doces' },
+] as const;
+
+const grupos = secoes
+  .map((secao) => ({
+    ...secao,
+    itens: pizzas
+      .filter((pizza) => pizza.data.categoria === secao.chave)
+      .sort((a, b) => a.data.nome.localeCompare(b.data.nome, 'pt-BR')),
+  }))
+  .filter((grupo) => grupo.itens.length > 0);
+
+// Sem preços: só publicar valores com confirmação do cliente e data.
+const menuSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Menu',
+  name: 'Cardápio de pizzas da Opportunità',
+  url: 'https://opportunitapizzaria.com.br/cardapio/',
+  inLanguage: 'pt-BR',
+  hasMenuSection: grupos.map((grupo) => ({
+    '@type': 'MenuSection',
+    name: grupo.titulo,
+    hasMenuItem: grupo.itens.map((pizza) => ({
+      '@type': 'MenuItem',
+      name: pizza.data.nome,
+      description: pizza.data.descricao,
+    })),
+  })),
+};
+---
+
+<Base
+  title="Cardápio de Pizzas em Poá"
+  description="Sabores de pizza artesanal da Opportunità em Poá, do tradicional ao doce. Peça pelo WhatsApp ou pela Brendi. 100% do lucro financia projetos sociais."
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Cardápio', path: '/cardapio/' },
+  ]}
+  extraSchema={menuSchema}
+>
+  <section class="hero hero--green" aria-labelledby="hero-titulo">
+    <div class="container hero__inner hero__inner--narrow">
+      <p class="hero__eyebrow">Pizza artesanal com propósito</p>
+      <h1 id="hero-titulo" class="hero__title">Cardápio de pizzas em Poá</h1>
+      <p class="hero__subtitle">
+        Estes são os sabores da Opportunità, a pizzaria social da Vila Açoreana. Cada pedido
+        gera trabalho na região e 100% do lucro financia o Instituto Recomeçar.
+      </p>
+      <div class="cardapio__acoes">
+        <a
+          class="btn btn--primary"
+          href={WHATSAPP_PEDIDOS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Pedir pizza pelo WhatsApp (abre em nova aba)"
+        >
+          Pedir pelo WhatsApp
+        </a>
+        <a
+          class="btn btn--outline"
+          href={CARDAPIO_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ver preços e pedir na Brendi (abre em nova aba)"
+        >
+          Ver preços e pedir na Brendi
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {
+    grupos.map((grupo) => (
+      <section class="secao" aria-labelledby={`secao-${grupo.chave}`}>
+        <div class="container">
+          <h2 id={`secao-${grupo.chave}`} class="section-title">{grupo.titulo}</h2>
+          <ul class="secao__grid" role="list">
+            {grupo.itens.map((pizza) => (
+              <li>
+                <article class="item">
+                  <h3 class="item__nome">{pizza.data.nome}</h3>
+                  <p class="item__desc">{pizza.data.descricao}</p>
+                </article>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="info" aria-labelledby="info-titulo">
+    <div class="container info__inner">
+      <h2 id="info-titulo" class="section-title">Preços, entrega e horário</h2>
+      <p>
+        Os preços e a disponibilidade atualizados ficam no cardápio digital da Brendi.
+        Veja <a href="/delivery-pizza-poa/">onde entregamos e como pedir</a> ou consulte o
+        <a href="/contato/">horário de funcionamento</a>.
+      </p>
+      <p>
+        Quer conhecer o projeto por trás da pizza? Leia
+        <a href="/sobre/">a história da Opportunità</a> e conheça a
+        <a href="/escola-da-pizza/">Escola da Pizza</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cardapio__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  .secao {
+    padding-block: var(--space-8) 0;
+  }
+
+  .secao__grid {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+  }
+
+  .item {
+    height: 100%;
+    padding: var(--space-5);
+    background-color: var(--branco);
+    border: 1px solid rgb(27 107 58 / 12%);
+    border-radius: var(--radius);
+  }
+
+  .item__nome {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .item__desc {
+    margin-top: var(--space-2);
+    font-size: var(--text-base);
+    line-height: 1.6;
+  }
+
+  .info {
+    padding-block: var(--space-8);
+  }
+
+  .info__inner p {
+    margin-top: var(--space-4);
+    max-width: 62ch;
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
+  .info__inner a {
+    color: var(--verde);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (min-width: 40rem) {
+    .secao__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
