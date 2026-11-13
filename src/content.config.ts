@@ -65,6 +65,9 @@ const blog = defineCollection({
         'receitas-e-tecnicas',
         'impacto-social',
         'alto-tiete',
+        'carreira-e-qualificacao',
+        'gestao-gastronomia',
+        'pizza-e-delivery',
       ]),
       capa: z.object({
         src: image(),
