@@ -182,6 +182,9 @@
   color: var(--amarelo);
 }
 
+.hero--home .hero__eyebrow {
+  color: var(--verde);
+}
 .hero--home .hero__title {
   color: var(--verde-escuro);
 }
