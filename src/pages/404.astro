@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import { CARDAPIO_URL, WHATSAPP_PEDIDOS_URL } from '../config/site';
+---
+
+<Base
+  title="Página não encontrada"
+  description="Esta página não existe ou mudou de endereço. Veja o cardápio, a Escola da Pizza ou fale com a Opportunità."
+  noindex
+>
+  <section class="erro container">
+    <h1 class="section-title">Página não encontrada</h1>
+    <p>
+      O endereço que você procurou não existe ou mudou. Veja onde podemos ajudar:
+    </p>
+    <ul class="erro__links">
+      <li><a href="/">Página inicial da Opportunità</a></li>
+      <li>
+        <a href={CARDAPIO_URL} target="_blank" rel="noopener noreferrer" aria-label="Cardápio de pizzas (abre em nova aba)">Cardápio de pizzas</a>
+      </li>
+      <li><a href="/escola-da-pizza/">Escola da Pizza</a></li>
+      <li><a href="/contato/">Contato, horário e áreas de entrega</a></li>
+      <li>
+        <a href={WHATSAPP_PEDIDOS_URL} target="_blank" rel="noopener noreferrer" aria-label="Pedir pelo WhatsApp (abre em nova aba)">Pedir pelo WhatsApp</a>
+      </li>
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .erro {
+    padding-block: var(--space-8);
+  }
+
+  .erro p {
+    margin-top: var(--space-4);
+    font-size: var(--text-base);
+  }
+
+  .erro__links {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+    font-size: var(--text-base);
+    font-weight: 600;
+  }
+
+  .erro__links a {
+    color: var(--verde);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

@@ -6,7 +6,13 @@ import Mascote from '../components/Mascote.astro';
 import Parceiros from '../components/Parceiros.astro';
 import StatsBand from '../components/StatsBand.astro';
 import { rasterFormats } from '../utils/image';
-import { CARDAPIO_URL, INSCRICAO_URL, WHATSAPP_PEDIDOS_URL } from '../config/site';
+import {
+  AREAS_ENTREGA,
+  CARDAPIO_URL,
+  HORARIO_FUNCIONAMENTO,
+  INSCRICAO_URL,
+  WHATSAPP_PEDIDOS_URL,
+} from '../config/site';
 
 import heroImage from '../assets/images/hero-opportunita.jpg';
 
@@ -74,6 +80,25 @@ const turmasTexto =
           class="media-cover hero__photo"
         />
       </figure>
+    </div>
+  </section>
+
+  <!-- HORÁRIO E ENTREGA -->
+  <section class="horario" aria-labelledby="horario-titulo">
+    <div class="container horario__inner">
+      <div>
+        <h2 id="horario-titulo" class="horario__titulo">Horário de funcionamento</h2>
+        <ul class="horario__lista" role="list">
+          {HORARIO_FUNCIONAMENTO.map(({ dias, horas }) => <li>{dias}: {horas}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h2 class="horario__titulo">Entrega e endereço</h2>
+        <p class="horario__texto">
+          Entregamos em {AREAS_ENTREGA.join(', ')}. Sede na Av. Vital Brasil, 478, Vila Açoreana, Poá.
+          Veja <a href="/contato/">como pedir e falar com a equipe</a>.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -249,6 +274,43 @@ const turmasTexto =
 </Base>
 
 <style>
+  .horario {
+    padding-block: var(--space-6);
+    background-color: var(--branco);
+    border-block: 1px solid rgb(27 107 58 / 10%);
+  }
+
+  .horario__inner {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .horario__titulo {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .horario__lista,
+  .horario__texto {
+    margin-top: var(--space-2);
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
+  .horario__texto a {
+    color: var(--verde);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (min-width: 40rem) {
+    .horario__inner {
+      grid-template-columns: 1fr 1.5fr;
+      gap: var(--space-8);
+    }
+  }
+
   .hero__photo {
     object-position: top center;
   }

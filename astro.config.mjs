@@ -11,6 +11,7 @@ const blogComPosts = temPostsPublicados();
 export default defineConfig({
   site: 'https://opportunitapizzaria.com.br',
   output: 'static',
+  trailingSlash: 'always',
   compressHTML: true,
   integrations: [
     sitemap({

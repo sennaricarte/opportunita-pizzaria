@@ -34,7 +34,7 @@ const restaurantSchema = {
   '@type': 'Restaurant',
   '@id': `${siteUrl}/#restaurant`,
   name: 'Opportunità Pizzaria Social',
-  alternateName: 'Opportunità Pizzaria',
+  alternateName: ['Opportunità Pizzaria', 'Opportunità', 'Opportunita', 'Oportunita'],
   servesCuisine: 'Pizza',
   image: heroSchema ? new URL(heroSchema.src, siteUrl).href : undefined,
   logo: logoSchema ? new URL(logoSchema.src, siteUrl).href : undefined,
