@@ -27,11 +27,39 @@ const servicos = [
     icon: 'catering',
   },
 ] as const;
+
+// Confirmado pelo cliente em 16/11/2026: atendimento em Poá, Alto Tietê, ABC e cidade de São Paulo;
+// pedido mínimo e prazo combinados por cotação. Não publicar valores, mínimos ou prazos fixos.
+const regioes = ['Poá', 'Alto Tietê', 'ABC Paulista', 'Cidade de São Paulo'] as const;
+
+const faq = [
+  {
+    pergunta: 'Em quais regiões a Opportunità atende eventos corporativos?',
+    resposta:
+      'Atendemos Poá, o Alto Tietê, o ABC Paulista e a cidade de São Paulo.',
+  },
+  {
+    pergunta: 'Como funciona o orçamento?',
+    resposta:
+      'O pedido e o prazo são combinados por cotação. Informe a data, o número de participantes e o formato que você procura, e nossa equipe retorna com a proposta.',
+  },
+  {
+    pergunta: 'Posso contratar mais de um formato no mesmo evento?',
+    resposta:
+      'Podemos conversar sobre isso na cotação. Os formatos disponíveis são pizza party, workshop de pizza e catering.',
+  },
+  {
+    pergunta: 'O que o evento financia?',
+    resposta:
+      'O lucro do evento financia o Instituto Recomeçar, que atua na reintegração de egressos do sistema prisional pelo trabalho.',
+  },
+] as const;
 ---
 
 <Base
-  title="Eventos Corporativos em Poá e ABC"
-  description="Pizza party, workshop de team building e catering corporativo em Poá e região do ABC. Eventos com responsabilidade social — cada contratação apoia o Instituto Recomeçar."
+  title="Eventos Corporativos com Pizza | Poá, ABC e São Paulo"
+  appendSiteName={false}
+  description="Pizza party, workshop de team building e catering corporativo em Poá, Alto Tietê, ABC e São Paulo. Cada evento contratado apoia o Instituto Recomeçar."
   breadcrumbs={[
     { name: 'Home', path: '/' },
     { name: 'Eventos Corporativos', path: '/eventos-corporativos/' },
@@ -91,6 +119,19 @@ const servicos = [
     </div>
   </section>
 
+  <section class="regioes" aria-labelledby="regioes-titulo">
+    <div class="container">
+      <h2 id="regioes-titulo" class="section-title">Onde atendemos</h2>
+      <ul class="regioes__lista" role="list">
+        {regioes.map((regiao) => <li>{regiao}</li>)}
+      </ul>
+      <p class="regioes__texto">
+        A equipe sai da Vila Açoreana, em Poá. O pedido e o prazo variam conforme o evento e
+        são combinados por cotação.
+      </p>
+    </div>
+  </section>
+
   <section class="impacto" aria-labelledby="impacto-titulo">
     <div class="container impacto__inner">
       <h2 id="impacto-titulo" class="impacto__title">Responsabilidade social corporativa</h2>
@@ -109,12 +150,28 @@ const servicos = [
     </div>
   </section>
 
+  <section class="faq" aria-labelledby="faq-titulo">
+    <div class="container faq__inner">
+      <h2 id="faq-titulo" class="section-title">Perguntas frequentes</h2>
+      <dl class="faq__lista">
+        {
+          faq.map(({ pergunta, resposta }) => (
+            <div class="faq__item">
+              <dt class="faq__pergunta">{pergunta}</dt>
+              <dd class="faq__resposta">{resposta}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
   <section class="cta" aria-labelledby="cta-titulo">
     <div class="container cta__inner">
       <h2 id="cta-titulo" class="cta__title">Monte seu evento com propósito</h2>
       <p class="cta__text">
-        Conte-nos sobre sua empresa, data e número de participantes. Retornamos com um
-        orçamento personalizado.
+        Conte-nos sobre sua empresa, data e número de participantes. Retornamos com uma
+        cotação personalizada.
       </p>
       <a
         class="btn btn--inverse"
@@ -130,6 +187,56 @@ const servicos = [
 </Base>
 
 <style>
+  .regioes {
+    padding-block: var(--space-8);
+  }
+
+  .regioes__lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  .regioes__lista li {
+    padding: var(--space-2) var(--space-4);
+    font-weight: 600;
+    color: var(--verde-escuro);
+    background-color: var(--branco);
+    border: 1px solid rgb(27 107 58 / 15%);
+    border-radius: var(--radius);
+  }
+
+  .regioes__texto {
+    margin-top: var(--space-4);
+    max-width: 62ch;
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
+  .faq {
+    padding-block: var(--space-8);
+  }
+
+  .faq__lista {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+    max-width: 52rem;
+  }
+
+  .faq__pergunta {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--verde-escuro);
+  }
+
+  .faq__resposta {
+    margin-top: var(--space-2);
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
   .servicos {
     padding-block: var(--space-8);
   }
