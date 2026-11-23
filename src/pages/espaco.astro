@@ -1,6 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
 import { WHATSAPP_PEDIDOS_URL } from '../config/site';
+import { rasterFormats } from '../utils/image';
+import fachadaImage from '../assets/images/fachada-opportunita-poa.jpg';
 
 // TODO: quando houver fotos reais do espaço, reativar a seção Galeria (ver histórico git)
 // e o mapa estático em Como chegar. Não publicar imagens placeholder.
@@ -82,6 +85,21 @@ const idealPara = [
           Ver no Google Maps
         </a>
       </div>
+      <figure class="localizacao__foto">
+        <Image
+          src={fachadaImage}
+          alt="Fachada da sede da Opportunità em Poá, onde fica o Espaço Opportunità para eventos, com placa indicando pizzaria, espaço de eventos e Escola da Pizza"
+          width={800}
+          height={600}
+          widths={[400, 640, 800]}
+          sizes="(min-width: 64rem) 520px, (min-width: 40rem) 45vw, 100vw"
+          formats={rasterFormats(fachadaImage)}
+          quality="mid"
+          loading="lazy"
+          decoding="async"
+          class="media-cover"
+        />
+      </figure>
     </div>
   </section>
 
@@ -154,6 +172,25 @@ const idealPara = [
   .localizacao__inner {
     display: grid;
     gap: var(--space-6);
+  }
+
+  .localizacao__foto {
+    margin: 0;
+  }
+
+  .localizacao__foto .media-cover {
+    aspect-ratio: 4 / 3;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgb(0 0 0 / 12%);
+  }
+
+  @media (min-width: 40rem) {
+    .localizacao__inner {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: var(--space-8);
+    }
   }
 
   .localizacao__texto p {
