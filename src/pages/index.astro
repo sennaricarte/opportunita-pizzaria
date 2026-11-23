@@ -14,6 +14,7 @@ import {
 } from '../config/site';
 
 import heroImage from '../assets/images/hero-opportunita.jpg';
+import fachadaImage from '../assets/images/fachada-opportunita-poa.jpg';
 
 const whatsappUrl = WHATSAPP_PEDIDOS_URL;
 
@@ -85,6 +86,22 @@ const turmasTexto =
   <!-- HORÁRIO E ENTREGA -->
   <section class="horario" aria-labelledby="horario-titulo">
     <div class="container horario__inner">
+      <figure class="horario__foto">
+        <Image
+          src={fachadaImage}
+          alt="Fachada da Opportunità Pizzaria Social na Av. Vital Brasil, em Poá, com letreiro, toldo verde e o telefone de delivery 4634-1149"
+          width={800}
+          height={600}
+          widths={[400, 640, 800]}
+          sizes="(min-width: 64rem) 520px, (min-width: 40rem) 45vw, 100vw"
+          formats={rasterFormats(fachadaImage)}
+          quality="mid"
+          loading="lazy"
+          decoding="async"
+          class="media-cover"
+        />
+        <figcaption>Nossa sede na Av. Vital Brasil, 478, Vila Açoreana, em Poá.</figcaption>
+      </figure>
       <div>
         <h2 id="horario-titulo" class="horario__titulo">Horário de funcionamento</h2>
         <ul class="horario__lista" role="list">
@@ -317,10 +334,32 @@ const turmasTexto =
     text-underline-offset: 3px;
   }
 
+  .horario__foto {
+    margin: 0;
+  }
+
+  .horario__foto .media-cover {
+    aspect-ratio: 4 / 3;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgb(0 0 0 / 12%);
+  }
+
+  .horario__foto figcaption {
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+    color: rgb(26 26 26 / 70%);
+  }
+
   @media (min-width: 40rem) {
     .horario__inner {
-      grid-template-columns: 1fr 1.5fr;
-      gap: var(--space-8);
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      gap: var(--space-6) var(--space-8);
+    }
+
+    .horario__foto {
+      grid-row: span 2;
     }
   }
 
